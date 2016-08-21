@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,28 +14,31 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Powiadomienia_uzytkownika")
-public class UserNotifications {
+@Table(name = "Powiadomienia_uzytkownika")
+public class UserNotifications implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
-	
 	@Id
 	@GeneratedValue
-	@Column(name="Id_Pow_Uzytk", columnDefinition="INTEGER(11) NOT NULL")
+	@Column(name = "Id_Pow_Uzytk", columnDefinition = "INTEGER(11) NOT NULL")
 	private int id;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_powiadomienia", columnDefinition="INTEGER(11) NOT NULL")
+	@JoinColumn(name = "Id_powiadomienia", columnDefinition = "INTEGER(11) NOT NULL")
 	private Notification notificationDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_uzytkownika", columnDefinition="INTEGER(11) NOT NULL")
+	@JoinColumn(name = "Id_uzytkownika", columnDefinition = "INTEGER(11) NOT NULL")
 	private User userDataModel;
-	
-	@Column(name="Data_wyslania")
+
+	@Column(name = "Data_wyslania")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataWyslania;
-	
-	@Column(name="Email", columnDefinition="VARCHAR(45) NOT NULL")
+
+	@Column(name = "Email", columnDefinition = "VARCHAR(45) NOT NULL")
 	private String email;
 
 	public int getId() {
@@ -76,7 +80,5 @@ public class UserNotifications {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }

@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="uzytkownicy")
 
-public class User{
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="Id_Uzytkownika")

@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,26 +15,30 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "historia_statusow")
-public class StatusHistory {
+public class StatusHistory implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Hist_Statusu", columnDefinition="INTEGER(11) NOT NULL")
+	@Column(name = "Id_Hist_Statusu", columnDefinition = "INTEGER(11) NOT NULL")
 	private int id;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_zgloszenia", columnDefinition="INTEGER(8) NOT NULL")
+	@JoinColumn(name = "Id_zgloszenia", columnDefinition = "INTEGER(8) NOT NULL")
 	private Problem problemDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_pracownika", columnDefinition="INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_pracownika", columnDefinition = "INTEGER(5) NOT NULL")
 	private Employee employeeDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_statusu", columnDefinition="INTEGER(2) NOT NULL")
+	@JoinColumn(name = "Id_statusu", columnDefinition = "INTEGER(2) NOT NULL")
 	private Status statusDataModel;
-	
-	@Column(name="Data", nullable=false)
+
+	@Column(name = "Data", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 
@@ -76,6 +81,5 @@ public class StatusHistory {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
-	
+
 }

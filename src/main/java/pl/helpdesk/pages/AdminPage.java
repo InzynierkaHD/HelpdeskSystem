@@ -1,7 +1,7 @@
 package pl.helpdesk.pages;
 
 
-import org.apache.wicket.markup.html.WebPage;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import pl.helpdesk.dao.UserDao;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class AdminPage extends WebPage{
+public class AdminPage extends  SuccessPage{
 		
 		/**
 		 * 

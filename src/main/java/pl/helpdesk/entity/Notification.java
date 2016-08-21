@@ -1,5 +1,7 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,17 +10,21 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "powiadomienia")
-public class Notification {
+public class Notification implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Powiadomienie", columnDefinition="INTEGER(11) NOT NULL")
+	@Column(name = "Id_Powiadomienie", columnDefinition = "INTEGER(11) NOT NULL")
 	private int id;
-	
-	@Column(name = "Nazwa", columnDefinition="VARCHAR(30) NOT NULL", unique=true)
+
+	@Column(name = "Nazwa", columnDefinition = "VARCHAR(30) NOT NULL", unique = true)
 	private String nazwa;
-	
-	@Column(name = "Tresc", columnDefinition="TEXT NOT NULL")
+
+	@Column(name = "Tresc", columnDefinition = "TEXT NOT NULL")
 	private String tresc;
 
 	public int getId() {
@@ -44,7 +50,5 @@ public class Notification {
 	public void setTresc(String tresc) {
 		this.tresc = tresc;
 	}
-	
-	
-	
+
 }

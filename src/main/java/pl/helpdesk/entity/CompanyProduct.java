@@ -1,5 +1,7 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,21 +12,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "firma_produkt")
-public class CompanyProduct {
+public class CompanyProduct implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Firma_Produkt", columnDefinition="INTEGER(6) NOT NULL")
+	@Column(name = "Id_Firma_Produkt", columnDefinition = "INTEGER(6) NOT NULL")
 	private int id;
-	
+
 	@OneToOne
-	@JoinColumn(name = "Id_firmy", columnDefinition="INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_firmy", columnDefinition = "INTEGER(5) NOT NULL")
 	private Company companyDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name = "Id_produktu", columnDefinition="INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_produktu", columnDefinition = "INTEGER(5) NOT NULL")
 	private Product productDataModel;
-	
+
 	@Column(name = "Czy_pomoc_aktywna")
 	private boolean czyAktywna;
 
@@ -59,8 +65,5 @@ public class CompanyProduct {
 	public void setCzyAktywna(boolean czyAktywna) {
 		this.czyAktywna = czyAktywna;
 	}
-	
-	
-	
-	
+
 }

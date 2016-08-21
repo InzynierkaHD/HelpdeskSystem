@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,29 +15,32 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "komentarze")
-public class Comment {
-
+public class Comment implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Komentarz", columnDefinition="INTEGER(11) NOT NULL")
+	@Column(name = "Id_Komentarz", columnDefinition = "INTEGER(11) NOT NULL")
 	private int id;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_uzytkownika", columnDefinition="INTEGER(11) NOT NULL")
+	@JoinColumn(name = "Id_uzytkownika", columnDefinition = "INTEGER(11) NOT NULL")
 	private User userDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_zgloszenia", columnDefinition="INTEGER(8) NOT NULL")
+	@JoinColumn(name = "Id_zgloszenia", columnDefinition = "INTEGER(8) NOT NULL")
 	private Problem problemDataModel;
-	
-	@Column(name = "Tresc", columnDefinition="TEXT NOT NULL")
+
+	@Column(name = "Tresc", columnDefinition = "TEXT NOT NULL")
 	private String tresc;
-	
-	@Column(name="Data_dodania", nullable=false)
+
+	@Column(name = "Data_dodania", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataDodania;
-	
-	@Column(name="Czy_wewnetrzny")
+
+	@Column(name = "Czy_wewnetrzny")
 	private boolean czyWewnetrzny;
 
 	public int getId() {
@@ -86,6 +90,5 @@ public class Comment {
 	public void setCzyWewnetrzny(boolean czyWewnetrzny) {
 		this.czyWewnetrzny = czyWewnetrzny;
 	}
-	
-	
+
 }

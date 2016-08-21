@@ -1,5 +1,7 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,20 +10,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "produkty")
-public class Product {
-	
+public class Product implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Produkt", columnDefinition="INTEGER(5) NOT NULL")
+	@Column(name = "Id_Produkt", columnDefinition = "INTEGER(5) NOT NULL")
 	private int id;
-	
-	@Column(name = "Nazwa", columnDefinition="VARCHAR(30) NOT NULL", unique=true)
+
+	@Column(name = "Nazwa", columnDefinition = "VARCHAR(30) NOT NULL", unique = true)
 	private String nazwa;
-	
-	@Column(name = "Cena", columnDefinition="Decimal(10,2) NOT NULL")
+
+	@Column(name = "Cena", columnDefinition = "Decimal(10,2) NOT NULL")
 	private double cena;
-	
-	@Column(name = "Opis", columnDefinition="TEXT NOT NULL")
+
+	@Column(name = "Opis", columnDefinition = "TEXT NOT NULL")
 	private String opis;
 
 	public int getId() {
@@ -56,5 +62,4 @@ public class Product {
 		this.opis = opis;
 	}
 
-	
 }

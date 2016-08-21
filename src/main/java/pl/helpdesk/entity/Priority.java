@@ -1,5 +1,7 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,18 +10,21 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "priorytety")
-public class Priority {
+public class Priority implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
-	
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Priorytet", columnDefinition="INTEGER(2) NOT NULL")
+	@Column(name = "Id_Priorytet", columnDefinition = "INTEGER(2) NOT NULL")
 	private int id;
-	
-	@Column(name = "Nazwa", columnDefinition="VARCHAR(15) NOT NULL", unique=true)
+
+	@Column(name = "Nazwa", columnDefinition = "VARCHAR(15) NOT NULL", unique = true)
 	private String nazwa;
-	
-	@Column(name = "Stopien_waznosci", columnDefinition="INTEGER(2) NOT NULL")
+
+	@Column(name = "Stopien_waznosci", columnDefinition = "INTEGER(2) NOT NULL")
 	private String stopienWaznosci;
 
 	public int getId() {
@@ -45,6 +50,5 @@ public class Priority {
 	public void setStopienWaznosci(String stopienWaznosci) {
 		this.stopienWaznosci = stopienWaznosci;
 	}
-	
-	
+
 }

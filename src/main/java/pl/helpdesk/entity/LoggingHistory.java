@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,23 +15,26 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Historia_logowania")
-public class LoggingHistory {
+public class LoggingHistory implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
-	
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Hist_Logowania", columnDefinition="INTEGER(5) NOT NULL")
+	@Column(name = "Id_Hist_Logowania", columnDefinition = "INTEGER(5) NOT NULL")
 	private int id;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_uzytkownika", columnDefinition="INTEGER(11) NOT NULL")
+	@JoinColumn(name = "Id_uzytkownika", columnDefinition = "INTEGER(11) NOT NULL")
 	private User userDataModel;
-	
-	@Column(name="Data_logowania", nullable=false)
+
+	@Column(name = "Data_logowania", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataLogowania;
-	
-	@Column(name="Data_wylogowania")
+
+	@Column(name = "Data_wylogowania")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataWylogowania;
 
@@ -65,6 +69,5 @@ public class LoggingHistory {
 	public void setDataWylogowania(Date dataWylogowania) {
 		this.dataWylogowania = dataWylogowania;
 	}
-	
-	
+
 }

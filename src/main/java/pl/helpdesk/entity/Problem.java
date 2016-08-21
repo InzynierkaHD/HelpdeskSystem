@@ -1,5 +1,6 @@
 package pl.helpdesk.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,45 +15,46 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "zgloszenia")
-public class Problem {
+public class Problem implements Serializable {
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Id_Zgloszenie", columnDefinition="INTEGER(8) NOT NULL")
+	@Column(name = "Id_Zgloszenie", columnDefinition = "INTEGER(8) NOT NULL")
 	private int id;
-	
-	@OneToOne
-	@JoinColumn(name = "Id_klienta", columnDefinition="INTEGER(6) NOT NULL")
-	private Client clientDataModel;
-	
-	
-	@OneToOne
-	@JoinColumn(name = "Id_typu", columnDefinition="INTEGER(2) NOT NULL")
-	private Type typeDataModel;
-	
-	
 
-	@Column(name = "Temat" , columnDefinition="VARCHAR(50) NOT NULL")
+	@OneToOne
+	@JoinColumn(name = "Id_klienta", columnDefinition = "INTEGER(6) NOT NULL")
+	private Client clientDataModel;
+
+	@OneToOne
+	@JoinColumn(name = "Id_typu", columnDefinition = "INTEGER(2) NOT NULL")
+	private Type typeDataModel;
+
+	@Column(name = "Temat", columnDefinition = "VARCHAR(50) NOT NULL")
 	private String temat;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_priorytetu", columnDefinition="INTEGER(2) NOT NULL")
+	@JoinColumn(name = "Id_priorytetu", columnDefinition = "INTEGER(2) NOT NULL")
 	private Priority prioritoryDataModel;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_firma_produkt", columnDefinition="INTEGER(6) NOT NULL")
+	@JoinColumn(name = "Id_firma_produkt", columnDefinition = "INTEGER(6) NOT NULL")
 	private CompanyProduct companyProductDataModel;
-	
-	@Column(name="Data_dodania", nullable=false)
+
+	@Column(name = "Data_dodania", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataDodania;
-	
-	@Column(name="Data_zakonczenia")
+
+	@Column(name = "Data_zakonczenia")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataZakonczenia;
-	
+
 	@OneToOne
-	@JoinColumn(name="Id_wlasciciela", columnDefinition="INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_wlasciciela", columnDefinition = "INTEGER(5) NOT NULL")
 	private Employee employeeDataModel;
 
 	public int getId() {
@@ -126,8 +128,5 @@ public class Problem {
 	public void setEmployeeDataModel(Employee employeeDataModel) {
 		this.employeeDataModel = employeeDataModel;
 	}
-	
-	
-	
-	
+
 }
