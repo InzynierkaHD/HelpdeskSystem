@@ -1,0 +1,1 @@
+INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`) VALUES (1,0,0,"email@gmail.com","user","Jan","user","Kowalski",null)
