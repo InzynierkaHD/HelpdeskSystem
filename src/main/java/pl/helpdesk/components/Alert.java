@@ -11,7 +11,7 @@ import org.apache.wicket.util.resource.StringResourceStream;
 
 
 public class Alert extends Panel implements IMarkupResourceStreamProvider{
-	
+	  
 	ArrayList<Link> buttonList;
 	StringBuilder html = new StringBuilder();
 	private static final long serialVersionUID = 1L;
