@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.alert-error{
+	border-radius: 9px 9px 0 0;
+	color: firebrick !important;
+	background: #ff9999 !important;
+}
+
+.alert-warning {
+	border-radius: 9px 9px 0 0;
+	color: darkgoldenrod !important;
+	background:khaki !important;
+}
+
+.alert-info {
+	border-radius: 9px 9px 0 0;
+	color: teal !important;
+	background:lightblue !important;
+}
+.alert-success {
+	border-radius: 9px 9px 0 0;
+	color: darkgreen !important;
+	background: !important;
+}
+
+.modal-dialog {
+
+}
