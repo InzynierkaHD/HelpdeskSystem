@@ -1,10 +1,9 @@
 package pl.helpdesk.components;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import pl.helpdesk.api.INavbarComponent;
-import pl.helpdesk.core.HelpdeskApp;
 
 /**
  * Dropdown dla navbara
@@ -12,7 +11,7 @@ import pl.helpdesk.core.HelpdeskApp;
  * @author Krzysztof Krocz
  *
  */
-public class Dropdown implements INavbarComponent {
+public class Dropdown implements INavbarComponent, Serializable{
 
 	private String name;
 	private HashMap<String, String> subOptions = new HashMap<String, String>();

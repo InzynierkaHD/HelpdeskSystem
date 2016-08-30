@@ -28,7 +28,7 @@ public class StatusHistory implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "Id_zgloszenia", columnDefinition = "INTEGER(8) NOT NULL")
-	private Problem problemDataModel;
+	private Issue problemDataModel;
 
 	@OneToOne
 	@JoinColumn(name = "Id_pracownika", columnDefinition = "INTEGER(5) NOT NULL")
@@ -50,11 +50,11 @@ public class StatusHistory implements Serializable {
 		this.id = id;
 	}
 
-	public Problem getProblemDataModel() {
+	public Issue getProblemDataModel() {
 		return problemDataModel;
 	}
 
-	public void setProblemDataModel(Problem problemDataModel) {
+	public void setProblemDataModel(Issue problemDataModel) {
 		this.problemDataModel = problemDataModel;
 	}
 

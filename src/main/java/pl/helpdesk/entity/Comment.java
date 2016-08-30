@@ -31,7 +31,7 @@ public class Comment implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "Id_zgloszenia", columnDefinition = "INTEGER(8) NOT NULL")
-	private Problem problemDataModel;
+	private Issue problemDataModel;
 
 	@Column(name = "Tresc", columnDefinition = "TEXT NOT NULL")
 	private String tresc;
@@ -59,11 +59,11 @@ public class Comment implements Serializable {
 		this.userDataModel = userDataModel;
 	}
 
-	public Problem getProblemDataModel() {
+	public Issue getProblemDataModel() {
 		return problemDataModel;
 	}
 
-	public void setProblemDataModel(Problem problemDataModel) {
+	public void setProblemDataModel(Issue problemDataModel) {
 		this.problemDataModel = problemDataModel;
 	}
 

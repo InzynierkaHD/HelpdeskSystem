@@ -1,5 +1,8 @@
 package pl.helpdesk.pages;
 
+import java.util.ArrayList;
+
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -9,6 +12,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.components.AlertModal;
+import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.userSession.ApplicationSession;
 
@@ -25,7 +30,6 @@ public class LoginPage extends WebPage {
 	private User userDataModel = new User();
 
 	public LoginPage() {
-
 		//System.out.println(userSpring.getUser("Login").getNazwisko());
 		final TextField<String> login = new TextField<String>("login",
 				new PropertyModel<String>(userDataModel, "login"));

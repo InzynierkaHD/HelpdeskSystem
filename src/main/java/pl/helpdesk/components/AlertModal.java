@@ -130,7 +130,7 @@ public class AlertModal extends Panel implements IMarkupCacheKeyProvider,IMarkup
 			html.append("</div>");
 		}
 		html.append(
-				"</div></div></div><script type=\"text/javascript\">$(window).load(function(){$('#myModal').modal('show');});"
+				"</div></div></div><script type=\"text/javascript\">$(window).load(function(){$('#myModal').modal('hide');});"
 						+ " function closeAlert() {$('#myModal').modal('hide');}</script></wicket:panel>");
 		return new StringResourceStream(html.toString());
 	}

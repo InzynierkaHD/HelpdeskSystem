@@ -2,9 +2,11 @@ package pl.helpdesk.pages;
 
 
 
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import pl.helpdesk.dao.UserDao;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -16,7 +18,8 @@ public class AdminPage extends  SuccessPage{
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public AdminPage(){
+		public AdminPage(PageParameters parameters){
+			super(parameters);
 			String result = ""; 
 			String result2= "";
 			result = String.valueOf(ApplicationSession.getInstance().getUser().getLogin());
@@ -43,6 +46,8 @@ public class AdminPage extends  SuccessPage{
 			
 			form.add(logOut);
 		}
+
+	
 
 	}
 

@@ -1,1 +1,6 @@
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`) VALUES (1,0,0,"email@gmail.com","user","Jan","user","Kowalski",null)
+INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (1,"Problem")
+INSERT INTO `priorytety`(`Id_Priorytet`, `Nazwa`, `Stopien_waznosci`) VALUES (1,"Wysoki","4")
+INSERT INTO `produkty`(`Id_Produkt`, `Cena`, `Nazwa`, `Opis`) VALUES (1,"2000","Przykladowy Produkt","Przykladowy opis")
+INSERT INTO `firmy`(`Id_Firma`, `Kod_pocztowy`, `Miejscowosc`, `Nazwa`, `Numer`, `Ulica`) VALUES (1,"21-032","Lublin","Przykladowa firma","Numer","Przykladowa ulica")
+INSERT INTO `firma_produkt`(`Id_Firma_Produkt`, `Czy_pomoc_aktywna`, `Id_firmy`, `Id_produktu`) VALUES (1,1,1,1)

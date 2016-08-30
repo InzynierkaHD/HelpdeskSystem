@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "typy_zgloszen")
-public class Type implements Serializable {
+public class IssueType implements Serializable {
 	/**
 	* 
 	*/

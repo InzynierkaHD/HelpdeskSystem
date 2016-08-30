@@ -1,14 +1,13 @@
 package pl.helpdesk.core;
 
 import org.apache.wicket.Session;
-import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.mapper.parameter.UrlPathPageParametersEncoder;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 import pl.helpdesk.pages.LoginPage;
+import pl.helpdesk.pages.MyIssue;
 import pl.helpdesk.pages.UserFinalPage;
 import pl.helpdesk.userSession.ApplicationSession;
 
@@ -36,5 +35,6 @@ public class HelpdeskApp extends WebApplication{
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		mountPage("/Home", LoginPage.class);
 		mountPage("/userPage", UserFinalPage.class);
+		mountPage("/MyIssues", MyIssue.class);
 	}
 }

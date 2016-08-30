@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "zgloszenia")
-public class Problem implements Serializable {
+public class Issue implements Serializable {
 	/**
 	* 
 	*/
@@ -32,7 +32,7 @@ public class Problem implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "Id_typu", columnDefinition = "INTEGER(2) NOT NULL")
-	private Type typeDataModel;
+	private IssueType typeDataModel;
 
 	@Column(name = "Temat", columnDefinition = "VARCHAR(50) NOT NULL")
 	private String temat;
@@ -73,11 +73,11 @@ public class Problem implements Serializable {
 		this.clientDataModel = clientDataModel;
 	}
 
-	public Type getTypeDataModel() {
+	public IssueType getTypeDataModel() {
 		return typeDataModel;
 	}
 
-	public void setTypeDataModel(Type typeDataModel) {
+	public void setTypeDataModel(IssueType typeDataModel) {
 		this.typeDataModel = typeDataModel;
 	}
 

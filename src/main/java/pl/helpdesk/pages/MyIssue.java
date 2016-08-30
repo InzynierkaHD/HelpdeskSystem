@@ -2,8 +2,8 @@ package pl.helpdesk.pages;
 
 import java.util.ArrayList;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import pl.helpdesk.components.AlertModal;
@@ -13,7 +13,7 @@ import pl.helpdesk.forms.AddIssueForm;
 public class MyIssue extends SuccessPage{
 
 	private static final long serialVersionUID = 1L;
-	private Link addIssue;
+	private AjaxLink<String> addIssue;
 	private AlertModal alert;
 	private AddIssueForm addIssueForm;
 	
@@ -24,15 +24,16 @@ public class MyIssue extends SuccessPage{
 		alert.add(addIssueForm);
 		//alert.show(new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie", new StringBuilder("dziala"));
 		add(alert);
-		add(addIssue = new Link("addIssue"){
+		alert.setVisible(true);
+		add(addIssue = new AjaxLink<String>("addIssue"){
 
 			@Override
-			public void onClick() {
-				alert.setVisible(true);
-				//alert.show(new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie", new StringBuilder("dziala"));
-				//target.appendJavaScript("$(\"#myModal\").modal(\"toggle\");");
-				//alert.add(new AddIssueForm("form"));
+			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript("$('#myModal').modal('show');");
+				
 			}
+
+			
 			
 		});
 	}
