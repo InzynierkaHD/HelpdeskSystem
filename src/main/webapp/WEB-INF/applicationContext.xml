@@ -38,6 +38,7 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
+    <bean id="genericDao" abstract="true" class="pl.helpdesk.dao.GenericDao"></bean>
     <bean id="userSpring" class="pl.helpdesk.dao.UserSpringDao"></bean>
+    <bean id="issueTypeDao" class="pl.helpdesk.dao.IssueTypeDao" parent="genericDao"></bean>
 </beans>

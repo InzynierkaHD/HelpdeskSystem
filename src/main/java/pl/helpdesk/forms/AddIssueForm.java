@@ -5,6 +5,10 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import pl.helpdesk.api.IIssueTypeDao;
+import pl.helpdesk.entity.IssueType;
 
 /**
  * Panel z formularzem dodania nowych zgłoszeń
@@ -19,7 +23,9 @@ public class AddIssueForm extends Panel{
 	private String contentsName;
 	private TextField<String> title;
 	private TextArea<String> contents;
-
+	@SpringBean
+	IIssueTypeDao issueTypeDao;
+	
 	public AddIssueForm(String id) {
 		super(id);
 		titleName="";
