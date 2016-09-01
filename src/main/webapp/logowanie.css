@@ -24,6 +24,7 @@ color:black;
 }
 
 #tytul{
+	font-family: 'Josefin Sans', sans-serif;
 	margin-top:5px;
     line-height:100px;
     color:white;
@@ -38,6 +39,7 @@ color:black;
 
 
 #onas{
+	font-family: 'Josefin Sans', sans-serif;
 	margin-top:5px;
     line-height:45px;
     text-align:center;
@@ -53,6 +55,7 @@ color:black;
 }
 
 #pomoc{
+	font-family: 'Josefin Sans', sans-serif;
     line-height:45px;
     text-align:center;
     background-color: #181629;
@@ -66,6 +69,7 @@ color:black;
 }
 
 #cytat{
+	font-family: 'Josefin Sans', sans-serif;
 	padding-left:2%;
     padding-right:2%;
     line-height:40px;
@@ -76,7 +80,6 @@ color:black;
 }
 
 #logowanie{
-	
 	text-align:center;
     padding-top: 2%;
     padding-left:2%;
@@ -98,13 +101,13 @@ input[type="password"] {
 }
 
 #informacje{
+	font-family: 'Josefin Sans', sans-serif;
 	padding-top: 2%;
     padding-left:2%;
     padding-right:2%;
     padding-bottom:2%;
     min-height: 400px;
 	text-align:justify;
-
 }
 
 
