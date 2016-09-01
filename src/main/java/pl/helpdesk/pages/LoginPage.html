@@ -10,54 +10,74 @@ and open the template in the editor.
 <title>Help desk online</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css.css" type="text/css">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="logowanie.css" type="text/css">
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div id="tytul">
-		<b>Help Desk</b>
-	</div>
-	<a href=onas/onas.html>
-		<div id="onas">
-			<b>Pomoc</b>
+	<div class="container">
+		<header class="row">
+			<div id="tytul" class="col-sm-7">
+				<b>Help Desk</b>
+			</div>
+
+			<div class="col-sm-5">
+				<a href=onas/onas.html>
+					<div id="onas">
+						<b>O nas</b>
+					</div>
+				</a> <a href=napisz/napisz.html>
+					<div id="pomoc">
+						<b>Pomoc</b>
+					</div>
+				</a>
+			</div>
+		</header>
+
+		<div id="cytat">Wpisz swoje dane, żeby zalogować się do systemu</div>
+
+		<div style="clear: both"></div>
+
+		<div class="row">
+			<div class="col-sm-7" id="logowanie">
+				<form wicket:id="form">
+					<br /> Login <br /> <input type="text" wicket:id="login" /><br />
+					<br /> Hasło<br /> <input type="password" wicket:id="haslo" /><br />
+					<br /> <input type="submit" class="przycisk" value="ZALOGUJ" />
+				</form>
+				<br /> <span wicket:id="message" style="color: #B04862;"></span>
+				 <span wicket:id="blocked" style="color: #B04862;"></span>
+			</div>
+			<div class="col-sm-5" id="informacje">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					Suspendisse laoreet pharetra turpis tincidunt commodo. Donec ornare
+					malesuada metus, non condimentum leo consequat sed. Sed viverra
+					enim sed justo euismod gravida. In hac habitasse platea dictumst.
+					Etiam ac nisl sed justo viverra euismod vel ut arcu. In sed velit
+					in massa porttitor egestas nec vel augue. Praesent congue venenatis
+					leo, sit amet aliquam felis.</p>
+				<p>Sed ultricies, ex sit amet consectetur iaculis, nunc augue
+					fermentum velit, vitae finibus est nunc vel massa. Lorem ipsum
+					dolor sit amet, consectetur adipiscing elit. Vivamus sapien sapien,
+					auctor pulvinar commodo vel, malesuada quis nisi. Vivamus viverra
+					dignissim sapien, ut convallis leo condimentum a. Nam ornare
+					placerat sem, eget efficitur dui semper euismod. Etiam posuere urna
+					sit amet justo convallis convallis id auctor felis. Nam eget
+					iaculis mi. Donec auctor erat eget felis molestie, sed tristique
+					nisl tempor. Donec tempus, augue et vehicula faucibus, urna augue
+					aliquam magna, a volutpat ipsum nibh ac nulla. Phasellus laoreet
+					sapien et elit tincidunt sollicitudin.</p>
+			</div>
 		</div>
-	</a>
-
-	<a href=napisz/napisz.html>
-		<div id="napisz">
-			<b>Coś tam</b>
-		</div>
-	</a>
-	<div style="clear: both"></div>
-	<div id="cytat">Wpisz swoje dane, żeby zalogować się do systemu</div>
-
-	<div style="clear: both"></div>
-
-
-	<div id="c">
-		<form wicket:id="form">
-			<br /> Login <br /> <input type="text" wicket:id="login" /><br />
-			<br /> Hasło<br /> <input type="password" wicket:id="haslo" /><br />
-			<br /> <input type="submit" class="ukryj" id="ukryj" value="ZALOGUJ" />
-		</form>
-		<br />
-		<span wicket:id="message" style="color: #B04862;"></span>
-		<span wicket:id="blocked" style="color: #B04862;"></span>
-
 	</div>
-
-
-	<div id="cpp">Jakieś pierdoły o helpdesku xd</div>
-
-	<div style="clear: both"></div>
-
-	<div id="stopka">Wszelkie prawa zastrzeżone. &copy; 2015</div>
 </body>
 </html>

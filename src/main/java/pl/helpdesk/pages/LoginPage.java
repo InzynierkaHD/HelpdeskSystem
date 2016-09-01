@@ -60,7 +60,10 @@ public class LoginPage extends WebPage {
 					ApplicationSession.getInstance().setUser(findedUser);
 					setResponsePage(UserFinalPage.class);
 				}
-				else System.out.println("Bledne dane");
+				else{
+					System.out.println("Bledne dane");
+					badInfo.setVisible(Boolean.TRUE);
+				}
 				
 				/*userDao = new UserDao();
 				badInfo.setVisible(Boolean.FALSE);

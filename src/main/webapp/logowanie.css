@@ -10,7 +10,7 @@ and open the template in the editor.
 @import url(http://fonts.googleapis.com/css?family=Josefin+Sans:400,700&subset=latin,latin-ext);
 
 body{
-    background-color:#181629;
+    background-color:#e7e7e9;
     font-family: 'Josefin Sans', sans-serif;
 }
 
@@ -24,13 +24,11 @@ color:black;
 }
 
 #tytul{
+	margin-top:5px;
     line-height:100px;
-    float: left;
-    width: 65%;
     color:white;
     font-size:50px;
     text-align:center;
-    height:100px;
     background-color: #181629;
 }
 
@@ -40,63 +38,54 @@ color:black;
 
 
 #onas{
+	margin-top:5px;
     line-height:45px;
     text-align:center;
-    width: 33.3%;
     background-color:  #181629;
     color:white;
-    float:right;
-    height:45px;
     margin-bottom: 10px;  
 }
 
 #onas:hover{
-    background-color:#181629;    
     cursor: pointer;
 	font-weight: bold;
-
+	text-decoration: none;
 }
 
-#napisz{
+#pomoc{
     line-height:45px;
     text-align:center;
-    width: 33.3%;
     background-color: #181629;
     color:white;
-    float:right;
-    height:45px;
     
 }
-#napisz:hover{
-    background-color:#181629;
+#pomoc:hover{
     cursor: pointer;
 	font-weight: bold;
+	text-decoration: none;
 }
 
 #cytat{
+	padding-left:2%;
+    padding-right:2%;
     line-height:40px;
-    padding-left:10%;
+    text-align:center;
     margin-top:10px;
-    background-color:  #181629;
-    height:40px;
+    background-color: #181629;
     color:white;
 }
 
-#c{
-	line-height:25px;
+#logowanie{
+	
 	text-align:center;
     padding-top: 2%;
     padding-left:2%;
     padding-right:2%;
     padding-bottom:2%;
 	font-size:25px;
-    display:table-cell;
-    height:300px;
-    float:left;
-    width: 45.5%;
-    background-color: #e7e7e9;
     font-family: 'Josefin Sans', sans-serif;
 	text-align:middle;
+	min-height: 400px;
 
 }
 input[type="text"] {
@@ -108,20 +97,18 @@ input[type="password"] {
 	height:25px;
 }
 
-#cpp{
+#informacje{
 	padding-top: 2%;
     padding-left:2%;
     padding-right:2%;
     padding-bottom:2%;
-    height:300px;
-    float:left;
-    width: 46.5%;
-	background-color: #e7e7e9;
+    min-height: 400px;
+	text-align:justify;
 
 }
 
 
-.ukryj{
+.przycisk{
     font-family: 'Josefin Sans', sans-serif;
     color: white;
     font-size:20px;
@@ -130,21 +117,7 @@ input[type="password"] {
     background-color: #181629;
     border:none;
 }
-.ukryj:hover{
-        cursor: pointer;
-		background-color: #181629;
-}
-
-#stopka{
-    height:45px;
-    line-height: 45px;
-   // clear:both;
-    color:white;
-    background-color: black;
-    text-align:center;
-    font-size:18px;
-   // position:fixed;
-    //bottom:0;
-    width:100%;
-    //z-index: -1;
+.przycisk:hover{
+    cursor: pointer;
+	background-color: #181629;
 }
