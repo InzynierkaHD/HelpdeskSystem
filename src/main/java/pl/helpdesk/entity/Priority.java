@@ -25,7 +25,7 @@ public class Priority implements Serializable {
 	private String nazwa;
 
 	@Column(name = "Stopien_waznosci", columnDefinition = "INTEGER(2) NOT NULL")
-	private String stopienWaznosci;
+	private int stopienWaznosci;
 
 	public int getId() {
 		return id;
@@ -43,11 +43,11 @@ public class Priority implements Serializable {
 		this.nazwa = nazwa;
 	}
 
-	public String getStopienWaznosci() {
+	public int getStopienWaznosci() {
 		return stopienWaznosci;
 	}
 
-	public void setStopienWaznosci(String stopienWaznosci) {
+	public void setStopienWaznosci(int stopienWaznosci) {
 		this.stopienWaznosci = stopienWaznosci;
 	}
 
