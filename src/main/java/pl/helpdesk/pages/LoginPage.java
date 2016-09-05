@@ -68,7 +68,7 @@ public class LoginPage extends WebPage {
 				{
 					ApplicationSession.getInstance().setUser(findedUser);
 					if(adminDao.isAdmin(findedUser)){
-						//Panel Admina
+						setResponsePage(AdminFinalPage.class);
 					} else if (employeeDao.isEmployee(findedUser)){
 						//Panel pracownika
 					} else if(agentDao.isAgent(findedUser)){
