@@ -11,7 +11,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pl.helpdesk.dao.UserDao;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class AdminPage extends  SuccessPage{
+public class AdminPage extends  ClientSuccessPage{
 		
 		/**
 		 * 

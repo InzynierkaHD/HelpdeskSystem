@@ -23,11 +23,9 @@ public class AdminDao  extends GenericDao<Admin,Integer> implements IAdminDao{
 	public Boolean isAdmin(User user) {
 		if(!sessionFactory.getCurrentSession().createCriteria(Admin.class)
 			.add(Restrictions.eq("userDataModel", user)).list().isEmpty()){
-			System.out.println("Admin");
 			return true;
 		}
 		else
-			System.out.println("NIE ADMIN");
 			return false;
 	}
 }

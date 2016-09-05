@@ -67,11 +67,16 @@ public class LoginPage extends WebPage {
 				if(findedUser != null)
 				{
 					ApplicationSession.getInstance().setUser(findedUser);
-					adminDao.isAdmin(findedUser);
-					employeeDao.isEmployee(findedUser);
-					agentDao.isAgent(findedUser);
-					clientDao.isClient(findedUser);
-					setResponsePage(UserFinalPage.class);
+					if(adminDao.isAdmin(findedUser)){
+						//Panel Admina
+					} else if (employeeDao.isEmployee(findedUser)){
+						//Panel pracownika
+					} else if(agentDao.isAgent(findedUser)){
+						//Panel przedstawiciela
+					} else if(clientDao.isClient(findedUser)){
+						setResponsePage(ClientFinalPage.class);
+					}
+					
 				}
 				else{
 					System.out.println("Bledne dane");

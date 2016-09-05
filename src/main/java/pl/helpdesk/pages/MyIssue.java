@@ -10,7 +10,7 @@ import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.forms.AddIssueForm;
 
-public class MyIssue extends SuccessPage{
+public class MyIssue extends ClientSuccessPage{
 
 	private static final long serialVersionUID = 1L;
 	private AjaxLink<String> addIssue;

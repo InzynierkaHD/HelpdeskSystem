@@ -8,7 +8,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 import pl.helpdesk.pages.LoginPage;
 import pl.helpdesk.pages.MyIssue;
-import pl.helpdesk.pages.UserFinalPage;
+import pl.helpdesk.pages.ClientFinalPage;
 import pl.helpdesk.userSession.ApplicationSession;
 
 //Klasa startowa w niej definiujemy z jakiej klasy startujemy aplikacje
@@ -34,7 +34,7 @@ public class HelpdeskApp extends WebApplication{
 		super.init();
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		mountPage("/Home", LoginPage.class);
-		mountPage("/userPage", UserFinalPage.class);
+		mountPage("/userPage", ClientFinalPage.class);
 		mountPage("/MyIssues", MyIssue.class);
 	}
 }

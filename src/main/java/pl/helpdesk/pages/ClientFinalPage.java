@@ -9,13 +9,13 @@ import pl.helpdesk.api.INavbarComponent;
 import pl.helpdesk.components.Dropdown;
 import pl.helpdesk.components.Navbar;
 
-public class UserFinalPage extends SuccessPage {
+public class ClientFinalPage extends ClientSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
 	
 
-	public UserFinalPage(PageParameters parameters) {
+	public ClientFinalPage(PageParameters parameters) {
 		super(parameters);
 		
 	}

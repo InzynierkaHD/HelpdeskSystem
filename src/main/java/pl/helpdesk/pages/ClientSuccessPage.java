@@ -14,13 +14,13 @@ import pl.helpdesk.components.Navbar;
 
 
 
-public abstract class SuccessPage extends WebPage {
+public abstract class ClientSuccessPage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
 	LinkedList<INavbarComponent> navComponent = new LinkedList<INavbarComponent>();
 	protected AlertModal alert;
 	
-	public SuccessPage(PageParameters parameters){
+	public ClientSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
 		options.put("Moje zgłoszenia", "MyIssues");
 		options.put("Historia", "Historia");

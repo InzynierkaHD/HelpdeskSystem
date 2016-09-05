@@ -18,11 +18,9 @@ public class ClientDao  extends GenericDao<Client,Integer> implements IClientDao
 	public Boolean isClient(User user) {
 		if(!sessionFactory.getCurrentSession().createCriteria(Client.class)
 			.add(Restrictions.eq("userDataModel", user)).list().isEmpty()){
-			System.out.println("Klient");
 			return true;
 		}
 		else
-			System.out.println("NIE KLIENT");
 			return false;
 	}
 }

@@ -18,11 +18,9 @@ public class EmployeeDao extends GenericDao<Employee,Integer> implements IEmploy
 	public Boolean isEmployee(User user) {
 		if(!sessionFactory.getCurrentSession().createCriteria(Employee.class)
 			.add(Restrictions.eq("userDataModel", user)).list().isEmpty()){
-			System.out.println("Pracownik");
 			return true;
 		}
 		else
-			System.out.println("NIE PRACOWNIK");
 			return false;
 	}
 }

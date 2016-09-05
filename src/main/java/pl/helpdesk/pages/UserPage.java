@@ -9,7 +9,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import pl.helpdesk.userSession.ApplicationSession;
 
 
-public class UserPage extends SuccessPage{
+public class UserPage extends ClientSuccessPage{
 	
 	/**
 	 * 
