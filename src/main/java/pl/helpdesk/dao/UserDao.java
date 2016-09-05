@@ -235,7 +235,7 @@ public class UserDao implements Serializable {
 	 *         2-przedstawiciel, 3-klient, 4-administrator) lub "0" gdy nie ma
 	 *         użytkownika o podanym loginie.
 	 */
-	public int userType(String login) {
+	/*public int userType(String login) {
 
 		AdminDao adminDao = new AdminDao();
 		EmployeeDao employeeDao = new EmployeeDao();
@@ -253,7 +253,7 @@ public class UserDao implements Serializable {
 
 		return 0;
 
-	}
+	}*/
 
 	/**
 	 * Waliduje adres email.

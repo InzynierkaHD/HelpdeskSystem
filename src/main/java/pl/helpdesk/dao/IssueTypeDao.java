@@ -11,7 +11,7 @@ import pl.helpdesk.entity.IssueType;
  *
  */
 @Transactional
-public class IssueTypeDao extends GenericDao<IssueType> implements IIssueTypeDao{
+public class IssueTypeDao extends GenericDao<IssueType,Integer> implements IIssueTypeDao{
 
 	public IssueTypeDao(){
 		super();

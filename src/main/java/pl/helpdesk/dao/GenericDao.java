@@ -1,5 +1,6 @@
 package pl.helpdesk.dao;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -11,8 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.IGenericDao;
 
+/**
+ * Generyczne dao 
+ * 
+ * @author Krzysztof Krocz
+ *
+ * @param <T> Typ encji
+ * @param <ID> typ id encji (np. Integer,Long itd..)
+ */
 @Transactional
-public abstract class GenericDao<T> implements IGenericDao<T>{
+public abstract class GenericDao<T,ID> implements IGenericDao<T,ID>{
 
 	protected Class<? extends T> daoType;
 
@@ -44,6 +53,11 @@ public abstract class GenericDao<T> implements IGenericDao<T>{
 	@Override
 	public List<T> getAll() {
 		return sessionFactory.getCurrentSession().createCriteria(daoType).list();
+	}
+	
+	@Override
+	public T getById(ID id) {
+		return (T)sessionFactory.getCurrentSession().get(daoType, (Serializable) id);
 	}
 	
 	

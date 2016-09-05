@@ -42,4 +42,6 @@
     <bean id="userSpring" class="pl.helpdesk.dao.UserSpringDao"></bean>
     <bean id="issueTypeDao" class="pl.helpdesk.dao.IssueTypeDao" parent="genericDao"></bean>
     <bean id="priorityDao" class="pl.helpdesk.dao.PriorityDao" parent="genericDao"></bean>
+    <bean id="companyProductDao" class="pl.helpdesk.dao.CompanyProductDao" parent="genericDao"></bean>
+    <bean id="employeeDao" class="pl.helpdesk.dao.EmployeeDao" parent="genericDao"></bean>
 </beans>

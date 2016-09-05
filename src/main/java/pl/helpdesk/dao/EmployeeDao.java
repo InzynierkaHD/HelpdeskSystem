@@ -10,11 +10,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Employee;
 
 
-public class EmployeeDao {
-	
+public class EmployeeDao extends GenericDao<Employee,Integer> implements IEmployeeDao{
+	/*
 	private EntityManagerFactory entityMF =  Persistence.createEntityManagerFactory("baza");
     private EntityManager entityM =entityMF.createEntityManager();
     private CriteriaBuilder builder = entityM.getCriteriaBuilder();
@@ -27,11 +28,11 @@ public class EmployeeDao {
 	     entityMF.close();
 	}
 	
-	/**
+	*//**
 	 * Tworzy listę pracowników Helpdesku.
 	 * 
 	 * @return Lista pracowników.
-	 */
+	 *//*
     public List <Employee> createEmployeeList(){
     	
     	criteriaQuery.select(employee);
@@ -40,6 +41,6 @@ public class EmployeeDao {
 		
 		List <Employee> employees=query.getResultList();
 		return employees;
-    }
+    }*/
 }
 

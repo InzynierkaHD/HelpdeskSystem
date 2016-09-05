@@ -7,6 +7,6 @@ import pl.helpdesk.entity.IssueType;
  * @author Krzysztof Krocz
  *
  */
-public interface IIssueTypeDao extends IGenericDao<IssueType> {
+public interface IIssueTypeDao extends IGenericDao<IssueType,Integer> {
 
 }

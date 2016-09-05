@@ -27,8 +27,8 @@ public class Issue implements Serializable {
 	private int id;
 
 	@OneToOne
-	@JoinColumn(name = "Id_klienta", columnDefinition = "INTEGER(6) NOT NULL")
-	private Client clientDataModel;
+	@JoinColumn(name = "Id_user", columnDefinition = "INTEGER(6) NOT NULL")
+	private User user;
 
 	@OneToOne
 	@JoinColumn(name = "Id_typu", columnDefinition = "INTEGER(2) NOT NULL")
@@ -54,7 +54,7 @@ public class Issue implements Serializable {
 	private Date dataZakonczenia;
 
 	@OneToOne
-	@JoinColumn(name = "Id_wlasciciela", columnDefinition = "INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_wlasciciela", columnDefinition = "INTEGER(5)")
 	private Employee employeeDataModel;
 
 	public int getId() {
@@ -65,12 +65,12 @@ public class Issue implements Serializable {
 		this.id = id;
 	}
 
-	public Client getClientDataModel() {
-		return clientDataModel;
+	public User getUser() {
+		return user;
 	}
 
-	public void setClientDataModel(Client clientDataModel) {
-		this.clientDataModel = clientDataModel;
+	public void setClientDataModel(User user) {
+		this.user = user;
 	}
 
 	public IssueType getTypeDataModel() {
