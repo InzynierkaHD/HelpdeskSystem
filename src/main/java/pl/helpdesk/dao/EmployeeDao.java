@@ -1,46 +1,29 @@
 package pl.helpdesk.dao;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Employee;
+import pl.helpdesk.entity.User;
 
-
+@Transactional
 public class EmployeeDao extends GenericDao<Employee,Integer> implements IEmployeeDao{
-	/*
-	private EntityManagerFactory entityMF =  Persistence.createEntityManagerFactory("baza");
-    private EntityManager entityM =entityMF.createEntityManager();
-    private CriteriaBuilder builder = entityM.getCriteriaBuilder();
-    private CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
-    private Root <Employee> employee=criteriaQuery.from(Employee.class);
 
-    
-	public void closeConection(){
-		 entityM.close();
-	     entityMF.close();
+	public EmployeeDao(){
+		super();
 	}
 	
-	*//**
-	 * Tworzy listę pracowników Helpdesku.
-	 * 
-	 * @return Lista pracowników.
-	 *//*
-    public List <Employee> createEmployeeList(){
-    	
-    	criteriaQuery.select(employee);
-		
-		TypedQuery<Employee> query=entityM.createQuery(criteriaQuery);
-		
-		List <Employee> employees=query.getResultList();
-		return employees;
-    }*/
+	@Override
+	public Boolean isEmployee(User user) {
+		if(!sessionFactory.getCurrentSession().createCriteria(Employee.class)
+			.add(Restrictions.eq("userDataModel", user)).list().isEmpty()){
+			System.out.println("Pracownik");
+			return true;
+		}
+		else
+			System.out.println("NIE PRACOWNIK");
+			return false;
+	}
 }
 

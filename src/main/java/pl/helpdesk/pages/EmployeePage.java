@@ -36,10 +36,7 @@ public class EmployeePage extends WebPage{
 					setResponsePage(LoginPage.class); 
 				}
 			};
-			
 			add(form);
-
-			
 			form.add(logOut);
 		}
 

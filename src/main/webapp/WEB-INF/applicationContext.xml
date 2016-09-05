@@ -44,4 +44,7 @@
     <bean id="priorityDao" class="pl.helpdesk.dao.PriorityDao" parent="genericDao"></bean>
     <bean id="companyProductDao" class="pl.helpdesk.dao.CompanyProductDao" parent="genericDao"></bean>
     <bean id="employeeDao" class="pl.helpdesk.dao.EmployeeDao" parent="genericDao"></bean>
+    <bean id="adminDao" class="pl.helpdesk.dao.AdminDao" parent="genericDao"></bean>
+    <bean id="agentDao" class="pl.helpdesk.dao.AgentDao" parent="genericDao"></bean>
+    <bean id="clientDao" class="pl.helpdesk.dao.ClientDao" parent="genericDao"></bean>
 </beans>
