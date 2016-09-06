@@ -77,9 +77,10 @@ color:black;
 	font-family: 'Josefin Sans', sans-serif;
 	padding-left:9%;
     padding-right:2%;
+	font-size:20px;
     line-height:40px;
     margin-top:10px;
-    background-color: #3b5998;
+    background-color: #808080;
     color:white;
 }
 
