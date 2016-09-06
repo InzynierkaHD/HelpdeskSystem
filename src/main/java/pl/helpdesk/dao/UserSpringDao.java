@@ -20,10 +20,7 @@ import pl.helpdesk.passwordHash.HashPassword;
  *
  */
 @Transactional
-public class UserSpringDao implements IUserDao {
-
-	@Resource
-	SessionFactory sessionFactory;
+public class UserSpringDao extends GenericDao<User,Integer> implements IUserDao{
 
 	@Override
 	public void saveUser(User user) {
@@ -43,5 +40,7 @@ public class UserSpringDao implements IUserDao {
 				.add(Restrictions.eq("login", login)).add(Restrictions.eq("haslo", HashPassword.PasswordHash(password))).uniqueResult();
 		
 	}
+	
+	
 
 }

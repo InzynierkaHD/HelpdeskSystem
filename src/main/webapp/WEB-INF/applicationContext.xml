@@ -47,4 +47,5 @@
     <bean id="adminDao" class="pl.helpdesk.dao.AdminDao" parent="genericDao"></bean>
     <bean id="agentDao" class="pl.helpdesk.dao.AgentDao" parent="genericDao"></bean>
     <bean id="clientDao" class="pl.helpdesk.dao.ClientDao" parent="genericDao"></bean>
+    <bean id="loggingHistoryDao" class="pl.helpdesk.dao.LoggingHistoryDao" parent="genericDao"></bean>
 </beans>

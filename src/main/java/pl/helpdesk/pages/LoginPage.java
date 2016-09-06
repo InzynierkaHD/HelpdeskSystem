@@ -1,6 +1,7 @@
 package pl.helpdesk.pages;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -15,9 +16,10 @@ import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.ILoggingHistoryDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.entity.LoggingHistory;
 import pl.helpdesk.entity.User;
-import pl.helpdesk.passwordHash.HashPassword;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class LoginPage extends WebPage {
@@ -41,6 +43,9 @@ public class LoginPage extends WebPage {
 	@SpringBean
 	private IClientDao clientDao;
 
+	@SpringBean
+	private ILoggingHistoryDao loggingHistoryDao;
+	
 	private User userDataModel = new User();
 
 	public LoginPage() {
@@ -69,14 +74,19 @@ public class LoginPage extends WebPage {
 
 				super.onSubmit();
 				User findedUser=null;
+				LoggingHistory loggingHistory=new LoggingHistory();
 				try {
 					findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(), userDataModel.getHaslo());
 				} catch (HibernateException | NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(findedUser != null)
-				{
+				if(findedUser != null){
+					Date date=new Date();
+					loggingHistory.setDataLogowania(date);
+					loggingHistory.setUserDataModel(findedUser);
+					loggingHistoryDao.save(loggingHistory);
+					findedUser.setOst_logowanie(date);
+					userSpring.update(findedUser);
 					ApplicationSession.getInstance().setUser(findedUser);
 					if(adminDao.isAdmin(findedUser)){
 						setResponsePage(AdminFinalPage.class);

@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.hibernate.HibernateException;
 
+import pl.helpdesk.entity.Priority;
 import pl.helpdesk.entity.User;
 
 /**
@@ -12,7 +13,7 @@ import pl.helpdesk.entity.User;
  * @author Krzysiek
  *
  */
-public interface IUserDao {
+public interface IUserDao extends IGenericDao<User,Integer> {
 	/**
 	 * Metoda zapisująca usera w bazie danych
 	 * 
