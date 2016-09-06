@@ -73,10 +73,9 @@ color:black;
 
 #cytat{
 	font-family: 'Josefin Sans', sans-serif;
-	padding-left:2%;
+	padding-left:9%;
     padding-right:2%;
     line-height:40px;
-    text-align:center;
     margin-top:10px;
     background-color: #181629;
     color:white;
@@ -110,19 +109,5 @@ input[type="password"] {
     padding-bottom:2%;
     min-height: 300px;
 	text-align:justify;
-}
-
-
-.przycisk{
-    font-family: 'Josefin Sans', sans-serif;
-    color: white;
-    font-size:20px;
-    height: 50px;
-    width: 200px;
-    background-color: #181629;
-    border:none;
-}
-.przycisk:hover{
-    cursor: pointer;
-	background-color: #181629;
+	font-size:17px;
 }

@@ -11,6 +11,7 @@ and open the template in the editor.
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="logowanie.css" type="text/css">
+<link rel="stylesheet" href="komponenty.css" type="text/css">
 	<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -27,7 +28,7 @@ and open the template in the editor.
  <div class="container-fluid">
 	<header class="row" id="gora">
 		<div id="tytul" class="col-sm-7">
-			<b>Help Desk</b>
+			<b><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> &nbsp;  &nbsp;  &nbsp;Help Desk </b>
 		</div>
 	
 		<div class="col-sm-5">
@@ -50,7 +51,7 @@ and open the template in the editor.
 	<div style="clear: both"></div>
 	
     <div class="row">
-		<div class="col-sm-7" id="logowanie">
+		<div class="col-sm-5" id="logowanie">
 			<form wicket:id="form">
 				<br /> Login <br /> <input type="text" wicket:id="login" /><br />
 				<br /> Hasło<br /> <input type="password" wicket:id="haslo" /><br />
@@ -60,7 +61,7 @@ and open the template in the editor.
 			<span wicket:id="message" style="color: #B04862;"></span>
 			<span wicket:id="blocked" style="color: #B04862;"></span>
 		</div>
-		<div class="col-sm-5" id="informacje">
+		<div class="col-sm-7" id="informacje">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse laoreet pharetra turpis tincidunt commodo. Donec ornare malesuada metus, non condimentum leo consequat sed. Sed viverra enim sed justo euismod gravida. In hac habitasse platea dictumst. Etiam ac nisl sed justo viverra euismod vel ut arcu. In sed velit in massa porttitor egestas nec vel augue. Praesent congue venenatis leo, sit amet aliquam felis.</p>
 			<p>Sed ultricies, ex sit amet consectetur iaculis, nunc augue fermentum velit, vitae finibus est nunc vel massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien sapien, auctor pulvinar commodo vel, malesuada quis nisi. Vivamus viverra dignissim sapien, ut convallis leo condimentum a. Nam ornare placerat sem, eget efficitur dui semper euismod. Etiam posuere urna sit amet justo convallis convallis id auctor felis. Nam eget iaculis mi. Donec auctor erat eget felis molestie, sed tristique nisl tempor. Donec tempus, augue et vehicula faucibus, urna augue aliquam magna, a volutpat ipsum nibh ac nulla. Phasellus laoreet sapien et elit tincidunt sollicitudin.</p>
 		</div>
