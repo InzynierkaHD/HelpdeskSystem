@@ -35,12 +35,13 @@ background-repeat: no-repeat;
 
 #tytul_strony{
 	font-family: 'Josefin Sans', sans-serif;
-	padding-left:9%;
+	padding-left:7%;
     padding-right:2%;
+	font-size:20px;
     line-height:40px;
-    font-size: 20px;
     margin-top:10px;
-    margin-bottom:10px;
-    background-color: #808080;
-    color:white;
+	font-weight: bold;
+	border-bottom-style: solid;
+	margin-bottom:3%;
 }
+
