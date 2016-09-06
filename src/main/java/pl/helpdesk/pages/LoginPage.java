@@ -1,5 +1,7 @@
 package pl.helpdesk.pages;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -7,6 +9,7 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.hibernate.HibernateException;
 
 import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
@@ -14,6 +17,7 @@ import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.entity.User;
+import pl.helpdesk.passwordHash.HashPassword;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class LoginPage extends WebPage {
@@ -52,6 +56,7 @@ public class LoginPage extends WebPage {
 		userBlocked.setVisible(Boolean.FALSE);
 		
 		
+		
 
 		Form<?> form = new Form<Void>("form") {
 			/**
@@ -63,7 +68,13 @@ public class LoginPage extends WebPage {
 			public void onSubmit() {
 
 				super.onSubmit();
-				User findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(), userDataModel.getHaslo());
+				User findedUser=null;
+				try {
+					findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(), userDataModel.getHaslo());
+				} catch (HibernateException | NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if(findedUser != null)
 				{
 					ApplicationSession.getInstance().setUser(findedUser);

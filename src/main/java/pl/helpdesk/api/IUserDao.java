@@ -1,5 +1,9 @@
 package pl.helpdesk.api;
 
+import java.security.NoSuchAlgorithmException;
+
+import org.hibernate.HibernateException;
+
 import pl.helpdesk.entity.User;
 
 /**
@@ -33,5 +37,5 @@ public interface IUserDao {
 	 * Haslo użytkownika
 	 * @return
 	 */
-	public User findUserByLoginAndPassword(String login, String password);
+	public User findUserByLoginAndPassword(String login, String password) throws HibernateException, NoSuchAlgorithmException;
 }
