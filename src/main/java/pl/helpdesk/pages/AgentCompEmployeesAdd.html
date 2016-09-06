@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:extend>
+	<h2>Wpisz poprawne dane, aby dodać pracownika:</h2>
+
+			<form wicket:id="creating">
+				<table>
+					<tr>
+						<td>Imię:</td>
+						<td><input type="text" size="30" wicket:id="imie" /></td>
+						<td><font color="B04862"><b><span wicket:id="badname"></span></b></font></td>
+					</tr>
+					<tr>
+						<td>Nazwisko:</td>
+						<td><input type="text" size="30" wicket:id="nazwisko" /></td>
+						<td><font color="B04862"><b><span wicket:id="badsurname"></span></b></font></td>
+					</tr>
+					<tr>
+						<td>E-mail:</td>
+						<td><input type="text" size="30" wicket:id="email" /></td>
+						<td><font color="B04862"><b><span wicket:id="emailExist"></span><span style="color: B04862"
+							wicket:id="bademail"></span></b></font></td>
+					</tr>
+					<tr>
+						<td>Login:</td>
+						<td><input type="text" size="30" wicket:id="login" /></td>
+						<td><font color="B04862"><b><span wicket:id="userExist"></span><span
+							  wicket:id="loginlength"></span></b></font></td>
+					</tr>
+					<tr>
+						<td>Hasło:</td>
+						<td><input type="password" size="30" wicket:id="haslo" /></td>
+						<td><font color="B04862"><b><span wicket:id="passlength"></span></b></font></td>
+					</tr>
+				</table>
+				<input type="submit" class="ukryj" id="ukryj" value="Utwórz" />
+			</form>
+			<br /> <font size="6"><span wicket:id="przeszlo"></span></font>
+
+		
+	<div style="clear: both"></div>
+</wicket:extend>
+</body>
+</html>

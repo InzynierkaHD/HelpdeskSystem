@@ -39,4 +39,9 @@ public interface IUserDao extends IGenericDao<User,Integer> {
 	 * @return
 	 */
 	public User findUserByLoginAndPassword(String login, String password) throws HibernateException, NoSuchAlgorithmException;
+	
+	public boolean emailExist(String email);
+	
+	public boolean loginExist(String login);
+	
 }

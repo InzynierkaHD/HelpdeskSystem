@@ -51,7 +51,21 @@ public class User implements Serializable{
 	@Column(name="Czy_usuniety", nullable=false)
 	private Boolean czy_usuniety;
 
+	public User(){
+		super();
+	}
 	
+	public User(String login, String haslo, String imie, String nazwisko, String email, Boolean czy_blokowany,
+			Boolean czy_usuniety) {
+		super();
+		this.login = login;
+		this.haslo = haslo;
+		this.imie = imie;
+		this.nazwisko = nazwisko;
+		this.email = email;
+		this.czy_blokowany = czy_blokowany;
+		this.czy_usuniety = czy_usuniety;
+	}
 	/**
 	 * @return the id
 	 */

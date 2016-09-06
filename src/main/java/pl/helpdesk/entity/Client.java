@@ -36,6 +36,17 @@ public class Client implements Serializable{
 		@JoinColumn(name = "Id_przedstawiciela", columnDefinition="INTEGER(5) NOT NULL")
 		private Agent agentDataModel;
 
+		public Client(){
+			super();
+		}
+		
+		public Client(User userDataModel, Company companyDataModel, Agent agentDataModel) {
+			super();
+			this.userDataModel = userDataModel;
+			this.companyDataModel = companyDataModel;
+			this.agentDataModel = agentDataModel;
+		}
+
 		public int getId() {
 			return id;
 		}

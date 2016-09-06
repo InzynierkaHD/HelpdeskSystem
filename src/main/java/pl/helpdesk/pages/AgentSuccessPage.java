@@ -27,8 +27,8 @@ public abstract class AgentSuccessPage extends WebPage {
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
 		options.clear();
-		options.put("Lista współpracowników", "compEmployees");
-		options.put("Dodaj współpracownika", "compEmployees");
+		options.put("Lista współpracowników", "compEmployeesList");
+		options.put("Dodaj współpracownika", "compEmployeesAdd");
 		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
 		options.clear();
 		options.put("Moj profil", "MyProfile");

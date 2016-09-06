@@ -23,4 +23,5 @@ public class ClientDao  extends GenericDao<Client,Integer> implements IClientDao
 		else
 			return false;
 	}
+	
 }
