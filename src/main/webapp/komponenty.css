@@ -9,6 +9,16 @@ and open the template in the editor.
 */
 @import url(http://fonts.googleapis.com/css?family=Josefin+Sans:400,700&subset=latin,latin-ext);
 
+
+body{
+ background-image:url("biuro.jpg");
+ font-family: 'Josefin Sans', sans-serif;
+//background-size: 100%;
+background-position: center;
+background-attachment: fixed;
+background-repeat: no-repeat;
+}
+
 .przycisk{
     font-family: 'Josefin Sans', sans-serif;
     color: white;
@@ -21,4 +31,16 @@ and open the template in the editor.
 .przycisk:hover{
     cursor: pointer;
 	background-color: #808080;
+}
+
+#tytul_strony{
+	font-family: 'Josefin Sans', sans-serif;
+	padding-left:9%;
+    padding-right:2%;
+    line-height:40px;
+    font-size: 20px;
+    margin-top:10px;
+    margin-bottom:10px;
+    background-color: #808080;
+    color:white;
 }
