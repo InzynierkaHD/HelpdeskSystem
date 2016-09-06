@@ -19,8 +19,13 @@ a {
 
 }
 
+
 a:hover {
 color:black;
+}
+
+#gora{
+	 background-color: #181629;
 }
 
 #tytul{

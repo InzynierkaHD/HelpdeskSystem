@@ -70,9 +70,9 @@ public class LoginPage extends WebPage {
 					if(adminDao.isAdmin(findedUser)){
 						setResponsePage(AdminFinalPage.class);
 					} else if (employeeDao.isEmployee(findedUser)){
-						//Panel pracownika
+						setResponsePage(EmployeeFinalPage.class);
 					} else if(agentDao.isAgent(findedUser)){
-						//Panel przedstawiciela
+						setResponsePage(AgentFinalPage.class);
 					} else if(clientDao.isClient(findedUser)){
 						setResponsePage(ClientFinalPage.class);
 					}

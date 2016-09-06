@@ -14,37 +14,30 @@ import pl.helpdesk.components.Navbar;
 
 
 
-public abstract class AdminSuccessPage extends WebPage {
+public abstract class AgentSuccessPage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
 	LinkedList<INavbarComponent> navComponent = new LinkedList<INavbarComponent>();
 	protected AlertModal alert;
 	
-	public AdminSuccessPage(PageParameters parameters){
+	public AgentSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Lista pracowników", "employeeList");
-		options.put("Dodaj pracownika", "employeeAdd");
-		INavbarComponent pracownicy = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Pracownicy",
+		options.put("Moje zgłoszenia", "MyIssues");
+		options.put("Historia", "Historia");
+		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
 		options.clear();
-		options.put("Lista firm", "companyList");
-		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);
+		options.put("Lista współpracowników", "compEmployees");
+		options.put("Dodaj współpracownika", "compEmployees");
+		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
 		options.clear();
-		options.put("Moj Profil", "MyProfile");
+		options.put("Moj profil", "MyProfile");
 		options.put("Edytuj", "Edit");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
-		options.clear();
-		options.put("Statystyki pracowników", "employeeStats");
-		options.put("Statystyki firm", "companiesStats");
-		options.put("Statystyki przedstawicieli", "agentsStats");
-		options.put("Statystyki klientów", "clientsStats");
-		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> Statystyki",
-				options);
-		navComponent.add(pracownicy);
-		navComponent.add(firmy);
+		navComponent.add(zgloszenia);
+		navComponent.add(firma);
 		navComponent.add(mojProfil);
-		navComponent.add(statystyki);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
 	}
 	
