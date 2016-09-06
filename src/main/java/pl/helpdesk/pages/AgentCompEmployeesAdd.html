@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,10 +7,11 @@
 </head>
 <body>
 <wicket:extend>
+<div class="container">
 	<h2>Wpisz poprawne dane, aby dodać pracownika:</h2>
-
+	<br />
 			<form wicket:id="creating">
-				<table>
+				<table class="table-striped">
 					<tr>
 						<td>Imię:</td>
 						<td><input type="text" size="30" wicket:id="imie" /></td>
@@ -38,12 +40,11 @@
 						<td><font color="B04862"><b><span wicket:id="passlength"></span></b></font></td>
 					</tr>
 				</table>
-				<input type="submit" class="ukryj" id="ukryj" value="Utwórz" />
+				<input type="submit" class="przycisk" id="przycisk" value="Utwórz" />
 			</form>
 			<br /> <font size="6"><span wicket:id="przeszlo"></span></font>
 
-		
-	<div style="clear: both"></div>
+</div>
 </wicket:extend>
 </body>
 </html>

@@ -20,23 +20,21 @@ import pl.helpdesk.passwordHash.HashPassword;
 import pl.helpdesk.userSession.ApplicationSession;
 import pl.helpdesk.validation.Validation;
 
-public class AgentCompEmployeesAdd extends AgentSuccessPage{
+public class AgentCompEmployeesAdd extends AgentSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
 	@SpringBean
 	private IUserDao userSpring;
-	
+
 	@SpringBean
 	private IAgentDao agentDao;
-	
+
 	@SpringBean
 	private IClientDao clientDao;
-	
-	public AgentCompEmployeesAdd(PageParameters parameters){
-		super(parameters);
-		
 
+	public AgentCompEmployeesAdd(PageParameters parameters) {
+		super(parameters);
 
 		final Label badName = new Label("badname", "Wpisz poprawnie imię!");
 		badName.setVisible(false);
@@ -56,7 +54,7 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage{
 		przeszlo.setVisible(false);
 
 		User userDataModel = new User();
-		
+
 		final TextField<String> imie = new TextField<String>("imie", new PropertyModel<String>(userDataModel, "imie"));
 		final TextField<String> nazwisko = new TextField<String>("nazwisko",
 				new PropertyModel<String>(userDataModel, "nazwisko"));
@@ -86,13 +84,12 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage{
 				emailExist.setVisible(false);
 				przeszlo.setVisible(false);
 
-				
 				String imie2 = imie.getInput();
 				String nazwisko2 = nazwisko.getInput();
 				String email2 = email.getInput();
 				String login2 = login.getInput();
-				String haslo2=haslo.getInput();
-				String hasloHash=null;
+				String haslo2 = haslo.getInput();
+				String hasloHash = null;
 				try {
 					hasloHash = HashPassword.PasswordHash(haslo2);
 				} catch (NoSuchAlgorithmException e1) {
@@ -134,20 +131,15 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage{
 				}
 
 				if (IsOk) {
-					 User newUser=new User(login2, hasloHash, imie2, nazwisko2, email2, false,
-								false);
-					 userSpring.save(newUser);
-					 //setResponsePage(AdminPanel.class);
-					 przeszlo.setVisible(true);
-					 Agent agent=agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
-					 Client client=new Client(newUser, agent.getCompanyDataModel(), agent);
-					 clientDao.save(client);
+					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false);
+					userSpring.save(newUser);
+					przeszlo.setVisible(true);
+					Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
+					Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
+					clientDao.save(client);
 				}
 
 			}
-
-			// error.setVisible(true);
-
 		};
 
 		creating.add(badName);
@@ -166,8 +158,6 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage{
 		creating.add(email);
 		creating.add(haslo);
 
-			
-		
 	}
-	
+
 }
