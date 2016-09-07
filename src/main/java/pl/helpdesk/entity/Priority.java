@@ -50,5 +50,10 @@ public class Priority implements Serializable {
 	public void setStopienWaznosci(int stopienWaznosci) {
 		this.stopienWaznosci = stopienWaznosci;
 	}
+	
+	@Override
+	public String toString() {
+		return this.nazwa;
+	}
 
 }

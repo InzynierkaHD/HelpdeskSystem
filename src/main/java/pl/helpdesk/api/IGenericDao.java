@@ -50,4 +50,10 @@ public interface IGenericDao<T, ID> {
 	 * @return
 	 */
 	T getById(ID id);
+	
+	/**
+	 * Pobiera listę wszystkich elementów encji 
+	 * @return Zwraca listę obiektów na których wykonano metodę toString()
+	 */
+	List<String> getAllToString();
 }

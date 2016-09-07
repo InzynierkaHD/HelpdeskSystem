@@ -8,6 +8,10 @@
 <wicket:panel>
 <div class="form-group">
 <form wicket:id="addIssueForm">
+<label><wicket:message key="typZgloszenia"></wicket:message></label>
+<select wicket:id="selectIssueType" style="width:100%"></select>
+<label><wicket:message key="priorytet"></wicket:message></label>
+<select wicket:id="selectPriority" style="width:100%"></select>
   <label><wicket:message key="temat"></wicket:message></label>
   <input type="text" class="form-control" wicket:id="title"/>
    <label><wicket:message key="tresc"></wicket:message></label>

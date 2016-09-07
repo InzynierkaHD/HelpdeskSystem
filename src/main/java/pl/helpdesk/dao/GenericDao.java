@@ -3,6 +3,7 @@ package pl.helpdesk.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -60,5 +61,12 @@ public abstract class GenericDao<T,ID> implements IGenericDao<T,ID>{
 		return (T)sessionFactory.getCurrentSession().get(daoType, (Serializable) id);
 	}
 	
-	
+	@Override
+	public List<String> getAllToString() {
+		List<String> listOfString = new ArrayList<String>();
+		for(Object value : sessionFactory.getCurrentSession().createCriteria(daoType).list()){
+			listOfString.add(value.toString());
+		}
+		return listOfString;
+	}
 }
