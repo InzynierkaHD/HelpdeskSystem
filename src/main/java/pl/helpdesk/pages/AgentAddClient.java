@@ -52,6 +52,8 @@ public class AgentAddClient extends AgentSuccessPage {
 		emailExist.setVisible(false);
 		final Label przeszlo = new Label("przeszlo", "Dodano użytkownika!");
 		przeszlo.setVisible(false);
+		final Label tooMany = new Label("tooMany", "W twojej firmie jest już zarejestrowane 5 kont klienckich!");
+		tooMany.setVisible(false);
 
 		User userDataModel = new User();
 
@@ -83,7 +85,8 @@ public class AgentAddClient extends AgentSuccessPage {
 				userExist.setVisible(false);
 				emailExist.setVisible(false);
 				przeszlo.setVisible(false);
-
+				tooMany.setVisible(false);
+				
 				String imie2 = imie.getInput();
 				String nazwisko2 = nazwisko.getInput();
 				String email2 = email.getInput();
@@ -131,14 +134,18 @@ public class AgentAddClient extends AgentSuccessPage {
 				}
 
 				if (IsOk) {
-					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false);
-					userSpring.save(newUser);
-					przeszlo.setVisible(true);
 					Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
-					Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
-					clientDao.save(client);
+					if(clientDao.numberOfClients(agent.getCompanyDataModel())<5){
+						User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false);
+						userSpring.save(newUser);				
+						Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
+						clientDao.save(client);
+						przeszlo.setVisible(true);	
+					}
+					else{
+						tooMany.setVisible(true);
+					}
 				}
-
 			}
 		};
 
@@ -150,7 +157,8 @@ public class AgentAddClient extends AgentSuccessPage {
 		creating.add(userExist);
 		creating.add(emailExist);
 		creating.add(przeszlo);
-
+		creating.add(tooMany);
+		
 		add(creating);
 		creating.add(login);
 		creating.add(imie);

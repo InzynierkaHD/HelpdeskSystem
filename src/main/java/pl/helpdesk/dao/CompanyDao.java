@@ -14,9 +14,6 @@ public class CompanyDao extends GenericDao<Company,Integer> implements ICompanyD
 		super();
 	}
 	
-//	@Override
-//	public Company findCompanyByAgent(Agent agent){
-//		return (Company) sessionFactory.getCurrentSession().createCriteria(Company.class).add(Restrictions.eq("id", id)).uniqueResult();
-//	}
+
 	
 }
