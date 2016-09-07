@@ -6,8 +6,9 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
+import pl.helpdesk.pages.AdminAddEmployee;
 import pl.helpdesk.pages.AdminFinalPage;
-import pl.helpdesk.pages.AgentCompEmployeesAdd;
+import pl.helpdesk.pages.AgentAddClient;
 import pl.helpdesk.pages.AgentFinalPage;
 import pl.helpdesk.pages.ClientFinalPage;
 import pl.helpdesk.pages.EmployeeFinalPage;
@@ -43,6 +44,7 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/employeePage", EmployeeFinalPage.class);
 		mountPage("/agentPage", AgentFinalPage.class);
 		mountPage("/ClientMyIssues", MyIssue.class);
-		mountPage("/AgentClientAdd", AgentCompEmployeesAdd.class);
+		mountPage("/AgentAddClient", AgentAddClient.class);
+		mountPage("/AdminAddEmployee", AdminAddEmployee.class);
 	}
 }

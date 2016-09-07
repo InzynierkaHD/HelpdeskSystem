@@ -22,17 +22,17 @@ public abstract class AdminSuccessPage extends WebPage {
 	
 	public AdminSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Lista pracowników", "adminEmployeeList");
-		options.put("Dodaj pracownika", "adminEmployeeAdd");
+		options.put("Lista pracowników", "AdminEmployeeList");
+		options.put("Dodaj pracownika", "AdminAddEmployee");
 		INavbarComponent pracownicy = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Pracownicy",
 				options);
 		options.clear();
-		options.put("Lista firm", "adminCompanyList");
-		options.put("Dodaj firmę", "adminCompanyAdd");
+		options.put("Lista firm", "AdminCompanyList");
+		options.put("Dodaj firmę", "AdminAddCompany");
 		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);
 		options.clear();
-		options.put("Moj Profil", "adminMyProfile");
-		options.put("Edytuj", "adminEditProfile");
+		options.put("Moj Profil", "AdminMyProfile");
+		options.put("Edytuj", "AdminEditProfile");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		options.clear();

@@ -20,7 +20,7 @@ import pl.helpdesk.passwordHash.HashPassword;
 import pl.helpdesk.userSession.ApplicationSession;
 import pl.helpdesk.validation.Validation;
 
-public class AgentCompEmployeesAdd extends AgentSuccessPage {
+public class AgentAddClient extends AgentSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage {
 	@SpringBean
 	private IClientDao clientDao;
 
-	public AgentCompEmployeesAdd(PageParameters parameters) {
+	public AgentAddClient(PageParameters parameters) {
 		super(parameters);
 
 		final Label badName = new Label("badname", "Wpisz poprawnie imię!");

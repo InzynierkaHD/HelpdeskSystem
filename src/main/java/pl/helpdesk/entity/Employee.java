@@ -27,6 +27,15 @@ public class Employee implements Serializable {
 	@JoinColumn(name = "Id_uzytkownika", nullable = false)
 	private User userDataModel;
 
+	public Employee(){
+		super();
+	}
+	
+	public Employee(User userDataModel) {
+		super();
+		this.userDataModel = userDataModel;
+	}
+
 	public int getId() {
 		return id;
 	}
