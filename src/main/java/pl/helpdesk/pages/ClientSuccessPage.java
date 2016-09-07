@@ -22,14 +22,14 @@ public abstract class ClientSuccessPage extends WebPage {
 	
 	public ClientSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Moje zgłoszenia", "MyIssues");
-		options.put("Historia", "Historia");
+		options.put("Moje zgłoszenia", "ClientMyIssues");
+		options.put("Historia", "ClientHistory");
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
 		options.clear();
 		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
-		options.put("Mój profil", "MyProfile");
-		options.put("Edytuj", "Edit");
+		options.put("Mój profil", "ClientMyProfile");
+		options.put("Edytuj", "ClientEdit");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		navComponent.add(zgloszenia);

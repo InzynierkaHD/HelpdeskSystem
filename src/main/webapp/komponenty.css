@@ -13,10 +13,14 @@ and open the template in the editor.
 body{
  background-image:url("biuro.jpg");
  font-family: 'Josefin Sans', sans-serif;
-//background-size: 100%;
-background-position: center;
-background-attachment: fixed;
-background-repeat: no-repeat;
+ background-position: center;
+ background-attachment: fixed;
+ background-repeat: no-repeat;
+}
+
+#form_dodawanieUsera{
+	font-size:18px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .przycisk{

@@ -22,17 +22,17 @@ public abstract class AgentSuccessPage extends WebPage {
 	
 	public AgentSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Moje zgłoszenia", "MyIssues");
-		options.put("Historia", "Historia");
+		options.put("Moje zgłoszenia", "AgentMyIssues");
+		options.put("Historia", "AgentHistory");
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
 		options.clear();
-		options.put("Lista współpracowników", "compEmployeesList");
-		options.put("Dodaj współpracownika", "compEmployeesAdd");
+		options.put("Lista współpracowników", "AgentClientList");
+		options.put("Dodaj współpracownika", "AgentClientAdd");
 		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
 		options.clear();
-		options.put("Moj profil", "MyProfile");
-		options.put("Edytuj", "Edit");
+		options.put("Moj profil", "AgentMyProfile");
+		options.put("Edytuj", "AgentEdit");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		navComponent.add(zgloszenia);

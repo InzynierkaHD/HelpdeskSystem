@@ -22,20 +22,17 @@ public abstract class EmployeeSuccessPage extends WebPage {
 	
 	public EmployeeSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Moje zgłoszenia", "MyIssues");
-		options.put("Przeglądaj", "Przegladaj");
-		options.put("Historia", "Historia");
+		options.put("Moje zgłoszenia", "EmployeeMyIssues");
+		options.put("Przeglądaj", "EmployeeIssuesList");
+		options.put("Historia", "EmployeeHistory");
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
-//		options.clear();
-//		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
 		options.clear();
-		options.put("Mój profil", "MyProfile");
-		options.put("Edytuj", "Edit");
+		options.put("Mój profil", "EmployeeMyProfile");
+		options.put("Edytuj", "EmployeeEdit");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		navComponent.add(zgloszenia);
-		//navComponent.add(firma);
 		navComponent.add(mojProfil);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
 	}

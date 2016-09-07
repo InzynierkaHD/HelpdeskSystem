@@ -42,7 +42,7 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/adminPage", AdminFinalPage.class);
 		mountPage("/employeePage", EmployeeFinalPage.class);
 		mountPage("/agentPage", AgentFinalPage.class);
-		mountPage("/MyIssues", MyIssue.class);
-		mountPage("/compEmployeesAdd", AgentCompEmployeesAdd.class);
+		mountPage("/ClientMyIssues", MyIssue.class);
+		mountPage("/AgentClientAdd", AgentCompEmployeesAdd.class);
 	}
 }

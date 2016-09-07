@@ -149,7 +149,7 @@ public class AgentCompEmployeesAdd extends AgentSuccessPage {
 		creating.add(passLength);
 		creating.add(userExist);
 		creating.add(emailExist);
-		add(przeszlo);
+		creating.add(przeszlo);
 
 		add(creating);
 		creating.add(login);
