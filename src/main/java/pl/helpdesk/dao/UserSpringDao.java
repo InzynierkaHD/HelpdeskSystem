@@ -36,8 +36,23 @@ public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao
 
 		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("login", login))
 				.add(Restrictions.eq("haslo", HashPassword.PasswordHash(password))).uniqueResult();
-
 	}
+	
+	
+	
+	@Override
+	public boolean incorrectPassword(String login, String password)
+			throws HibernateException, NoSuchAlgorithmException {
+		User user= (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();		
+		String userPass=user.getHaslo();
+		if(userPass.equals(HashPassword.PasswordHash(password))){
+			return false;
+		}
+		else
+			return true;
+	}
+	
+	
 
 	@Override
 	public boolean emailExist(String email) {
@@ -56,5 +71,22 @@ public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao
 		} else
 			return false;
 	}
+	
+	@Override
+	public void incrementBadPassowrd(String login){
+		User user=(User)sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
+		int current=user.getBadPassword();
+		user.setBadPassword(current+1);
+		update(user);
+		if(user.getBadPassword()>2){
+			user.setCzy_blokowany(true);
+			update(user);
+		}
+		update(user);
+	}
+	
+
+	
+	
 
 }

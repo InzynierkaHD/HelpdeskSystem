@@ -43,5 +43,6 @@ public interface IUserDao extends IGenericDao<User,Integer> {
 	public boolean emailExist(String email);
 	
 	public boolean loginExist(String login);
-	
+	boolean incorrectPassword(String login, String password) throws HibernateException, NoSuchAlgorithmException;
+	void incrementBadPassowrd(String login);
 }

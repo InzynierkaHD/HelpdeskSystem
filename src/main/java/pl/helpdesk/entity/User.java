@@ -41,6 +41,8 @@ public class User implements Serializable{
 	@Column(name="Email", unique=true ,columnDefinition="VARCHAR(45) NOT NULL")
 	private String email;
 	
+
+	
 	@Column(name="Ostatnie_logowanie")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ost_logowanie;
@@ -51,12 +53,15 @@ public class User implements Serializable{
 	@Column(name="Czy_usuniety", nullable=false)
 	private Boolean czy_usuniety;
 
+	@Column(name="Bledne_logowania", columnDefinition="TINYINT NOT NULL")
+	private int badPassword;
+	
 	public User(){
 		super();
 	}
 	
 	public User(String login, String haslo, String imie, String nazwisko, String email, Boolean czy_blokowany,
-			Boolean czy_usuniety) {
+			Boolean czy_usuniety, int badPassword) {
 		super();
 		this.login = login;
 		this.haslo = haslo;
@@ -65,7 +70,18 @@ public class User implements Serializable{
 		this.email = email;
 		this.czy_blokowany = czy_blokowany;
 		this.czy_usuniety = czy_usuniety;
+		this.badPassword=badPassword;
 	}
+	
+	
+	public int getBadPassword() {
+		return badPassword;
+	}
+
+	public void setBadPassword(int badPassword) {
+		this.badPassword = badPassword;
+	}
+
 	/**
 	 * @return the id
 	 */

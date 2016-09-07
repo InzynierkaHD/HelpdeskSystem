@@ -126,7 +126,7 @@ public class AdminAddEmployee extends AdminSuccessPage {
 				}
 
 				if (IsOk) {
-					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false);
+					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false, 0);
 					userSpring.save(newUser);
 					przeszlo.setVisible(true);
 					Employee employee=new Employee(newUser);
