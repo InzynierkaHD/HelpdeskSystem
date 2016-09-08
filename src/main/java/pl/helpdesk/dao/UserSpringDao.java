@@ -84,9 +84,5 @@ public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao
 		}
 		update(user);
 	}
-	
-
-	
-	
 
 }

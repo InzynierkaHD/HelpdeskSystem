@@ -25,8 +25,8 @@ public abstract class AdminSuccessPage extends WebPage {
 
 	public AdminSuccessPage(PageParameters parameters){
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Lista pracowników", "AdminEmployeeList");
 		options.put("Dodaj pracownika", "AdminAddEmployee");
+		options.put("Lista pracowników", "AdminEmployeeList");
 		INavbarComponent pracownicy = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Pracownicy",
 				options);
 		options.clear();

@@ -1,5 +1,8 @@
 package pl.helpdesk.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,12 @@ public class ClientDao  extends GenericDao<Client,Integer> implements IClientDao
 	@Override
 	public int numberOfClients(Company company){
 		return (int) sessionFactory.getCurrentSession().createCriteria(Client.class).add(Restrictions.eq("companyDataModel", company)).list().size();
+	}
+	
+	@Override
+	public List <Client> clientsFromAgent(Agent agent){
+		return (List<Client>) sessionFactory.getCurrentSession().createCriteria(Client.class)
+				.add(Restrictions.eq("agentDataModel", agent)).list();
 	}
 	
 }
