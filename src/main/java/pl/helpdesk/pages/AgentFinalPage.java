@@ -12,6 +12,7 @@ public class AgentFinalPage extends AgentSuccessPage {
 	
 
 	public AgentFinalPage(PageParameters parameters) {
+		
 		super(parameters);
 		add(new Label("username", ApplicationSession.getInstance().getUser().getImie()));
 	}

@@ -47,6 +47,8 @@ public class LoginPage extends WebPage {
 	private User userDataModel = new User();
 
 	public LoginPage() {
+		
+		if(ApplicationSession.exists()){
 		final TextField<String> login = new TextField<String>("login",
 				new PropertyModel<String>(userDataModel, "login"));
 
@@ -134,5 +136,9 @@ public class LoginPage extends WebPage {
 		add(badLogin);
 		add(userBlocked);
 		add(badPass);
+	}else{
+		setResponsePage(ClientFinalPage.class);
 	}
+	}
+		
 }
