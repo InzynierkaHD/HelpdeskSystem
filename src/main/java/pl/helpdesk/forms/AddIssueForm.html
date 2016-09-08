@@ -3,22 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 </head>
+
 <body>
 <wicket:panel>
 <div class="form-group">
 <form wicket:id="addIssueForm">
 <label><wicket:message key="typZgloszenia"></wicket:message></label>
 <select wicket:id="selectIssueType" style="width:100%"></select>
+<span id="issueTypeE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pusteZgloszenie"></wicket:message></span><br/>
 <label><wicket:message key="priorytet"></wicket:message></label>
 <select wicket:id="selectPriority" style="width:100%"></select>
+<span id="priorityE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pustyPriorytet"></wicket:message></span><br/>
   <label><wicket:message key="temat"></wicket:message></label>
   <input type="text" class="form-control" wicket:id="title"/>
+  <span id="titleE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pustyTemat"></wicket:message></span><br/>
    <label><wicket:message key="tresc"></wicket:message></label>
   <textarea class="form-control" rows="5" id="comment" wicket:id="contents"></textarea>
-  <input type="submit" class="btn btn-success" value="Dodaj zgłoszenie"/>
+  <span id="contentE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pustaTresc"></wicket:message></span><br/>
+  <input wicket:id="ajaxSubmit" type="submit" class="btn btn-success" value="Dodaj zgłoszenie"/>
   </form>
+  <div wicket:id="feedbackErrors"></div>
 </div>
+<script>
+$(document).ready(function(){
+
+    $("#issueTypeE").hide();
+    $("#priorityE").hide();
+    $("#titleE").hide();
+    $("#contentE").hide();
+});
+</script>
 </wicket:panel>
+
 </body>
 </html>

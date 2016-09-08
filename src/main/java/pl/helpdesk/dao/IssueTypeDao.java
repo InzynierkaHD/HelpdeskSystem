@@ -19,11 +19,11 @@ public class IssueTypeDao extends GenericDao<IssueType,Integer> implements IIssu
 	}
 
 	@Override
-	public Integer getIssueTypeId(String issueTypeName){
+	public IssueType getIssueTypeByName(String issueTypeName){
 		IssueType issueType=(IssueType)sessionFactory.getCurrentSession().createCriteria(IssueType.class).
 				add(Restrictions.eq("nazwa", issueTypeName))
 				.uniqueResult();
-		return issueType.getId();
+		return issueType;
 		
 	}
 	

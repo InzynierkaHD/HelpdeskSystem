@@ -37,6 +37,9 @@ public class Issue implements Serializable {
 	@Column(name = "Temat", columnDefinition = "VARCHAR(50) NOT NULL")
 	private String temat;
 
+	@Column(name = "Tresc", columnDefinition = "VARCHAR(50) NOT NULL")
+	private String tresc;
+
 	@OneToOne
 	@JoinColumn(name = "Id_priorytetu", columnDefinition = "INTEGER(2) NOT NULL")
 	private Priority prioritoryDataModel;
@@ -69,15 +72,15 @@ public class Issue implements Serializable {
 		return user;
 	}
 
-	public void setClientDataModel(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public IssueType getTypeDataModel() {
+	public IssueType getType() {
 		return typeDataModel;
 	}
 
-	public void setTypeDataModel(IssueType typeDataModel) {
+	public void setType(IssueType typeDataModel) {
 		this.typeDataModel = typeDataModel;
 	}
 
@@ -89,19 +92,19 @@ public class Issue implements Serializable {
 		this.temat = temat;
 	}
 
-	public Priority getPrioritoryDataModel() {
+	public Priority getPriority() {
 		return prioritoryDataModel;
 	}
 
-	public void setPrioritoryDataModel(Priority prioritoryDataModel) {
+	public void setPriority(Priority prioritoryDataModel) {
 		this.prioritoryDataModel = prioritoryDataModel;
 	}
 
-	public CompanyProduct getCompanyProductDataModel() {
+	public CompanyProduct getCompanyProduct() {
 		return companyProductDataModel;
 	}
 
-	public void setCompanyProductDataModel(CompanyProduct companyProductDataModel) {
+	public void setCompanyProduct(CompanyProduct companyProductDataModel) {
 		this.companyProductDataModel = companyProductDataModel;
 	}
 
@@ -121,12 +124,19 @@ public class Issue implements Serializable {
 		this.dataZakonczenia = dataZakonczenia;
 	}
 
-	public Employee getEmployeeDataModel() {
+	public Employee getEmployee() {
 		return employeeDataModel;
 	}
 
-	public void setEmployeeDataModel(Employee employeeDataModel) {
+	public void setEmployee(Employee employeeDataModel) {
 		this.employeeDataModel = employeeDataModel;
 	}
 
+	public String getTresc() {
+		return tresc;
+	}
+
+	public void setTresc(String tresc) {
+		this.tresc = tresc;
+	}
 }

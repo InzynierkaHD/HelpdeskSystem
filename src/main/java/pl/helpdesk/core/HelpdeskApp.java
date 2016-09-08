@@ -1,6 +1,7 @@
 package pl.helpdesk.core;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.bean.validation.BeanValidationConfiguration;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -38,6 +39,7 @@ public class HelpdeskApp extends WebApplication{
 	{
 		super.init();
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+		new BeanValidationConfiguration().configure(this);
 		mountPage("/Home", LoginPage.class);
 		mountPage("/userPage", ClientFinalPage.class);
 		mountPage("/adminPage", AdminFinalPage.class);
