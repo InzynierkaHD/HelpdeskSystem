@@ -48,4 +48,6 @@
     <bean id="agentDao" class="pl.helpdesk.dao.AgentDao" parent="genericDao"></bean>
     <bean id="clientDao" class="pl.helpdesk.dao.ClientDao" parent="genericDao"></bean>
     <bean id="loggingHistoryDao" class="pl.helpdesk.dao.LoggingHistoryDao" parent="genericDao"></bean>
+    <bean id="productDao" class="pl.helpdesk.dao.ProductDao" parent="genericDao"></bean>
+    <bean id="issueDao" class="pl.helpdesk.dao.IssueDao" parent="genericDao"></bean>
 </beans>

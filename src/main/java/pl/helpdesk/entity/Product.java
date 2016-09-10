@@ -61,5 +61,10 @@ public class Product implements Serializable {
 	public void setOpis(String opis) {
 		this.opis = opis;
 	}
+	
+	@Override
+	public String toString() {
+		return this.nazwa;
+	}
 
 }

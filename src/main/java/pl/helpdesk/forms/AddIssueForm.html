@@ -9,8 +9,11 @@
 
 <body>
 <wicket:panel>
-<div class="form-group">
+<div id="dodanieZgloszenia" class="form-group">
 <form wicket:id="addIssueForm">
+<label><wicket:message key="produkt"></wicket:message></label>
+<select wicket:id="selectProduct" style="width:100%"></select>
+<span id="productE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pustyProdukt"></wicket:message></span><br/>
 <label><wicket:message key="typZgloszenia"></wicket:message></label>
 <select wicket:id="selectIssueType" style="width:100%"></select>
 <span id="issueTypeE" style="background: #ff6666;width: 100%;color: white;padding: 2px;"><wicket:message key="pusteZgloszenie"></wicket:message></span><br/>
@@ -34,6 +37,7 @@ $(document).ready(function(){
     $("#priorityE").hide();
     $("#titleE").hide();
     $("#contentE").hide();
+    $("#productE").hide();
 });
 </script>
 </wicket:panel>
