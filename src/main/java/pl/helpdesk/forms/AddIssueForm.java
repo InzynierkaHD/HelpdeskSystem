@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -13,8 +15,11 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
+
 
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
@@ -41,6 +46,8 @@ public class AddIssueForm extends Panel{
 	
 	private static final long serialVersionUID = 1L;
 	//@NotNull
+	Logger log = Logger.getLogger(AddIssueForm.class.getName());
+
 	private String titleName;
 	//@NotNull
 	private String contentsName;
@@ -71,6 +78,7 @@ public class AddIssueForm extends Panel{
 	
 	public AddIssueForm(String id) {
 		super(id);
+		this.setOutputMarkupId(true);
 		final User loggedUser = ApplicationSession.getInstance().getUser();
 		if(clientDao.getClientForUser(loggedUser) != null){
 			Client adder = clientDao.getClientForUser(loggedUser);
@@ -82,24 +90,7 @@ public class AddIssueForm extends Panel{
 		}
 		title = new TextField<String>("title",new PropertyModel<String>(this, "titleName"));
 		contents = new TextArea<String>("contents", new PropertyModel<String>(this, "contentsName"));
-		Form<Void> addIssueForm = new Form<Void>("addIssueForm"){
-
-		/*	private static final long serialVersionUID = 1L;
-			protected void onSubmit() {
-				System.out.println("SUBMIT : " + titleName + " tresc:  "+ contentsName);
-				System.out.println("ID Typu : " + "Priorytet :" );
-				Issue newIssue  = new Issue();
-				newIssue.setUser(session.getUser());
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				Date date = new Date();
-				newIssue.setDataDodania(date);
-				newIssue.setPriority(priorityDao.getPriorityByName(selectedPriority));
-				newIssue.setTemat(titleName);
-				newIssue.setTresc(contentsName);
-				newIssue.setType(issueTypeDao.getIssueTypeByName(selectedIssueType));
-			};*/
-			
-		};
+		Form<Void> addIssueForm = new Form<Void>("addIssueForm");
 		AjaxSubmitLink submitLink = new AjaxSubmitLink("ajaxSubmit",addIssueForm) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
@@ -142,9 +133,10 @@ public class AddIssueForm extends Panel{
 					newIssue.setCompanyProduct(companyProductDao.findCompanyProductByProductAndCompany(productDao.findProductByName(selectedProduct), userCompany));
 					issueDao.save(newIssue);
 					target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
-					this.setOutputMarkupId(true);
-					System.out.println("SUBMIT : " + titleName + " tresc:  "+ contentsName);
-				
+					target.appendJavaScript("setTimeout(function(){"
+							+"location.reload();"
+							+"}, 2000);");
+					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 				}
 				super.onSubmit(target, form);
 			}
@@ -166,13 +158,16 @@ public class AddIssueForm extends Panel{
 
 	}
 	
+	
 	@Override
 	protected void onBeforeRender() {
-		titleName="";
-		contentsName="";
+		titleName=null;
+		contentsName=null;
+		selectedIssueType=null;
+		selectedPriority=null;
+		selectedProduct=null;
 		super.onBeforeRender();
 	}
-
 	public String getTitleName() {
 		return titleName;
 	}
