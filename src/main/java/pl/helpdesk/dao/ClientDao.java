@@ -1,5 +1,6 @@
 package pl.helpdesk.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,11 @@ public class ClientDao  extends GenericDao<Client,Integer> implements IClientDao
 		}
 		else
 			return false;
+	}
+
+	@Override
+	public Client getClientForUser(User user) {
+		return(Client)sessionFactory.getCurrentSession().createCriteria(Client.class).add(Restrictions.eq("userDataModel", user)).uniqueResult();
 	}
 	
 	@Override

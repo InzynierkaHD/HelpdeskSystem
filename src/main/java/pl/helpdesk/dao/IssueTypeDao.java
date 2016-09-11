@@ -1,5 +1,6 @@
 package pl.helpdesk.dao;
 
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.IIssueTypeDao;
@@ -17,5 +18,13 @@ public class IssueTypeDao extends GenericDao<IssueType,Integer> implements IIssu
 		super();
 	}
 
+	@Override
+	public IssueType getIssueTypeByName(String issueTypeName){
+		IssueType issueType=(IssueType)sessionFactory.getCurrentSession().createCriteria(IssueType.class).
+				add(Restrictions.eq("nazwa", issueTypeName))
+				.uniqueResult();
+		return issueType;
+		
+	}
 	
 }

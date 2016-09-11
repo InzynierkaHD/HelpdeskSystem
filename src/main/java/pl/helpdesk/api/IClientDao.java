@@ -8,4 +8,5 @@ public interface IClientDao extends IGenericDao<Client,Integer>{
 
 	public Boolean isClient(User user);
 	public int numberOfClients(Company company);
+	Client getClientForUser(User user);
 }

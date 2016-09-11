@@ -8,5 +8,5 @@ import pl.helpdesk.entity.IssueType;
  *
  */
 public interface IIssueTypeDao extends IGenericDao<IssueType,Integer> {
-
+	IssueType getIssueTypeByName(String issueTypeName);
 }

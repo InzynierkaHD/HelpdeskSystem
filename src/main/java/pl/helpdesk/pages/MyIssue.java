@@ -26,7 +26,6 @@ public class MyIssue extends ClientSuccessPage{
 		add(alert);
 		alert.setVisible(true);
 		add(addIssue = new AjaxLink<String>("addIssue"){
-
 			@Override
 			public void onClick(AjaxRequestTarget target) {
 				target.appendJavaScript("$('#myModal').modal('show');");
