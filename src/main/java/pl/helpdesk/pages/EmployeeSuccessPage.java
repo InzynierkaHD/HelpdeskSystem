@@ -3,27 +3,34 @@ package pl.helpdesk.pages;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import org.apache.wicket.markup.IMarkupCacheKeyProvider;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.ILoggingHistoryDao;
 import pl.helpdesk.api.INavbarComponent;
+import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.Dropdown;
 import pl.helpdesk.components.Navbar;
 import pl.helpdesk.userSession.ApplicationSession;
 
-
-
 public abstract class EmployeeSuccessPage extends WebPage {
+
+	@SpringBean
+	private ILoggingHistoryDao loggingHistoryDao;
+
+	@SpringBean
+	private IUserDao userDao;
 
 	private static final long serialVersionUID = 1L;
 	LinkedList<INavbarComponent> navComponent = new LinkedList<INavbarComponent>();
 	protected AlertModal alert;
-	
-	public EmployeeSuccessPage(PageParameters parameters){
+
+	public EmployeeSuccessPage(PageParameters parameters) {
 		HashMap<String, String> options = new HashMap<String, String>();
 		options.put("Moje zgłoszenia", "EmployeeMyIssues");
 		options.put("Przeglądaj", "EmployeeIssuesList");
@@ -35,7 +42,7 @@ public abstract class EmployeeSuccessPage extends WebPage {
 		options.put("Edytuj", "EmployeeEdit");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
-		
+
 		Form<?> logutForm = new Form<Void>("logutForm");
 		Button logOut = new Button("logOut") {
 
@@ -44,21 +51,18 @@ public abstract class EmployeeSuccessPage extends WebPage {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
+				loggingHistoryDao
+						.setUserLogOutDate(userDao.getUser(ApplicationSession.getInstance().getUser().getLogin()));
 				ApplicationSession.getInstance().invalidate();
 				setResponsePage(LoginPage.class);
 			}
 		};
 		add(logutForm);
 		logutForm.add(logOut);
-		
+
 		navComponent.add(zgloszenia);
 		navComponent.add(mojProfil);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
 	}
-	
-
-
-
-	
 
 }

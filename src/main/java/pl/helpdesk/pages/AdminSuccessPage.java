@@ -4,26 +4,32 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.ILoggingHistoryDao;
 import pl.helpdesk.api.INavbarComponent;
+import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.Dropdown;
 import pl.helpdesk.components.Navbar;
 import pl.helpdesk.userSession.ApplicationSession;
 
-
-
 public abstract class AdminSuccessPage extends WebPage {
+
+	@SpringBean
+	private ILoggingHistoryDao loggingHistoryDao;
+
+	@SpringBean
+	private IUserDao userDao;
 
 	private static final long serialVersionUID = 1L;
 	LinkedList<INavbarComponent> navComponent = new LinkedList<INavbarComponent>();
 	protected AlertModal alert;
 
-	public AdminSuccessPage(PageParameters parameters){
+	public AdminSuccessPage(PageParameters parameters) {
 		HashMap<String, String> options = new HashMap<String, String>();
 		options.put("Dodaj pracownika", "AdminAddEmployee");
 		options.put("Lista pracowników", "AdminEmployeeList");
@@ -45,7 +51,7 @@ public abstract class AdminSuccessPage extends WebPage {
 		options.put("Statystyki klientów", "AdminClientsStats");
 		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> Statystyki",
 				options);
-		
+
 		Form<?> logutForm = new Form<Void>("logutForm");
 		Button logOut = new Button("logOut") {
 
@@ -54,6 +60,8 @@ public abstract class AdminSuccessPage extends WebPage {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
+				loggingHistoryDao
+						.setUserLogOutDate(userDao.getUser(ApplicationSession.getInstance().getUser().getLogin()));
 				ApplicationSession.getInstance().invalidate();
 				setResponsePage(LoginPage.class);
 			}
@@ -66,7 +74,4 @@ public abstract class AdminSuccessPage extends WebPage {
 		navComponent.add(statystyki);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
 	}
-	}
-
-
-
+}

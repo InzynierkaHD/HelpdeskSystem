@@ -1,6 +1,5 @@
 package pl.helpdesk.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
