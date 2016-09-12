@@ -136,7 +136,7 @@ public class AgentAddClient extends AgentSuccessPage {
 				if (IsOk) {
 					Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
 					if(clientDao.numberOfClients(agent.getCompanyDataModel())<5){
-						User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false);
+						User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false, 0);
 						userSpring.save(newUser);				
 						Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
 						clientDao.save(client);

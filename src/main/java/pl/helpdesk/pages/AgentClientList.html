@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Lista współpracowników</div>
+		</div>
+
+		<div class="container">
+			<div class="table-responsive">
+				<table id="listaUserow" class="table table-hover">
+					<thead>
+						<tr>
+							<th>Imie</th>
+							<th>Nazwisko</th>
+							<th>E-mail</th>
+							<th>Ostatnie logowanie</th>
+							<th>Blokowany</th>
+							<th>Usunięty</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr wicket:id="listview">
+							<td><span wicket:id="imie"></span></td>
+							<td><span wicket:id="nazwisko"></span></td>
+							<td><span wicket:id="email"></span></td>
+							<td><span wicket:id="ostatnie_logowanie"></span></td>
+							<td><span wicket:id="czy_blokowany"></span></td>
+							<td><span wicket:id="czy_usuniety"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

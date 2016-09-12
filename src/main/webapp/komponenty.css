@@ -23,6 +23,21 @@ body{
     font-family: 'Josefin Sans', sans-serif;
 }
 
+#listaUserow{
+	font-size:18px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+
+#stopka_tab{
+	font-size:22px;
+	text-align:center;
+}
+
+#stopka_tab:a{
+	text-decoration: none;
+}
+
 .przycisk{
     font-family: 'Josefin Sans', sans-serif;
     font-size:20px;
@@ -49,5 +64,24 @@ body{
 	font-weight: bold;
 	border-bottom-style: solid;
 	margin-bottom:3%;
+}
+
+#wyloguj{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size:20px;
+    display: block;
+    height: 50px;
+    width: 200px;
+    border:none;
+    text-align:center;
+    background-color: rgba(0, 0, 0, 0);
+	margin-bottom:3%;
+    float:right;
+    margin-right: 5%
+}
+
+#wyloguj:hover{
+        cursor: pointer;
+		font-weight: bold;
 }
 
