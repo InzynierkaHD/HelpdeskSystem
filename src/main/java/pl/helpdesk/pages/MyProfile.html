@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Mój profil</div>
+		</div>
+		<div class="container">
+			<form wicket:id="form">
+				<div class="table-responsive">
+					<table table id="listaUserow" class="table table-hover">
+						<tbody>
+						<thead>
+							<tr>
+								<td colspan="3" id="glowa_tab"><b>Moje Dane</b></td>
+							</tr>
+						</thead>
+						<tr>
+							<td>Imię</td>
+							<td><span wicket:id="userName" class="inline-edit"></span></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Nazwisko</td>
+							<td><span wicket:id="userSurname" class="inline-edit"></span></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Login</td>
+							<td id="podpowiedz" data-toggle="tooltip" data-placement="right" title="Naciśnij dwa razy, żeby edytować"><span wicket:id="userLogin" class="inline-edit"></span></td>
+							<td><b> <font color="B04862"> <span
+										wicket:id="userExist"></span> <span wicket:id="loginlength"></span>
+								</font> <span wicket:id="loginOK"></span>
+							</b></td>
+						</tr>
+						<tr>
+							<td>E-mail</td>
+							<td id="podpowiedz" data-toggle="tooltip" data-placement="right" title="Naciśnij dwa razy, żeby edytować"><span wicket:id="userEmail" class="inline-edit"></span></td>
+							<td><b> <font color="B04862"> <span
+										wicket:id="emailExist"></span> <span wicket:id="bademail"></span>
+								</font> <span wicket:id="emaillOK"></span>
+							</b></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</wicket:extend>
+	<SCRIPT>
+	$("#podpowiedz").tooltip();
+	</SCRIPT>
+</body>
+</html>

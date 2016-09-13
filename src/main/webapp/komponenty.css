@@ -38,6 +38,15 @@ body{
 	text-decoration: none;
 }
 
+#glowa_tab{
+	font-size:24px;
+	text-align:center;
+}
+
+#stopka_tab:a{
+	text-decoration: none;
+}
+
 .przycisk{
     font-family: 'Josefin Sans', sans-serif;
     font-size:20px;

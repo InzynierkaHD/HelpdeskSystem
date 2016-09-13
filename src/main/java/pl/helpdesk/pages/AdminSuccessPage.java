@@ -40,7 +40,7 @@ public abstract class AdminSuccessPage extends WebPage {
 		options.put("Dodaj firmę", "AdminAddCompany");
 		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);
 		options.clear();
-		options.put("Moj Profil", "AdminMyProfile");
+		options.put("Moj Profil", "MyProfile");
 		options.put("Edytuj", "AdminEditProfile");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
