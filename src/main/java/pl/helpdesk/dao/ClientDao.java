@@ -33,11 +33,6 @@ public class ClientDao extends GenericDao<Client, Integer> implements IClientDao
 				.add(Restrictions.eq("userDataModel", user)).uniqueResult();
 	}
 
-	@Override
-	public int numberOfClients(Company company) {
-		return (int) sessionFactory.getCurrentSession().createCriteria(Client.class)
-				.add(Restrictions.eq("companyDataModel", company)).list().size();
-	}
 
 	@Override
 	public List<Client> clientsFromAgent(Agent agent) {

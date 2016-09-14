@@ -7,6 +7,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.entity.Client;
+import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.passwordHash.HashPassword;
 
@@ -84,5 +86,6 @@ public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao
 		}
 		update(user);
 	}
+	
 
 }

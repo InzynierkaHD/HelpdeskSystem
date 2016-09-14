@@ -19,7 +19,7 @@ public class MyProfile extends AdminSuccessPage {
 	@SpringBean
 	private IUserDao userDao;
 
-	User user;
+	private User user;
 	private String userLogin;
 	private String userEmail;
 

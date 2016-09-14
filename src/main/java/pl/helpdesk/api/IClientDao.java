@@ -26,15 +26,6 @@ public interface IClientDao extends IGenericDao<Client,Integer>{
 	 */
 	public Boolean isClient(User user);
 	
-	/**
-	 * Metoda zlicza klientów z danej firmy
-	 * 
-	 * @param company
-	 *            Firma z której zliczamy klientów 
-	 * 
-	 * @return liczba klientów konkretnej firmy
-	 */
-	public int numberOfClients(Company company);
 	
 	public Client getClientForUser(User user);
 

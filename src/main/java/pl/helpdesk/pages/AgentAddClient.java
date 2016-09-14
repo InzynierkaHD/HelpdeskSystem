@@ -1,6 +1,7 @@
 package pl.helpdesk.pages;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -86,7 +87,7 @@ public class AgentAddClient extends AgentSuccessPage {
 				emailExist.setVisible(false);
 				przeszlo.setVisible(false);
 				tooMany.setVisible(false);
-				
+
 				String imie2 = imie.getInput();
 				String nazwisko2 = nazwisko.getInput();
 				String email2 = email.getInput();
@@ -135,14 +136,21 @@ public class AgentAddClient extends AgentSuccessPage {
 
 				if (IsOk) {
 					Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
-					if(clientDao.numberOfClients(agent.getCompanyDataModel())<5){
+					int numberOfActiveClients = 0;
+					List<Client> clientsList = clientDao.clientsFromAgent(agent);
+					for (Client clientsListt : clientsList) {
+						if (clientsListt.getUserDataModel().getCzy_usuniety() == false) {
+							numberOfActiveClients++;
+						}
+					}
+					System.out.println(numberOfActiveClients);
+					if (numberOfActiveClients < 5) {
 						User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false, 0);
-						userSpring.save(newUser);				
+						userSpring.save(newUser);
 						Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
 						clientDao.save(client);
-						przeszlo.setVisible(true);	
-					}
-					else{
+						przeszlo.setVisible(true);
+					} else {
 						tooMany.setVisible(true);
 					}
 				}
@@ -158,7 +166,7 @@ public class AgentAddClient extends AgentSuccessPage {
 		creating.add(emailExist);
 		creating.add(przeszlo);
 		creating.add(tooMany);
-		
+
 		add(creating);
 		creating.add(login);
 		creating.add(imie);
