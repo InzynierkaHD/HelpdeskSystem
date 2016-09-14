@@ -1,8 +1,14 @@
 package pl.helpdesk.pages;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -31,23 +37,83 @@ public class AgentClientList extends AgentSuccessPage {
 	public AgentClientList(PageParameters parameters) {
 		super(parameters);
 
-		clientDao.clientsFromAgent(agent);
-
+		
 		ListView<?> listView = new ListView<Client>("listview", clientDao.clientsFromAgent(agent)) {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-
+			private final List<String> TYPES = Arrays
+					.asList(new String[] { "TAK ", "NIE"});
+			private String selected;
 			@Override
 			protected void populateItem(ListItem<Client> item) {
-				Client client = (Client) item.getModelObject();
+				final Client client = (Client) item.getModelObject();
 				item.add(new Label("imie", client.getUserDataModel().getImie()));
 				item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));
 				item.add(new Label("email", client.getUserDataModel().getEmail()));
 				item.add(new Label("ostatnie_logowanie", client.getUserDataModel().getOst_logowanie()));
-				item.add(new Label("czy_blokowany", client.getUserDataModel().getCzy_blokowany()));
-				item.add(new Label("czy_usuniety", client.getUserDataModel().getCzy_usuniety()));
+		        
+				
+				Label blokujWyswietl=new Label("blokujWyswietl", new AbstractReadOnlyModel<String>(){
+		            /**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+		            public String getObject()
+		            {
+		        		if(client.getUserDataModel().getCzy_blokowany()){
+		        			return "Odblokuj";
+		        		} else{
+		        			return "Zablokuj";
+		        		}
+		            }
+		        });
+				
+				final Link zablokujUsera= new Link<Object>("zablokujUsera") {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+		            public void onClick(){
+		                if(client.getUserDataModel().getCzy_blokowany()){
+		                	client.getUserDataModel().setCzy_blokowany(false);
+		                	userDao.update(client.getUserDataModel());
+		                }else{
+		                	client.getUserDataModel().setCzy_blokowany(true);
+		                	userDao.update(client.getUserDataModel());
+		                }
+		            }
+		        };
+		        item.add(zablokujUsera.add(blokujWyswietl));
+		        
+		        
+		        
+		        Label usunWyswietl=new Label("usunWyswietl", "Usuń");
+				Label Usuniety=new Label("czyUsuniety", "Usunięty");
+				Usuniety.setVisible(false);
+				
+				final Link usunUsera= new Link<Object>("usunUsera") {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+		            public void onClick(){
+		                	client.getUserDataModel().setCzy_usuniety(true);
+		                	userDao.update(client.getUserDataModel());
+		            }
+		        };
+		        usunUsera.setVisible(false);
+		        item.add(usunUsera.add(usunWyswietl));
+		        item.add(Usuniety);
+		        if(client.getUserDataModel().getCzy_usuniety()){
+		        	Usuniety.setVisible(true);
+		        } else{
+		        	 usunUsera.setVisible(true);
+		        }
+		        
 			}
 		};
 
