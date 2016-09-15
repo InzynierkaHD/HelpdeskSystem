@@ -45,12 +45,13 @@ public class EditPassword extends Panel {
 		badPassword.setVisible(false);
 		passLength.setVisible(false);
 		badSecoundPassword.setVisible(false);
+		passwordChanged.setVisible(false);
 
-		//final User userDataModel = new User();
+		final User newUser = userDao.getById(ApplicationSession.getInstance().getUser().getId());
 		
-		final PasswordTextField stareHaslo = new PasswordTextField("stareHaslo");
-		final PasswordTextField noweHaslo = new PasswordTextField("noweHaslo");
-		final PasswordTextField potwierdzHaslo = new PasswordTextField("potwierdzHaslo");
+		final PasswordTextField stareHaslo = new PasswordTextField("stareHaslo", new PropertyModel<String>(user, "haslo"));
+		final PasswordTextField noweHaslo = new PasswordTextField("noweHaslo", new PropertyModel<String>(newUser, "haslo"));
+		final PasswordTextField potwierdzHaslo = new PasswordTextField("potwierdzHaslo", new PropertyModel<String>(newUser, "haslo"));
 		
 		Form<?> changePassword = new Form("changePassword") {
 		private static final long serialVersionUID = 1L;
@@ -62,7 +63,7 @@ public class EditPassword extends Panel {
 			passLength.setVisible(false);
 			badSecoundPassword.setVisible(false);
 			passwordChanged.setVisible(false);
-			
+			//String hasloo=stareHaslo.getInput();
 			String hasloStare = null;
 			String hasloNowe = null;
 			String hasloPotwierdz = null;
@@ -73,10 +74,12 @@ public class EditPassword extends Panel {
 			} catch (NoSuchAlgorithmException e1) {
 				e1.printStackTrace();
 			}
-			if (!hasloStare.equals(user.getHaslo())) {
+			if (!hasloStare.equals(userPassword)) {
+				System.out.println(hasloStare);
+				System.out.println(userPassword);
 				badPassword.setVisible(true);
 			}
-			else if(hasloNowe.length() < 4 || hasloNowe.length() > 15 || hasloNowe.isEmpty()){
+			else if(noweHaslo.getInput().length() < 4 ||noweHaslo.getInput().length() > 15){
 				passLength.setVisible(true);
 			}else if(!hasloPotwierdz.equals(hasloNowe)){
 				badSecoundPassword.setVisible(true);
@@ -87,6 +90,16 @@ public class EditPassword extends Panel {
 			}
 		}
 		};
+		add(changePassword);
+		changePassword.add(stareHaslo);
+		changePassword.add(noweHaslo);
+		changePassword.add(potwierdzHaslo);
+		
+		changePassword.add(passLength);
+		changePassword.add(badPassword);
+		changePassword.add(badSecoundPassword);
+		changePassword.add(passwordChanged);
+		
 		addComponents();
 	}
 
