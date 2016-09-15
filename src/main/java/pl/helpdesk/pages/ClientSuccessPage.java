@@ -37,8 +37,7 @@ public abstract class ClientSuccessPage extends WebPage {
 				options);
 		options.clear();
 		INavbarComponent firma = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firma", options);
-		options.put("Mój profil", "ClientMyProfile");
-		options.put("Edytuj", "ClientEdit");
+		options.put("Edycja", "ClientMyProfile");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 

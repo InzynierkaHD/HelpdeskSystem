@@ -38,8 +38,7 @@ public abstract class EmployeeSuccessPage extends WebPage {
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
 		options.clear();
-		options.put("Mój profil", "EmployeeMyProfile");
-		options.put("Edytuj", "EmployeeEdit");
+		options.put("Edycja", "EmployeeMyProfile");
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 
