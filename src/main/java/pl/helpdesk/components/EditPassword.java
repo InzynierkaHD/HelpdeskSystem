@@ -27,6 +27,11 @@ public class EditPassword extends Panel {
 	final Label badSecoundPassword;
 	final Label passwordChanged;
 
+	final Form<?> changePassword;
+	
+	final PasswordTextField stareHaslo;
+	final PasswordTextField noweHaslo;
+	final PasswordTextField potwierdzHaslo;
 	private static final long serialVersionUID = 1L;
 
 	public EditPassword(String id) {
@@ -49,11 +54,12 @@ public class EditPassword extends Panel {
 
 		final User newUser = userDao.getById(ApplicationSession.getInstance().getUser().getId());
 		
-		final PasswordTextField stareHaslo = new PasswordTextField("stareHaslo", new PropertyModel<String>(user, "haslo"));
-		final PasswordTextField noweHaslo = new PasswordTextField("noweHaslo", new PropertyModel<String>(newUser, "haslo"));
-		final PasswordTextField potwierdzHaslo = new PasswordTextField("potwierdzHaslo", new PropertyModel<String>(newUser, "haslo"));
+		stareHaslo= new PasswordTextField("stareHaslo", new PropertyModel<String>(user, "haslo"));
+		noweHaslo = new PasswordTextField("noweHaslo", new PropertyModel<String>(newUser, "haslo"));
+		potwierdzHaslo = new PasswordTextField("potwierdzHaslo", new PropertyModel<String>(newUser, "haslo"));
 		
-		Form<?> changePassword = new Form("changePassword") {
+		
+		changePassword = new Form<Object>("changePassword") {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -63,7 +69,6 @@ public class EditPassword extends Panel {
 			passLength.setVisible(false);
 			badSecoundPassword.setVisible(false);
 			passwordChanged.setVisible(false);
-			//String hasloo=stareHaslo.getInput();
 			String hasloStare = null;
 			String hasloNowe = null;
 			String hasloPotwierdz = null;
@@ -90,7 +95,15 @@ public class EditPassword extends Panel {
 			}
 		}
 		};
+		
+		addComponents();
+	}
+
+	
+
+	private void addComponents() {
 		add(changePassword);
+		
 		changePassword.add(stareHaslo);
 		changePassword.add(noweHaslo);
 		changePassword.add(potwierdzHaslo);
@@ -100,12 +113,5 @@ public class EditPassword extends Panel {
 		changePassword.add(badSecoundPassword);
 		changePassword.add(passwordChanged);
 		
-		addComponents();
-	}
-
-	
-
-	private void addComponents() {
-	
 	}
 }

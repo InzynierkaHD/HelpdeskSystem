@@ -5,11 +5,11 @@
 				<tbody>
 				<thead>
 					<tr>
-						<td colspan="3" id="glowa_tab"><b>Moje Dane</b></td>
+						<td colspan="3" id="glowa_tab"><b>Edycja Danych</b></td>
 					</tr>
 				</thead>
 				<tr>
-					<td>ImiÄ™</td>
+					<td>Imiê</td>
 					<td><span wicket:id="userName" class="inline-edit"></span></td>
 					<td></td>
 				</tr>
@@ -20,9 +20,9 @@
 				</tr>
 				<tr>
 					<td>Login</td>
-					<td id="podpowiedz" data-toggle="tooltip" data-placement="right"
-						title="NaciÅ›nij dwa razy, Å¼eby edytowaÄ‡"><span
-						wicket:id="userLogin" class="inline-edit"></span></td>
+					<td><span
+						  id="podpowiedz" data-toggle="tooltip" data-placement="left"
+						title="Naciœnij dwa razy, ¿eby edytowaæ" wicket:id="userLogin" class="inline-edit"></span>&nbsp;<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </td>
 					<td><b> <font color="B04862"> <span
 								wicket:id="userExist"></span> <span wicket:id="loginlength"></span>
 						</font> <span wicket:id="loginOK"></span>
@@ -30,9 +30,9 @@
 				</tr>
 				<tr>
 					<td>E-mail</td>
-					<td id="podpowiedz" data-toggle="tooltip" data-placement="right"
-						title="NaciÅ›nij dwa razy, Å¼eby edytowaÄ‡"><span
-						wicket:id="userEmail" class="inline-edit"></span></td>
+					<td><span id="podpowiedz2" data-toggle="tooltip" data-placement="left"
+						title="Naciœnij dwa razy, ¿eby edytowaæ"
+						wicket:id="userEmail" class="inline-edit"></span>&nbsp;<span class="glyphicon glyphicon-edit" aria-hidden="true"></span></td>
 					<td><b> <font color="B04862"> <span
 								wicket:id="emailExist"></span> <span wicket:id="bademail"></span>
 						</font> <span wicket:id="emaillOK"></span>
@@ -42,4 +42,10 @@
 			</table>
 		</div>
 	</form>
+		<SCRIPT>
+	$("#podpowiedz").tooltip();
+	</SCRIPT>
+			<SCRIPT>
+	$("#podpowiedz2").tooltip();
+	</SCRIPT>
 </wicket:panel>

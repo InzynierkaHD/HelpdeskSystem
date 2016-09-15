@@ -2,6 +2,7 @@ package pl.helpdesk.pages;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import pl.helpdesk.components.EditPassword;
 import pl.helpdesk.components.EditProfile;
 
 public class AgentMyProfile extends AgentSuccessPage {
@@ -11,6 +12,7 @@ public class AgentMyProfile extends AgentSuccessPage {
 	public AgentMyProfile(PageParameters parameters) {
 		super(parameters);
 		add(new EditProfile("panel"));
+		add(new EditPassword("zmianaHasla"));
 	}
 
 }
