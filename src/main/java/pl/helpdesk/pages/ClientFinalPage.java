@@ -19,7 +19,6 @@ public class ClientFinalPage extends ClientSuccessPage {
 
 	public ClientFinalPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("username", ApplicationSession.getInstance().getUser().getImie()));
 		
 	}
 }

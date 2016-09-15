@@ -81,7 +81,10 @@ public class LoginPage extends WebPage {
 				badPass.setVisible(Boolean.FALSE);
 				badLogin.setVisible(Boolean.FALSE);
 
-				if (userSpring.getUser(userDataModel.getLogin()) != null) {
+				if (userSpring.getUser(userDataModel.getLogin()) == null) {
+					System.out.println("Nie ma takiego usera");
+					badLogin.setVisible(Boolean.TRUE);
+				} else {
 					boolean badPassword = false;
 					try {
 						badPassword = userSpring.incorrectPassword(userDataModel.getLogin(), userDataModel.getHaslo());
@@ -129,9 +132,6 @@ public class LoginPage extends WebPage {
 						userSpring.incrementBadPassowrd(userDataModel.getLogin());
 						badPass.setVisible(Boolean.TRUE);
 					}
-				} else {
-					System.out.println("Nie ma takiego usera");
-					badLogin.setVisible(Boolean.TRUE);
 				}
 			}
 		};

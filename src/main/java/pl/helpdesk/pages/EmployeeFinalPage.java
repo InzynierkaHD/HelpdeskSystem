@@ -13,7 +13,6 @@ public class EmployeeFinalPage extends EmployeeSuccessPage {
 
 	public EmployeeFinalPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("username", ApplicationSession.getInstance().getUser().getImie()));
 		
 	}
 }

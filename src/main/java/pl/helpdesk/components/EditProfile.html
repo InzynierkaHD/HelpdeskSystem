@@ -1,0 +1,45 @@
+<wicket:panel>
+	<form wicket:id="form">
+		<div class="table-responsive">
+			<table table id="listaUserow" class="table table-hover">
+				<tbody>
+				<thead>
+					<tr>
+						<td colspan="3" id="glowa_tab"><b>Moje Dane</b></td>
+					</tr>
+				</thead>
+				<tr>
+					<td>Imię</td>
+					<td><span wicket:id="userName" class="inline-edit"></span></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Nazwisko</td>
+					<td><span wicket:id="userSurname" class="inline-edit"></span></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Login</td>
+					<td id="podpowiedz" data-toggle="tooltip" data-placement="right"
+						title="Naciśnij dwa razy, żeby edytować"><span
+						wicket:id="userLogin" class="inline-edit"></span></td>
+					<td><b> <font color="B04862"> <span
+								wicket:id="userExist"></span> <span wicket:id="loginlength"></span>
+						</font> <span wicket:id="loginOK"></span>
+					</b></td>
+				</tr>
+				<tr>
+					<td>E-mail</td>
+					<td id="podpowiedz" data-toggle="tooltip" data-placement="right"
+						title="Naciśnij dwa razy, żeby edytować"><span
+						wicket:id="userEmail" class="inline-edit"></span></td>
+					<td><b> <font color="B04862"> <span
+								wicket:id="emailExist"></span> <span wicket:id="bademail"></span>
+						</font> <span wicket:id="emaillOK"></span>
+					</b></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+</wicket:panel>

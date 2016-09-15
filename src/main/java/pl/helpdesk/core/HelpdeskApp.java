@@ -10,14 +10,17 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import pl.helpdesk.pages.AdminAddEmployee;
 import pl.helpdesk.pages.AdminEmployeeList;
 import pl.helpdesk.pages.AdminFinalPage;
+import pl.helpdesk.pages.AdminMyProfile;
 import pl.helpdesk.pages.AgentAddClient;
 import pl.helpdesk.pages.AgentClientList;
 import pl.helpdesk.pages.AgentFinalPage;
+import pl.helpdesk.pages.AgentMyProfile;
 import pl.helpdesk.pages.ClientFinalPage;
+import pl.helpdesk.pages.ClientMyProfile;
 import pl.helpdesk.pages.EmployeeFinalPage;
+import pl.helpdesk.pages.EmployeeMyProfile;
 import pl.helpdesk.pages.LoginPage;
 import pl.helpdesk.pages.MyIssue;
-import pl.helpdesk.pages.MyProfile;
 import pl.helpdesk.userSession.ApplicationSession;
 
 //Klasa startowa w niej definiujemy z jakiej klasy startujemy aplikacje
@@ -53,7 +56,10 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AdminAddEmployee", AdminAddEmployee.class);
 		mountPage("/AgentClientList", AgentClientList.class);
 		mountPage("/AdminEmployeeList", AdminEmployeeList.class);
-		mountPage("/MyProfile", MyProfile.class);
+		mountPage("/AdminMyProfile", AdminMyProfile.class);
+		mountPage("/ClientMyProfile", ClientMyProfile.class);
+		mountPage("/AgentMyProfile", AgentMyProfile.class);
+		mountPage("/EmployeeMyProfile", EmployeeMyProfile.class);
 		
 	}
 }

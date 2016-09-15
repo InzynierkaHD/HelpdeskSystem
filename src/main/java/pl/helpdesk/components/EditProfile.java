@@ -1,10 +1,10 @@
-package pl.helpdesk.pages;
+package pl.helpdesk.components;
 
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IUserDao;
@@ -12,9 +12,9 @@ import pl.helpdesk.entity.User;
 import pl.helpdesk.userSession.ApplicationSession;
 import pl.helpdesk.validation.Validation;
 
-public class MyProfile extends AdminSuccessPage {
 
-	private static final long serialVersionUID = 1L;
+public class EditProfile extends Panel{
+
 
 	@SpringBean
 	private IUserDao userDao;
@@ -30,9 +30,14 @@ public class MyProfile extends AdminSuccessPage {
 	final Label emailExist;
 	final Label emaillOK;
 	final Label loginOK;
+	
+	final Form<EditProfile> form;
+	
+	private static final long serialVersionUID = 1L;
+	
 
-	public MyProfile(PageParameters parameters) {
-		super(parameters);
+	public EditProfile(String id) {
+		super(id);
 		
 		user = userDao.getById(ApplicationSession.getInstance().getUser().getId());
 		userLogin = user.getLogin();
@@ -56,20 +61,8 @@ public class MyProfile extends AdminSuccessPage {
 		userExist.setVisible(false);
 		emailExist.setVisible(false);
 
-		Form form = new Form("form", new CompoundPropertyModel<>(this));
-		add(form);
-		form.add(new Label("userName", ApplicationSession.getInstance().getUser().getImie()));
-		form.add(new Label("userSurname", ApplicationSession.getInstance().getUser().getNazwisko()));
-		form.add(new AjaxEditableLabel<Object>("userLogin"));
-		form.add(new AjaxEditableLabel<Object>("userEmail"));
-		form.add(userExist);
-		form.add(loginLength);
-		form.add(passLength);
-		form.add(emailExist);
-		form.add(badEmail);
-		form.add(emaillOK);
-		form.add(loginOK);
-
+		form = new Form<EditProfile>("form", new CompoundPropertyModel<>(this));
+		addComponents();
 	}
 
 	public String getUserLogin() {
@@ -81,7 +74,6 @@ public class MyProfile extends AdminSuccessPage {
 		emaillOK.setVisible(false);
 		loginLength.setVisible(false);
 		loginOK.setVisible(false);
-		passLength.setVisible(false);
 		userExist.setVisible(false);
 		emailExist.setVisible(false);
 		try {
@@ -133,5 +125,21 @@ public class MyProfile extends AdminSuccessPage {
 		}
 		setResponsePage(getPage());
 	}
-
+	
+	
+	
+	private void addComponents(){
+		add(form);
+		form.add(new Label("userName", ApplicationSession.getInstance().getUser().getImie()));
+		form.add(new Label("userSurname", ApplicationSession.getInstance().getUser().getNazwisko()));
+		form.add(new AjaxEditableLabel<Object>("userLogin"));
+		form.add(new AjaxEditableLabel<Object>("userEmail"));
+		form.add(userExist);
+		form.add(loginLength);
+		form.add(emailExist);
+		form.add(badEmail);
+		form.add(emaillOK);
+		form.add(loginOK);
+		
+	}
 }

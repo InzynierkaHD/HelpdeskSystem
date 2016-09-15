@@ -13,7 +13,7 @@ public class AdminFinalPage extends AdminSuccessPage {
 
 	public AdminFinalPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("username", ApplicationSession.getInstance().getUser().getImie()));
+	
 		
 	}
 }

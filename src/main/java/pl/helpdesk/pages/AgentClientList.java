@@ -34,18 +34,17 @@ public class AgentClientList extends AgentSuccessPage {
 
 	final Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
 
+	final ListView<?> listView;
+
 	public AgentClientList(PageParameters parameters) {
 		super(parameters);
 
-		
-		ListView<?> listView = new ListView<Client>("listview", clientDao.clientsFromAgent(agent)) {
+		listView = new ListView<Client>("listview", clientDao.clientsFromAgent(agent)) {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			private final List<String> TYPES = Arrays
-					.asList(new String[] { "TAK ", "NIE"});
-			private String selected;
+
 			@Override
 			protected void populateItem(ListItem<Client> item) {
 				final Client client = (Client) item.getModelObject();
@@ -53,67 +52,64 @@ public class AgentClientList extends AgentSuccessPage {
 				item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));
 				item.add(new Label("email", client.getUserDataModel().getEmail()));
 				item.add(new Label("ostatnie_logowanie", client.getUserDataModel().getOst_logowanie()));
-		        
-				
-				Label blokujWyswietl=new Label("blokujWyswietl", new AbstractReadOnlyModel<String>(){
-		            /**
+
+				final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
+					/**
 					 * 
 					 */
 					private static final long serialVersionUID = 1L;
 
 					@Override
-		            public String getObject()
-		            {
-		        		if(client.getUserDataModel().getCzy_blokowany()){
-		        			return "Odblokuj";
-		        		} else{
-		        			return "Zablokuj";
-		        		}
-		            }
-		        });
+					public String getObject() {
+						if (client.getUserDataModel().getCzy_blokowany()) {
+							return "Odblokuj";
+						} else {
+							return "Zablokuj";
+						}
+					}
+				});
 				
-				final Link zablokujUsera= new Link<Object>("zablokujUsera") {
+				final Link zablokujUsera = new Link<Object>("zablokujUsera") {
 
 					private static final long serialVersionUID = 1L;
 
 					@Override
-		            public void onClick(){
-		                if(client.getUserDataModel().getCzy_blokowany()){
-		                	client.getUserDataModel().setCzy_blokowany(false);
-		                	userDao.update(client.getUserDataModel());
-		                }else{
-		                	client.getUserDataModel().setCzy_blokowany(true);
-		                	userDao.update(client.getUserDataModel());
-		                }
-		            }
-		        };
-		        item.add(zablokujUsera.add(blokujWyswietl));
-		        
-		        
-		        
-		        Label usunWyswietl=new Label("usunWyswietl", "Usuń");
-				Label Usuniety=new Label("czyUsuniety", "Usunięty");
+					public void onClick() {
+						if (client.getUserDataModel().getCzy_blokowany()) {
+							client.getUserDataModel().setCzy_blokowany(false);
+							userDao.update(client.getUserDataModel());
+						} else {
+							client.getUserDataModel().setCzy_blokowany(true);
+							userDao.update(client.getUserDataModel());
+						}
+					}
+				};
+				item.add(zablokujUsera.add(blokujWyswietl));
+				
+				Label usunWyswietl = new Label("usunWyswietl", "Usuń");
+				Label Usuniety = new Label("czyUsuniety", "Usunięty");
 				Usuniety.setVisible(false);
-				
-				final Link usunUsera= new Link<Object>("usunUsera") {
+
+				final Link usunUsera = new Link<Object>("usunUsera") {
 
 					private static final long serialVersionUID = 1L;
 
 					@Override
-		            public void onClick(){
-		                	client.getUserDataModel().setCzy_usuniety(true);
-		                	userDao.update(client.getUserDataModel());
-		            }
-		        };
-		        usunUsera.setVisible(false);
-		        item.add(usunUsera.add(usunWyswietl));
-		        item.add(Usuniety);
-		        if(client.getUserDataModel().getCzy_usuniety()){
-		        	Usuniety.setVisible(true);
-		        } else{
-		        	 usunUsera.setVisible(true);
-		        }
-		        
+					public void onClick() {
+						client.getUserDataModel().setCzy_usuniety(true);
+						userDao.update(client.getUserDataModel());
+					}
+				};
+				usunUsera.setVisible(false);
+				item.add(usunUsera.add(usunWyswietl));
+				item.add(Usuniety);
+				if (client.getUserDataModel().getCzy_usuniety()) {
+					zablokujUsera.setVisible(false);
+					Usuniety.setVisible(true);
+				} else {
+					usunUsera.setVisible(true);
+					zablokujUsera.setVisible(true);
+				}
 			}
 		};
 
