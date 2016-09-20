@@ -83,5 +83,11 @@ public class Company implements Serializable {
 	public void setMiejscowosc(String miejscowosc) {
 		this.miejscowosc = miejscowosc;
 	}
+	
+	@Override
+	public String toString() {
+		
+		return this.nazwa;
+	}
 
 }

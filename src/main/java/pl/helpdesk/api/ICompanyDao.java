@@ -1,6 +1,7 @@
 package pl.helpdesk.api;
 
 import pl.helpdesk.entity.Company;
+import pl.helpdesk.entity.IssueType;
 
 /**
  * Interfejs dla Firmy dao
@@ -9,7 +10,8 @@ import pl.helpdesk.entity.Company;
  *
  */
 public interface ICompanyDao extends IGenericDao<Company,Integer>{
-
+	
+	public Company getCompanyByName(String companyName);
 
 		
 }

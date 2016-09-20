@@ -23,6 +23,9 @@ public abstract class AdminSuccessPage extends WebPage {
 	private ILoggingHistoryDao loggingHistoryDao;
 
 	@SpringBean
+	private IUserDao userSpring;
+	
+	@SpringBean
 	private IUserDao userDao;
 
 	private static final long serialVersionUID = 1L;
@@ -37,7 +40,7 @@ public abstract class AdminSuccessPage extends WebPage {
 				options);
 		options.clear();
 		options.put("Lista firm", "AdminCompanyList");
-		options.put("Dodaj firmę", "AdminAddCompany");
+		options.put("Dodaj przedstawiciela", "AdminAddAgent");
 		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);
 		options.clear();
 		options.put("Edycja", "AdminMyProfile");

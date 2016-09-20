@@ -33,6 +33,18 @@ public class Agent implements Serializable{
 	@JoinColumn(name = "Id_firmy", columnDefinition="INTEGER(5) NOT NULL")
 	private Company companyDataModel;
 	
+	
+	public Agent(){
+		super();
+	}
+	
+	public Agent(User userDataModel, Company companyDataModel) {
+		super();
+		this.userDataModel = userDataModel;
+		this.companyDataModel=companyDataModel;
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
