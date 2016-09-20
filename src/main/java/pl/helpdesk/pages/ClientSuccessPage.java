@@ -3,6 +3,8 @@ package pl.helpdesk.pages;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -57,7 +59,6 @@ public abstract class ClientSuccessPage extends WebPage {
 		};
 		add(logutForm);
 		logutForm.add(logOut);
-
 		navComponent.add(zgloszenia);
 		navComponent.add(firma);
 		navComponent.add(mojProfil);

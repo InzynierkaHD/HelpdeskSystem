@@ -135,7 +135,7 @@ public class AddIssueForm extends Panel{
 					target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
 					target.appendJavaScript("setTimeout(function(){"
 							+"location.reload();"
-							+"}, 2000);");
+							+"}, 1500);");
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 				}
 				super.onSubmit(target, form);

@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.komentarzKlient{
+	width:50%;
+}
+
+.komentarzPracownik{
+	width:50%;
+	margin-left:50%;
+}

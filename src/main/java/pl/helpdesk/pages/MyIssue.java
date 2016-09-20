@@ -1,14 +1,21 @@
 package pl.helpdesk.pages;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
+import pl.helpdesk.components.table.Tabelka;
+import pl.helpdesk.components.table.TableCol;
+import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
+import pl.helpdesk.panels.IssuePanel;
 
 public class MyIssue extends ClientSuccessPage{
 
@@ -16,6 +23,9 @@ public class MyIssue extends ClientSuccessPage{
 	private AjaxLink<String> addIssue;
 	private AlertModal alert;
 	private AddIssueForm addIssueForm;
+	
+	@SpringBean
+	IIssueDao issueDao;
 	
 	public MyIssue(PageParameters parameters){
 		super(parameters);
@@ -35,6 +45,30 @@ public class MyIssue extends ClientSuccessPage{
 			
 			
 		});
+		TableCol col = new TableCol(true,"temat");
+		TableCol col2 = new TableCol(false,"prioritoryDataModel");
+		TableCol col3 = new TableCol(false,"typeDataModel");
+		TableCol col4 = new TableCol(false,"dataDodania");
+		TableCol col5 = new TableCol(false,"employeeDataModel");
+		List<TableCol> listaCol = new ArrayList<TableCol>();
+		listaCol.add(col);
+		listaCol.add(col2);
+		listaCol.add(col3);
+		listaCol.add(col4);
+		listaCol.add(col5);
+		Tabelka<Issue> myIssue = new Tabelka<Issue>("myIssues",listaCol,new String[]{"Temat","Priorytet","Typ","Data Dodania","Pracownik obsługujący"},issueDao,true){
+			@Override
+			public void rowClickEvent(AjaxRequestTarget target) {
+				System.out.println("JUPI!");
+				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");	
+				target.appendJavaScript(" $(\"#myIssuesTable\").slideUp();");
+				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
+				
+				//super.rowClickEvent();
+			}
+		};
+		add(myIssue);
+		add(new IssuePanel("issuePanel"));
 	}
 	
 }

@@ -50,4 +50,5 @@
     <bean id="loggingHistoryDao" class="pl.helpdesk.dao.LoggingHistoryDao" parent="genericDao"></bean>
     <bean id="productDao" class="pl.helpdesk.dao.ProductDao" parent="genericDao"></bean>
     <bean id="issueDao" class="pl.helpdesk.dao.IssueDao" parent="genericDao"></bean>
+    <bean id="commentDao" class="pl.helpdesk.dao.CommentDao" parent="genericDao"></bean>
 </beans>

@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.naglowek {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ce3455+0,a82842+69 */
+background: #ce3455; /* Old browsers */
+background: -moz-linear-gradient(top,  #ce3455 0%, #a82842 69%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #ce3455 0%,#a82842 69%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #ce3455 0%,#a82842 69%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce3455', endColorstr='#a82842',GradientType=0 ); /* IE6-9 */
+
+    color: oldlace;
+}
+
+.elementNaglowka{
+	text-align: center;
+}
+.komorkaTabeli{
+	text-align: center;
+}
+
+.wiersz:hover{
+	opacity: 0.7 !important;
+    background: #b30000 !important;
+    color: white !important;
+}
+
+.wiersz:nth-child(even) {background: #f5f5ef}
+.wiersz:nth-child(odd) {background: #ebebe0}
