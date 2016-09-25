@@ -3,15 +3,18 @@ package pl.helpdesk.components.table;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -52,7 +55,10 @@ public class Tabelka<T> extends Panel {
 	 * Dao do encji powyższej.
 	 */
 	private IGenericDao dao;
-
+	
+	private ListDataProvider listDataProvider;
+	
+	private List<TableCol> listOfTableColumn;
 	/**
 	 * 
 	 * @param id
@@ -75,7 +81,8 @@ public class Tabelka<T> extends Panel {
 		this.dao = dao;
 		this.listOfRows = dao.getAll();
 		this.clickableRow = clickableRow;
-		ListDataProvider listDataProvider = new ListDataProvider(listOfRows);
+		this.listOfTableColumn = listOfTableColumn;
+		listDataProvider = new ListDataProvider(listOfRows);
 		tableHead = new RepeatingView("tableHead");
 		for (String headerName : columnHeaders) {
 			tableHead.add(new Label(tableHead.newChildId(), Model.of(headerName)));
@@ -83,7 +90,48 @@ public class Tabelka<T> extends Panel {
 		add(tableHead);
 
 		dataView = new DataView<T>("rows", listDataProvider) {
+			@Override
+			protected void populateItem(Item<T> item) {
+				rowElements = new RepeatingView("dataRow");
+				entity = item.getModelObject();
+				
+				for (TableCol column : listOfTableColumn) {
+					if (column.isEditable() && !clickableRow) {
+						addColumnEditable(column.getPropertyName());
+					} else {
+						addColumnNoEditable(column.getPropertyName());
+					}
+					column.getPropertyName();
+				}
+				item.add(rowElements);
+				if(clickableRow){
+				item.add(new AjaxEventBehavior("onclick") {
 
+					private static final long serialVersionUID = 6720512493017210281L;
+
+					@Override
+					protected void onEvent(AjaxRequestTarget target) {
+
+						rowClickEvent(target,getComponent());
+					}
+
+				});
+				}
+			}
+		};
+		dataView.setItemsPerPage(3);
+		add(dataView);
+		add(new AjaxPagingNavigator("pagingNavigator", dataView));
+	}
+	
+	@Override
+	protected void onModelChanged() {
+		System.out.println("zmiana modelu w Tabelce");
+		super.onModelChanged();
+	}
+	
+	void refreshData(){
+		dataView = new DataView<T>("rows", listDataProvider) {
 			@Override
 			protected void populateItem(Item<T> item) {
 				rowElements = new RepeatingView("dataRow");
@@ -105,15 +153,13 @@ public class Tabelka<T> extends Panel {
 
 					@Override
 					protected void onEvent(AjaxRequestTarget target) {
-						rowClickEvent(target);
+						rowClickEvent(target,getComponent());
 					}
 
 				});
 				}
 			}
 		};
-
-		add(dataView);
 	}
 
 	/**
@@ -170,10 +216,15 @@ public class Tabelka<T> extends Panel {
 		response.render(cssItem);
 	}
 
+	@Override
+	protected void onRender() {
+		System.out.println("render");
+		super.onRender();
+	}
 	/**
 	 * Metoda wykonywana po kliknięciu na wierszs
 	 */
-	public void rowClickEvent(AjaxRequestTarget target) {
+	public void rowClickEvent(AjaxRequestTarget target, Component component) {
 		log.info("Kliknięto na wiersz");
 	}
 

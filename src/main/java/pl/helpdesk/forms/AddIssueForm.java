@@ -2,7 +2,9 @@ package pl.helpdesk.forms;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -29,11 +31,14 @@ import pl.helpdesk.api.IIssueTypeDao;
 import pl.helpdesk.api.IPriorityDao;
 import pl.helpdesk.api.IProductDao;
 import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.components.table.Tabelka;
+import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.entity.User;
+import pl.helpdesk.pages.MyIssue;
 import pl.helpdesk.userSession.ApplicationSession;
 
 /**
@@ -132,12 +137,15 @@ public class AddIssueForm extends Panel{
 					newIssue.setType(issueTypeDao.getIssueTypeByName(selectedIssueType));
 					newIssue.setCompanyProduct(companyProductDao.findCompanyProductByProductAndCompany(productDao.findProductByName(selectedProduct), userCompany));
 					issueDao.save(newIssue);
-					target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
+					//target.add(addIssueForm);
+					//target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
 					target.appendJavaScript("setTimeout(function(){"
 							+"location.reload();"
-							+"}, 1500);");
+							+"});");
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 				}
+				
+				
 				super.onSubmit(target, form);
 			}
 		};

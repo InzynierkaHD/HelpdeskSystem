@@ -3,8 +3,10 @@ package pl.helpdesk.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -23,6 +25,8 @@ public class MyIssue extends ClientSuccessPage{
 	private AjaxLink<String> addIssue;
 	private AlertModal alert;
 	private AddIssueForm addIssueForm;
+	private Tabelka<Issue> myIssueTable;
+	private IssuePanel issuePanel;
 	
 	@SpringBean
 	IIssueDao issueDao;
@@ -56,19 +60,39 @@ public class MyIssue extends ClientSuccessPage{
 		listaCol.add(col3);
 		listaCol.add(col4);
 		listaCol.add(col5);
-		Tabelka<Issue> myIssue = new Tabelka<Issue>("myIssues",listaCol,new String[]{"Temat","Priorytet","Typ","Data Dodania","Pracownik obsługujący"},issueDao,true){
+		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues",listaCol,new String[]{"Temat","Priorytet","Typ","Data Dodania","Pracownik obsługujący"},issueDao,true){
 			@Override
-			public void rowClickEvent(AjaxRequestTarget target) {
-				System.out.println("JUPI!");
+			public void rowClickEvent(AjaxRequestTarget target,Component component) {
+				//issuePanel.setIssue(getEntity());
+				//issuePanel.setTemat("dsa");
+				//issuePanel.setTresc("dsadas");
+				Issue clickedIssue = (Issue)component.getDefaultModel().getObject();
+				System.out.println("Wybrany issue : "+clickedIssue.getTresc());
+				//issuePanel.setTemat(clickedIssue.getTemat());
+				issuePanel.setIssue(clickedIssue);
+				//issuePanel.setDefaultModelObject(new Model<Issue>(getEntity()));
+				target.add(issuePanel);
+				System.out.println("JUPI!"+getEntity().getTemat());
 				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");	
 				target.appendJavaScript(" $(\"#myIssuesTable\").slideUp();");
 				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
 				
 				//super.rowClickEvent();
 			}
+			
 		};
-		add(myIssue);
-		add(new IssuePanel("issuePanel"));
+		issuePanel = new IssuePanel("issuePanel",myIssueTable.getEntity());
+		issuePanel.setOutputMarkupId(true);
+		this.myIssueTable = myIssueTable;
+		//myIssueTable.setOutputMarkupId(true);
+		add(myIssueTable);
+		add(issuePanel);
 	}
+	
+	
+
+
+	
+	
 	
 }

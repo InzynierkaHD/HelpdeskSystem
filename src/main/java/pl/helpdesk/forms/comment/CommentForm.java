@@ -6,22 +6,32 @@ import java.io.IOException;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import pl.helpdesk.api.ICommentDao;
+import pl.helpdesk.entity.Issue;
 
 public class CommentForm extends Panel{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Form<Void> addCommentForm;
+	private TextArea content;
 	private FileUploadField fileUploadField;
 	private Button submitButton;
+	@SpringBean
+	private ICommentDao commentDao;
 	
-	public CommentForm(String id) {
+	public CommentForm(String id, Issue issue) {
 		super(id);
 		submitButton = new Button("submit");
 		fileUploadField = new FileUploadField("fileUpload");
+		content = new TextArea("content");
 		addCommentForm = new Form<Void>("addCommentForm"){
 			@Override
 			protected void onSubmit() {

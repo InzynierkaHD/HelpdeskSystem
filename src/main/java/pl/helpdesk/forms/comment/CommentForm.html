@@ -7,6 +7,8 @@
 <body>
 <wicket:panel>
 <form wicket:id="addCommentForm">
+<label for="comment"><wicket:message key="nowyKomentarz"></wicket:message></label>
+<textarea class="form-control" rows="5" wicket:id="content"></textarea>
 <input type="file" wicket:id="fileUpload"/>
 <button wicket:id="submit"></button>
 </form>
