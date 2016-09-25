@@ -19,7 +19,7 @@ import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.IssuePanel;
 
-public class MyIssue extends ClientSuccessPage{
+public class MyIssue extends ClientSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 	private AjaxLink<String> addIssue;
@@ -27,72 +27,57 @@ public class MyIssue extends ClientSuccessPage{
 	private AddIssueForm addIssueForm;
 	private Tabelka<Issue> myIssueTable;
 	private IssuePanel issuePanel;
-	
+
 	@SpringBean
 	IIssueDao issueDao;
-	
-	public MyIssue(PageParameters parameters){
+
+	public MyIssue(PageParameters parameters) {
 		super(parameters);
 		addIssueForm = new AddIssueForm("form");
-		alert = new AlertModal("alert",new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie", new StringBuilder("<div wicket:id=\"form\"></div>"));
+		alert = new AlertModal("alert", new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie",
+				new StringBuilder("<div wicket:id=\"form\"></div>"));
 		alert.add(addIssueForm);
-		//alert.show(new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie", new StringBuilder("dziala"));
 		add(alert);
 		alert.setVisible(true);
-		add(addIssue = new AjaxLink<String>("addIssue"){
+		add(addIssue = new AjaxLink<String>("addIssue") {
 			@Override
 			public void onClick(AjaxRequestTarget target) {
 				target.appendJavaScript("$('#myModal').modal('show');");
-				
+
 			}
 
-			
-			
 		});
-		TableCol col = new TableCol(true,"temat");
-		TableCol col2 = new TableCol(false,"prioritoryDataModel");
-		TableCol col3 = new TableCol(false,"typeDataModel");
-		TableCol col4 = new TableCol(false,"dataDodania");
-		TableCol col5 = new TableCol(false,"employeeDataModel");
+		TableCol col = new TableCol(true, "temat");
+		TableCol col2 = new TableCol(false, "prioritoryDataModel");
+		TableCol col3 = new TableCol(false, "typeDataModel");
+		TableCol col4 = new TableCol(false, "dataDodania");
+		TableCol col5 = new TableCol(false, "employeeDataModel");
 		List<TableCol> listaCol = new ArrayList<TableCol>();
 		listaCol.add(col);
 		listaCol.add(col2);
 		listaCol.add(col3);
 		listaCol.add(col4);
 		listaCol.add(col5);
-		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues",listaCol,new String[]{"Temat","Priorytet","Typ","Data Dodania","Pracownik obsługujący"},issueDao,true){
+		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
+				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, issueDao, true) {
 			@Override
-			public void rowClickEvent(AjaxRequestTarget target,Component component) {
-				//issuePanel.setIssue(getEntity());
-				//issuePanel.setTemat("dsa");
-				//issuePanel.setTresc("dsadas");
-				Issue clickedIssue = (Issue)component.getDefaultModel().getObject();
-				System.out.println("Wybrany issue : "+clickedIssue.getTresc());
-				//issuePanel.setTemat(clickedIssue.getTemat());
+			public void rowClickEvent(AjaxRequestTarget target, Component component) {
+				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();
 				issuePanel.setIssue(clickedIssue);
-				//issuePanel.setDefaultModelObject(new Model<Issue>(getEntity()));
 				target.add(issuePanel);
-				System.out.println("JUPI!"+getEntity().getTemat());
-				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");	
+				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");
 				target.appendJavaScript(" $(\"#myIssuesTable\").slideUp();");
 				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
-				
-				//super.rowClickEvent();
+
+				// super.rowClickEvent();
 			}
-			
+
 		};
-		issuePanel = new IssuePanel("issuePanel",myIssueTable.getEntity());
+		issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
 		issuePanel.setOutputMarkupId(true);
 		this.myIssueTable = myIssueTable;
-		//myIssueTable.setOutputMarkupId(true);
 		add(myIssueTable);
 		add(issuePanel);
 	}
-	
-	
 
-
-	
-	
-	
 }

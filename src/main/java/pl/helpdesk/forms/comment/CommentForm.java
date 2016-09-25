@@ -16,6 +16,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import pl.helpdesk.api.ICommentDao;
 import pl.helpdesk.entity.Issue;
 
+/**
+ * Panel zawierający formularz dodania zgłoszenia
+ * 
+ * @author Krzysztof Krocz
+ *
+ */
 public class CommentForm extends Panel{
 
 	private static final long serialVersionUID = 1L;
@@ -54,6 +60,7 @@ public class CommentForm extends Panel{
 		};
 		
 		//submitButton.add(new AjaxFormSubmitBehavior(addCommentForm, "click"){});
+		addCommentForm.add(content);
 		addCommentForm.add(submitButton);
 		addCommentForm.add(fileUploadField);
 		addCommentForm.setMultiPart(true);

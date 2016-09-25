@@ -139,9 +139,10 @@ public class AddIssueForm extends Panel{
 					issueDao.save(newIssue);
 					//target.add(addIssueForm);
 					//target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
-					target.appendJavaScript("setTimeout(function(){"
+					/*target.appendJavaScript("setTimeout(function(){"
 							+"location.reload();"
-							+"});");
+							+"});");*/
+					getPage().setResponsePage(MyIssue.class);
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 				}
 				

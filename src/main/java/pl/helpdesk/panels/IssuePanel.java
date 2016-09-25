@@ -17,6 +17,13 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.comment.CommentForm;
 
+/**
+ * Panel na którym zostaje wyświetlona informacja o zgłoszeniu, jego komentarze
+ *  oraz możliwość dodania komentarza do zgłoszenia
+ * 
+ * @author Krzysiek
+ *
+ */
 public class IssuePanel extends Panel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +32,7 @@ public class IssuePanel extends Panel {
 	private Issue issue;
 	private Label issueTopic;
 	private Label issueContent;
+	private CommentForm commentForm;
 	
 	public IssuePanel(String id, Issue issue) {
 		super(id);
@@ -33,9 +41,11 @@ public class IssuePanel extends Panel {
 			issueContent = new Label("issueContent",new PropertyModel<Issue>(this,"issue.tresc"));
 		clientComments = new RepeatingView("clientComments");
 		clientComments.add(new ClientComment(clientComments.newChildId(),"head","content"));
+		commentForm = new CommentForm("commentForm",issue);
 		add(clientComments);
 		add(issueTopic);
 		add(issueContent);
+		add(commentForm);
 		add(new AjaxLink("backToIssues"){
 
 			@Override
@@ -50,6 +60,7 @@ public class IssuePanel extends Panel {
 
 			@Override
 			public void onClick(AjaxRequestTarget target) {
+				target.appendJavaScript(" $(\"#commentForm\").slideDown();");
 				//CommentForm commentForm = new CommentForm("commentForm",getIssue());
 				
 			}
