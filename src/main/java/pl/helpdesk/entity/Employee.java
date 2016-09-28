@@ -52,4 +52,9 @@ public class Employee implements Serializable {
 		this.userDataModel = userDataModel;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getUserDataModel().getLogin();
+	}
 }

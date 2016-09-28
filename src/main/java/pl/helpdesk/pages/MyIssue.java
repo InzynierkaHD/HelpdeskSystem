@@ -18,6 +18,7 @@ import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.IssuePanel;
+import pl.helpdesk.userSession.ApplicationSession;
 
 public class MyIssue extends ClientSuccessPage {
 
@@ -59,7 +60,7 @@ public class MyIssue extends ClientSuccessPage {
 		listaCol.add(col4);
 		listaCol.add(col5);
 		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
-				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, issueDao, true) {
+				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser()),issueDao, true) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();

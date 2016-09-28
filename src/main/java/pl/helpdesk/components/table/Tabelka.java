@@ -55,10 +55,11 @@ public class Tabelka<T> extends Panel {
 	 * Dao do encji powyższej.
 	 */
 	private IGenericDao dao;
-	
+
 	private ListDataProvider listDataProvider;
-	
+
 	private List<TableCol> listOfTableColumn;
+
 	/**
 	 * 
 	 * @param id
@@ -67,6 +68,9 @@ public class Tabelka<T> extends Panel {
 	 *            lista kolumn w tabelce które mają zostać wyświetlone
 	 * @param columnHeaders
 	 *            nagłówki kolumn
+	 * @param listOfRows
+	 *            lista encji które mają być wyświetlone w tabelce np. lista
+	 *            zgłoszeń
 	 * @param dao
 	 *            dao dla encji którą wyświetlamy w tabelce
 	 * @param clickableRow
@@ -75,11 +79,11 @@ public class Tabelka<T> extends Panel {
 	 *            tabelki) jeśli ta opcja jest włączona wszystkie komponenty w
 	 *            tabelce nie są edytowalne!!!
 	 */
-	public Tabelka(String id, final List<TableCol> listOfTableColumn, final String columnHeaders[], IGenericDao dao,
-			final boolean clickableRow) {
+	public Tabelka(String id, final List<TableCol> listOfTableColumn, final String columnHeaders[], List listOfRows,
+			IGenericDao dao, final boolean clickableRow) {
 		super(id);
 		this.dao = dao;
-		this.listOfRows = dao.getAll();
+		this.listOfRows = listOfRows;
 		this.clickableRow = clickableRow;
 		this.listOfTableColumn = listOfTableColumn;
 		listDataProvider = new ListDataProvider(listOfRows);
@@ -94,7 +98,7 @@ public class Tabelka<T> extends Panel {
 			protected void populateItem(Item<T> item) {
 				rowElements = new RepeatingView("dataRow");
 				entity = item.getModelObject();
-				
+
 				for (TableCol column : listOfTableColumn) {
 					if (column.isEditable() && !clickableRow) {
 						addColumnEditable(column.getPropertyName());
@@ -104,18 +108,18 @@ public class Tabelka<T> extends Panel {
 					column.getPropertyName();
 				}
 				item.add(rowElements);
-				if(clickableRow){
-				item.add(new AjaxEventBehavior("onclick") {
+				if (clickableRow) {
+					item.add(new AjaxEventBehavior("onclick") {
 
-					private static final long serialVersionUID = 6720512493017210281L;
+						private static final long serialVersionUID = 6720512493017210281L;
 
-					@Override
-					protected void onEvent(AjaxRequestTarget target) {
+						@Override
+						protected void onEvent(AjaxRequestTarget target) {
 
-						rowClickEvent(target,getComponent());
-					}
+							rowClickEvent(target, getComponent());
+						}
 
-				});
+					});
 				}
 			}
 		};
@@ -123,14 +127,14 @@ public class Tabelka<T> extends Panel {
 		add(dataView);
 		add(new AjaxPagingNavigator("pagingNavigator", dataView));
 	}
-	
+
 	@Override
 	protected void onModelChanged() {
 		System.out.println("zmiana modelu w Tabelce");
 		super.onModelChanged();
 	}
-	
-	void refreshData(){
+
+	void refreshData() {
 		dataView = new DataView<T>("rows", listDataProvider) {
 			@Override
 			protected void populateItem(Item<T> item) {
@@ -146,17 +150,17 @@ public class Tabelka<T> extends Panel {
 					column.getPropertyName();
 				}
 				item.add(rowElements);
-				if(clickableRow){
-				item.add(new AjaxEventBehavior("onclick") {
+				if (clickableRow) {
+					item.add(new AjaxEventBehavior("onclick") {
 
-					private static final long serialVersionUID = 6720512493017210281L;
+						private static final long serialVersionUID = 6720512493017210281L;
 
-					@Override
-					protected void onEvent(AjaxRequestTarget target) {
-						rowClickEvent(target,getComponent());
-					}
+						@Override
+						protected void onEvent(AjaxRequestTarget target) {
+							rowClickEvent(target, getComponent());
+						}
 
-				});
+					});
 				}
 			}
 		};
@@ -221,6 +225,7 @@ public class Tabelka<T> extends Panel {
 		System.out.println("render");
 		super.onRender();
 	}
+
 	/**
 	 * Metoda wykonywana po kliknięciu na wierszs
 	 */

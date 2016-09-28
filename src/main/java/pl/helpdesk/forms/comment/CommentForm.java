@@ -2,6 +2,7 @@ package pl.helpdesk.forms.comment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.form.Button;
@@ -11,6 +12,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.ICommentDao;
@@ -30,6 +32,7 @@ public class CommentForm extends Panel{
 	private TextArea content;
 	private FileUploadField fileUploadField;
 	private Button submitButton;
+	private List<FileUpload> listOfAttachments;
 	@SpringBean
 	private ICommentDao commentDao;
 	
@@ -37,11 +40,15 @@ public class CommentForm extends Panel{
 		super(id);
 		submitButton = new Button("submit");
 		fileUploadField = new FileUploadField("fileUpload");
-		content = new TextArea("content");
+		content = new TextArea("content",Model.of(""));
 		addCommentForm = new Form<Void>("addCommentForm"){
 			@Override
 			protected void onSubmit() {
-				final FileUpload uploadedFile = fileUploadField.getFileUpload();
+				listOfAttachments= fileUploadField.getFileUploads();
+				for(FileUpload file : listOfAttachments){
+					System.out.println("plik: " + file.getClientFileName());
+				}
+				/*final FileUpload uploadedFile = fileUploadField.getFileUpload();
 				try {
 					 ClassLoader classLoader = getClass().getClassLoader(); 
 					File file = new File(classLoader .getResource("Attachments").toURI().getPath() +
@@ -54,7 +61,7 @@ public class CommentForm extends Panel{
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 				super.onSubmit();
 			}
 		};
