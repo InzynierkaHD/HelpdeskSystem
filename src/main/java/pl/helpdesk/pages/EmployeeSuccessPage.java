@@ -32,8 +32,8 @@ public abstract class EmployeeSuccessPage extends WebPage {
 
 	public EmployeeSuccessPage(PageParameters parameters) {
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Moje zgłoszenia", "EmployeeMyIssues");
-		options.put("Przeglądaj", "EmployeeIssuesList");
+		//options.put("Moje zgłoszenia", "EmployeeMyIssues");
+		options.put("Przeglądaj", "IssuesList");
 		options.put("Historia", "EmployeeHistory");
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);

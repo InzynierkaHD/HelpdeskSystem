@@ -38,7 +38,7 @@ import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.entity.User;
-import pl.helpdesk.pages.MyIssue;
+import pl.helpdesk.pages.IssueListPage;
 import pl.helpdesk.userSession.ApplicationSession;
 
 /**
@@ -137,12 +137,7 @@ public class AddIssueForm extends Panel{
 					newIssue.setType(issueTypeDao.getIssueTypeByName(selectedIssueType));
 					newIssue.setCompanyProduct(companyProductDao.findCompanyProductByProductAndCompany(productDao.findProductByName(selectedProduct), userCompany));
 					issueDao.save(newIssue);
-					//target.add(addIssueForm);
-					//target.appendJavaScript("document.getElementById(\"dodanieZgloszenia\").innerHTML =\"Dodano zgłoszenie!\" ");
-					/*target.appendJavaScript("setTimeout(function(){"
-							+"location.reload();"
-							+"});");*/
-					getPage().setResponsePage(MyIssue.class);
+					getPage().setResponsePage(IssueListPage.class);
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 				}
 				

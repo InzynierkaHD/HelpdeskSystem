@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -12,6 +13,7 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.ICommentDao;
@@ -25,27 +27,56 @@ import pl.helpdesk.userSession.ApplicationSession;
  * @author Krzysztof Krocz
  *
  */
-public class CommentForm extends Panel{
+public class CommentForm extends Panel {
 
 	private static final long serialVersionUID = 1L;
-	
+	/**
+	 * Formularz zawierający wszystkie kontrolki dotyczące dodania zgłoszenia
+	 */
 	private Form<Void> addCommentForm;
+	/**
+	 * TextArea przechowująca treść komentarza
+	 */
 	private TextArea content;
+	/**
+	 * Browser dla załączników
+	 */
 	private FileUploadField fileUploadField;
+	/**
+	 * Button Zatwierdzający dodanie komentarza
+	 */
 	private Button submitButton;
+	/**
+	 * Lista uploadowanych załączników
+	 */
 	private List<FileUpload> listOfAttachments;
+	/**
+	 * Zgłoszenie którego tyczy się komentarz
+	 */
 	private Issue issue;
 	@SpringBean
 	private ICommentDao commentDao;
-	
+
 	public CommentForm(String id, Issue issue) {
 		super(id);
 		this.issue = issue;
 		submitButton = new Button("submit");
 		fileUploadField = new FileUploadField("fileUpload");
-		content = new TextArea<String>("content",Model.of(""));
+		content = new TextArea<String>("content", Model.of(""));
+		//Update modelu zawartości komentarza przy każdym wpisaniu /usunieciu litery 
+		content.add(new OnChangeAjaxBehavior() {
+
+			private static final long serialVersionUID = 2462233190993745889L;
+
+			@Override
+			protected void onUpdate(final AjaxRequestTarget target) {
+
+				content.setDefaultModelObject(getComponent().getDefaultModelObject());
+
+			}
+		});
 		addCommentForm = new Form<Void>("addCommentForm");
-		submitButton.add(new AjaxFormSubmitBehavior(addCommentForm, "click"){
+		submitButton.add(new AjaxFormSubmitBehavior(addCommentForm, "click") {
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
 				System.out.println("Submit komentarza");
@@ -65,7 +96,6 @@ public class CommentForm extends Panel{
 		addCommentForm.setMultiPart(true);
 		add(addCommentForm);
 	}
-	
 
 	public Issue getIssue() {
 		return issue;
@@ -122,6 +152,5 @@ public class CommentForm extends Panel{
 	public void setCommentDao(ICommentDao commentDao) {
 		this.commentDao = commentDao;
 	}
-	
 
 }

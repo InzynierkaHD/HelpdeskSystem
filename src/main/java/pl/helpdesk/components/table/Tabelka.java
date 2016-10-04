@@ -59,7 +59,7 @@ public class Tabelka<T> extends Panel {
 	private ListDataProvider listDataProvider;
 
 	private List<TableCol> listOfTableColumn;
-
+	private int rowsPerPage;
 	/**
 	 * 
 	 * @param id
@@ -82,6 +82,7 @@ public class Tabelka<T> extends Panel {
 	public Tabelka(String id, final List<TableCol> listOfTableColumn, final String columnHeaders[], List listOfRows,
 			IGenericDao dao, final boolean clickableRow) {
 		super(id);
+		this.rowsPerPage = 10;
 		this.dao = dao;
 		this.listOfRows = listOfRows;
 		this.clickableRow = clickableRow;
@@ -123,48 +124,13 @@ public class Tabelka<T> extends Panel {
 				}
 			}
 		};
-		dataView.setItemsPerPage(3);
+		dataView.setItemsPerPage(rowsPerPage);
 		add(dataView);
 		add(new AjaxPagingNavigator("pagingNavigator", dataView));
 	}
 
-	@Override
-	protected void onModelChanged() {
-		System.out.println("zmiana modelu w Tabelce");
-		super.onModelChanged();
-	}
 
-	void refreshData() {
-		dataView = new DataView<T>("rows", listDataProvider) {
-			@Override
-			protected void populateItem(Item<T> item) {
-				rowElements = new RepeatingView("dataRow");
 
-				entity = item.getModelObject();
-				for (TableCol column : listOfTableColumn) {
-					if (column.isEditable() && !clickableRow) {
-						addColumnEditable(column.getPropertyName());
-					} else {
-						addColumnNoEditable(column.getPropertyName());
-					}
-					column.getPropertyName();
-				}
-				item.add(rowElements);
-				if (clickableRow) {
-					item.add(new AjaxEventBehavior("onclick") {
-
-						private static final long serialVersionUID = 6720512493017210281L;
-
-						@Override
-						protected void onEvent(AjaxRequestTarget target) {
-							rowClickEvent(target, getComponent());
-						}
-
-					});
-				}
-			}
-		};
-	}
 
 	/**
 	 * Metoda dodająca edytowalną labelkę
@@ -180,7 +146,6 @@ public class Tabelka<T> extends Panel {
 
 			@Override
 			protected void onModelChanged() {
-				System.out.println("zmiana modelu ");
 				dao.update(entity);
 				// dao.save()
 				super.onModelChanged();
@@ -271,6 +236,76 @@ public class Tabelka<T> extends Panel {
 
 	public void setEntity(T entity) {
 		this.entity = entity;
+	}
+
+
+
+
+	public RepeatingView getRowElements() {
+		return rowElements;
+	}
+
+
+
+
+	public void setRowElements(RepeatingView rowElements) {
+		this.rowElements = rowElements;
+	}
+
+
+
+
+	public IGenericDao getDao() {
+		return dao;
+	}
+
+
+
+
+	public void setDao(IGenericDao dao) {
+		this.dao = dao;
+	}
+
+
+
+
+	public ListDataProvider getListDataProvider() {
+		return listDataProvider;
+	}
+
+
+
+
+	public void setListDataProvider(ListDataProvider listDataProvider) {
+		this.listDataProvider = listDataProvider;
+	}
+
+
+
+
+	public List<TableCol> getListOfTableColumn() {
+		return listOfTableColumn;
+	}
+
+
+
+
+	public void setListOfTableColumn(List<TableCol> listOfTableColumn) {
+		this.listOfTableColumn = listOfTableColumn;
+	}
+
+
+
+
+	public int getRowsPerPage() {
+		return rowsPerPage;
+	}
+
+
+
+
+	public void setRowsPerPage(int rowsPerPage) {
+		this.rowsPerPage = rowsPerPage;
 	}
 
 }

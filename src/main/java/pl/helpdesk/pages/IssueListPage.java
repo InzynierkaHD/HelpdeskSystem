@@ -1,7 +1,6 @@
 package pl.helpdesk.pages;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -9,22 +8,22 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IAdminDao;
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.components.table.Tabelka;
 import pl.helpdesk.components.table.TableCol;
-import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class MyIssue extends ClientSuccessPage {
+public class IssueListPage extends ClientSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 	private AjaxLink<String> addIssue;
@@ -35,8 +34,14 @@ public class MyIssue extends ClientSuccessPage {
 
 	@SpringBean
 	IIssueDao issueDao;
+	
+	@SpringBean 
+	IEmployeeDao employeeDao;
+	
+	@SpringBean
+	IAdminDao adminDao;
 
-	public MyIssue(PageParameters parameters) {
+	public IssueListPage(PageParameters parameters) {
 		super(parameters);
 		addIssueForm = new AddIssueForm("form");
 		alert = new AlertModal("alert", new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie",
@@ -63,8 +68,16 @@ public class MyIssue extends ClientSuccessPage {
 		listaCol.add(col3);
 		listaCol.add(col4);
 		listaCol.add(col5);
+		List listOfRows;
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser()) || adminDao.isAdmin(ApplicationSession.getInstance().getUser())){
+			listOfRows = issueDao.getAll();
+			addIssue.setVisible(false);
+		}
+		else{
+			listOfRows = issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser());
+		}
 		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
-				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser()),issueDao, true) {
+				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, listOfRows,issueDao, true) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();

@@ -33,7 +33,7 @@ public abstract class ClientSuccessPage extends WebPage {
 
 	public ClientSuccessPage(PageParameters parameters) {
 		HashMap<String, String> options = new HashMap<String, String>();
-		options.put("Moje zgłoszenia", "ClientMyIssues");
+		options.put("Moje zgłoszenia", "IssuesList");
 		options.put("Historia", "ClientHistory");
 		INavbarComponent zgloszenia = new Dropdown("<span class=\"glyphicon glyphicon-bell\"></span> Zgłoszenia",
 				options);
