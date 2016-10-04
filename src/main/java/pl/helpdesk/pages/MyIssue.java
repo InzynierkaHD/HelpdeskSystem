@@ -1,10 +1,13 @@
 package pl.helpdesk.pages;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -15,6 +18,7 @@ import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.components.table.Tabelka;
 import pl.helpdesk.components.table.TableCol;
+import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.IssuePanel;
@@ -77,6 +81,22 @@ public class MyIssue extends ClientSuccessPage {
 		issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
 		issuePanel.setOutputMarkupId(true);
 		this.myIssueTable = myIssueTable;
+		issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
+	        @Override
+	        protected void onEvent(final AjaxRequestTarget target) {
+	            target.add(issuePanel);
+	        }
+	    });
+		add(new AjaxFormSubmitBehavior(issuePanel.getCommentForm().getAddCommentForm(),"onsubmit"){
+
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				target.add(issuePanel);
+				super.onSubmit(target);
+			}
+			
+		});
 		add(myIssueTable);
 		add(issuePanel);
 	}

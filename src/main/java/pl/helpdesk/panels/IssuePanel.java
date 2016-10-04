@@ -1,6 +1,10 @@
 package pl.helpdesk.panels;
 
+import java.util.Date;
+
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -16,6 +20,7 @@ import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.comment.CommentForm;
+import pl.helpdesk.userSession.ApplicationSession;
 
 /**
  * Panel na którym zostaje wyświetlona informacja o zgłoszeniu, jego komentarze
@@ -59,17 +64,6 @@ public class IssuePanel extends Panel {
 			}
 
 		});
-		add(new AjaxLink("addComment") {
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				target.appendJavaScript(" $(\"#commentForm\").slideDown();");
-				// CommentForm commentForm = new
-				// CommentForm("commentForm",getIssue());
-
-			}
-
-		});
 	}
 
 	@Override
@@ -82,8 +76,7 @@ public class IssuePanel extends Panel {
 
 	@Override
 	protected void onBeforeRender() {
-		System.out.println("before ");
-		System.out.println("Wywoluje konstruktor issuePanelu");
+		commentForm.setIssue(this.getIssue());
 		clientComments.removeAll();
 		for (Comment comment : commentDao.getCommentByIssue(this.issue)) {
 			if (employeDao.isEmployee(comment.getUserDataModel()))
@@ -104,6 +97,54 @@ public class IssuePanel extends Panel {
 
 	public void setIssue(Issue issue) {
 		this.issue = issue;
+	}
+
+	public RepeatingView getClientComments() {
+		return clientComments;
+	}
+
+	public void setClientComments(RepeatingView clientComments) {
+		this.clientComments = clientComments;
+	}
+
+	public Label getIssueTopic() {
+		return issueTopic;
+	}
+
+	public void setIssueTopic(Label issueTopic) {
+		this.issueTopic = issueTopic;
+	}
+
+	public Label getIssueContent() {
+		return issueContent;
+	}
+
+	public void setIssueContent(Label issueContent) {
+		this.issueContent = issueContent;
+	}
+
+	public CommentForm getCommentForm() {
+		return commentForm;
+	}
+
+	public void setCommentForm(CommentForm commentForm) {
+		this.commentForm = commentForm;
+	}
+
+	public ICommentDao getCommentDao() {
+		return commentDao;
+	}
+
+	public void setCommentDao(ICommentDao commentDao) {
+		this.commentDao = commentDao;
+	}
+
+	public IEmployeeDao getEmployeDao() {
+		return employeDao;
+	}
+
+	public void setEmployeDao(IEmployeeDao employeDao) {
+		this.employeDao = employeDao;
 	}
 
 }
