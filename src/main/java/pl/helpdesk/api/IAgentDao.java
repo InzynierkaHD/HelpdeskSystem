@@ -1,6 +1,9 @@
 package pl.helpdesk.api;
 
+import java.util.List;
+
 import pl.helpdesk.entity.Agent;
+import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 
 /**
@@ -31,4 +34,7 @@ public interface IAgentDao extends IGenericDao<Agent,Integer>{
 	 * @return Szukany przedstawiciel
 	 */
 	public Agent findAgentByUser(User user);
+	
+	
+	public List <String> getCompanyWithoutAgent();
 }

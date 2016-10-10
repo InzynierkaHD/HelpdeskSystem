@@ -3,6 +3,7 @@ package pl.helpdesk.pages;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -24,7 +25,7 @@ public abstract class AdminSuccessPage extends WebPage {
 
 	@SpringBean
 	private IUserDao userSpring;
-	
+
 	@SpringBean
 	private IUserDao userDao;
 
@@ -64,7 +65,7 @@ public abstract class AdminSuccessPage extends WebPage {
 				super.onSubmit();
 				loggingHistoryDao
 						.setUserLogOutDate(userDao.getUser(ApplicationSession.getInstance().getUser().getLogin()));
-				ApplicationSession.getInstance().invalidate();
+				ApplicationSession.get().invalidateNow();
 				setResponsePage(LoginPage.class);
 			}
 		};
@@ -75,5 +76,6 @@ public abstract class AdminSuccessPage extends WebPage {
 		navComponent.add(mojProfil);
 		navComponent.add(statystyki);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
+
 	}
 }

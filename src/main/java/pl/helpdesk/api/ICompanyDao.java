@@ -1,5 +1,7 @@
 package pl.helpdesk.api;
 
+import java.util.List;
+
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.IssueType;
 
@@ -13,5 +15,6 @@ public interface ICompanyDao extends IGenericDao<Company,Integer>{
 	
 	public Company getCompanyByName(String companyName);
 
+	public List <Company> getAllCompany();
 		
 }

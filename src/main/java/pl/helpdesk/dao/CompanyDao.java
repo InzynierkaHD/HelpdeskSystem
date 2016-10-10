@@ -1,5 +1,7 @@
 package pl.helpdesk.dao;
 
+import java.util.List;
+
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,5 +24,9 @@ public class CompanyDao extends GenericDao<Company, Integer> implements ICompany
 
 	}
 	
+	@Override 
+	public List <Company> getAllCompany(){
+		return getAll();
+	}
 
 }

@@ -13,6 +13,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.ICompanyDao;
 import pl.helpdesk.api.IUserDao;
@@ -21,6 +22,7 @@ import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.passwordHash.HashPassword;
+import pl.helpdesk.userSession.ApplicationSession;
 import pl.helpdesk.validation.Validation;
 
 public class AdminAddAgent extends AdminSuccessPage {
@@ -33,6 +35,10 @@ public class AdminAddAgent extends AdminSuccessPage {
 	@SpringBean
 	private IUserDao userSpring;
 	
+	
+	@SpringBean
+	private IAdminDao adminDao;
+	
 	@SpringBean
 	private IAgentDao agentDao;
 
@@ -40,7 +46,8 @@ public class AdminAddAgent extends AdminSuccessPage {
 	
 	public AdminAddAgent(PageParameters parameters) {
 			super(parameters);
-
+			if (!(ApplicationSession.getInstance().getUser() == null)
+					&& adminDao.isAdmin(ApplicationSession.getInstance().getUser())) {
 			final Label badName = new Label("badname", "Wpisz poprawnie imię!");
 			badName.setVisible(false);
 			final Label badSurname = new Label("badsurname", "Wpisz poprawnie nazwisko!");
@@ -61,7 +68,6 @@ public class AdminAddAgent extends AdminSuccessPage {
 			przeszlo.setVisible(false);
 
 			User userDataModel = new User();
-			
 			
 			final SelectForm selectCompany = new SelectForm("selectCompany",new PropertyModel<String>(this,"selectedCompany"),companyDao.getAllToString());
 			final TextField<String> imie = new TextField<String>("imie", new PropertyModel<String>(userDataModel, "imie"));
@@ -175,8 +181,10 @@ public class AdminAddAgent extends AdminSuccessPage {
 			creating.add(haslo);
 			creating.add(selectCompany);
 
+		}else{
+			setResponsePage(LoginPage.class);
 		}
-	
+	}
 		
 	}
 

@@ -52,6 +52,12 @@ public class LoginPage extends WebPage {
 
 	public LoginPage() {
 
+		if (!(ApplicationSession.getInstance().getUser() == null)) {
+			loggingHistoryDao
+					.setUserLogOutDate(userSpring.getUser(ApplicationSession.getInstance().getUser().getLogin()));
+			ApplicationSession.get().invalidateNow();
+		}
+
 		final TextField<String> login = new TextField<String>("login",
 				new PropertyModel<String>(userDataModel, "login"));
 
@@ -105,7 +111,7 @@ public class LoginPage extends WebPage {
 						if (findedUser.getCzy_usuniety() == true) {
 							System.out.println("Nie ma takiego usera");
 							badLogin.setVisible(Boolean.TRUE);
-						} else if (findedUser.getCzy_blokowany() == true) {
+						} else if (findedUser.getCzy_blokowany() == true && clientDao.isClient(findedUser)) {
 							System.out.println("Konto zablokowane");
 							userBlocked.setVisible(Boolean.TRUE);
 						} else {
@@ -129,8 +135,8 @@ public class LoginPage extends WebPage {
 						}
 					} else if (badPassword == true) {
 						System.out.println("Bledne haslo");
-						userSpring.incrementBadPassowrd(userDataModel.getLogin());
 						badPass.setVisible(Boolean.TRUE);
+						userSpring.incrementBadPassowrd(userDataModel.getLogin());
 					}
 				}
 			}

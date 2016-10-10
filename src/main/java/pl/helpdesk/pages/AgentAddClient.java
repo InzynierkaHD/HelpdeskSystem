@@ -36,7 +36,8 @@ public class AgentAddClient extends AgentSuccessPage {
 
 	public AgentAddClient(PageParameters parameters) {
 		super(parameters);
-
+		if (!(ApplicationSession.getInstance().getUser() == null)
+				&& agentDao.isAgent(ApplicationSession.getInstance().getUser())) {
 		final Label badName = new Label("badname", "Wpisz poprawnie imię!");
 		badName.setVisible(false);
 		final Label badSurname = new Label("badsurname", "Wpisz poprawnie nazwisko!");
@@ -173,7 +174,9 @@ public class AgentAddClient extends AgentSuccessPage {
 		creating.add(nazwisko);
 		creating.add(email);
 		creating.add(haslo);
-
+	}else{
+		setResponsePage(LoginPage.class);
+	}
 	}
 
 }
