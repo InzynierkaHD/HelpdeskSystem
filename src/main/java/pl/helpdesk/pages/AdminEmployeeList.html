@@ -19,8 +19,9 @@
 							<th>Imie</th>
 							<th>Nazwisko</th>
 							<th>E-mail</th>
-							<th>Login</th>
 							<th>Ostatnie logowanie</th>
+							<th>Zablokuj</th>
+							<th>Usuń</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -28,14 +29,16 @@
 							<td span wicket:id="imie"></td>
 							<td span wicket:id="nazwisko"></td>
 							<td span wicket:id="email"></td>
-							<td span wicket:id="login"></td>
 							<td span wicket:id="ostatnie_logowanie"></td>
-
+							<td><a href="#" wicket:id="zablokujUsera"><span
+									wicket:id="blokujWyswietl"></span></a></td>
+							<td><a href="#" wicket:id="usunUsera"><span
+									wicket:id="usunWyswietl"></span></a><span wicket:id="czyUsuniety"></span></td>
 						</tr>
 					</tbody>
-					<tfoot >
+					<tfoot>
 						<tr>
-							<td  id="stopka_tab" colspan="5" wicket:id="nav"></td>
+							<td id="stopka_tab" colspan="5" wicket:id="nav"></td>
 						</tr>
 					</tfoot>
 				</table>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dodaj Przedstawiciela</title>
+</head>
+<body>
+<wicket:extend>
+<div class="container-fluid">
+<div id="tytul_strony">Dodaj przedstawiciela</div>
+</div>
+<div class="container" >
+	<br />
+			<form wicket:id="creating" role="form" class="form-horizontal" id="form_dodawanieUsera">
+			<div class="row">		
+				<div class="form-group">
+						<label class="col-sm-3 control-label" for="nazwisko">Firma:</label>
+						<div class="col-sm-5"><select style="background: white;width: 100%; color: #555555;" wicket:id="selectCompany"></select></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="companyFail"></span></b></font></div>
+					</div>
+			</div>		
+			
+			<div class="row">
+			
+				<div class="form-group">
+						<label class="col-sm-3 control-label" for="imie">Imię:</label>
+						<div class="col-sm-5"><input type="text" size="40" wicket:id="imie" class="form-control" name="imie" placeholder="Imię"></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="badname"></span></b></font></div>
+				</div>
+			</div>
+			<div class="row">		
+				<div class="form-group">
+						<label class="col-sm-3 control-label" for="nazwisko">Nazwisko:</label>
+						<div class="col-sm-5"><input type="text" size="40" wicket:id="nazwisko" class="form-control" name="nazwisko" placeholder="Nazwisko"></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="badsurname"></span></b></font></div>
+					</div>
+			</div>		
+			<div class="row">		
+				<div class="form-group">
+						<label class="col-sm-3 control-label" for="email">E-mail:</label>
+						<div class="col-sm-5"><input type="text" size="40" wicket:id="email" class="form-control" name="email" placeholder="E-mail"></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="emailExist"></span>
+						<span wicket:id="bademail"></span></b></font></div>
+											</div>
+			</div>		
+			<div class="row">		
+				<div class="form-group">			
+						<label class="col-sm-3 control-label" for="login">Login:</label>
+						<div class="col-sm-5"><input type="text" size="40" wicket:id="login" class="form-control" name="login" placeholder="Login"></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="userExist"></span>
+						<span wicket:id="loginlength"></span></b></font></div>
+											</div>
+			</div>		
+			<div class="row">		
+				<div class="form-group">
+						<label class="col-sm-3 control-label" for="haslo">Hasło:</label>
+						<div class="col-sm-5"><input type="password" size="40" wicket:id="haslo" class="form-control" name="haslo" placeholder="Hasło"></div>
+						<div class="col-sm-4"><font color="B04862"><b><span wicket:id="passlength"></span></b></font></div>
+											</div>
+			</div>		
+		<br />
+		<div class="row">	
+		<div class="col-sm-3"></div>
+		<div class="col-sm-5"><font size="6"><span wicket:id="przeszlo"></span></font></div>
+		<div class="col-sm-4"><input type="submit" class="przycisk" id="przycisk" value="Utwórz" /></div>
+		</div>
+			</form>
+
+</div>
+</wicket:extend>
+</body>
+</html>

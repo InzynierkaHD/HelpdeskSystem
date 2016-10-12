@@ -43,6 +43,7 @@ public class IssueListPage extends ClientSuccessPage {
 
 	public IssueListPage(PageParameters parameters) {
 		super(parameters);
+			
 		addIssueForm = new AddIssueForm("form");
 		alert = new AlertModal("alert", new ArrayList<AjaxLink>(), typeAlert.info, "Dodaj zgłoszenie",
 				new StringBuilder("<div wicket:id=\"form\"></div>"));

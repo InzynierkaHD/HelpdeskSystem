@@ -3,6 +3,7 @@ package pl.helpdesk.pages;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -23,6 +24,9 @@ public abstract class AdminSuccessPage extends WebPage {
 	private ILoggingHistoryDao loggingHistoryDao;
 
 	@SpringBean
+	private IUserDao userSpring;
+
+	@SpringBean
 	private IUserDao userDao;
 
 	private static final long serialVersionUID = 1L;
@@ -37,7 +41,7 @@ public abstract class AdminSuccessPage extends WebPage {
 				options);
 		options.clear();
 		options.put("Lista firm", "AdminCompanyList");
-		options.put("Dodaj firmę", "AdminAddCompany");
+		options.put("Dodaj przedstawiciela", "AdminAddAgent");
 		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);
 		options.clear();
 		options.put("Edycja", "AdminMyProfile");
@@ -61,7 +65,7 @@ public abstract class AdminSuccessPage extends WebPage {
 				super.onSubmit();
 				loggingHistoryDao
 						.setUserLogOutDate(userDao.getUser(ApplicationSession.getInstance().getUser().getLogin()));
-				ApplicationSession.getInstance().invalidate();
+				ApplicationSession.get().invalidateNow();
 				setResponsePage(LoginPage.class);
 			}
 		};
@@ -72,5 +76,6 @@ public abstract class AdminSuccessPage extends WebPage {
 		navComponent.add(mojProfil);
 		navComponent.add(statystyki);
 		add(new Navbar("header", "Internet Helpdesk", navComponent));
+
 	}
 }

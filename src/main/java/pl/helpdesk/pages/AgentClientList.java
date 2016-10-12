@@ -34,11 +34,13 @@ public class AgentClientList extends AgentSuccessPage {
 
 	final Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
 
-	final ListView<?> listView;
 
 	public AgentClientList(PageParameters parameters) {
 		super(parameters);
-
+		if (!(ApplicationSession.getInstance().getUser() == null)
+				&& agentDao.isAgent(ApplicationSession.getInstance().getUser())) {
+		
+		final ListView<?> listView;
 		listView = new ListView<Client>("listview", clientDao.clientsFromAgent(agent)) {
 			/**
 			 * 
@@ -114,6 +116,8 @@ public class AgentClientList extends AgentSuccessPage {
 		};
 
 		add(listView);
-
+	}else{
+		setResponsePage(LoginPage.class);
+	}
 	}
 }

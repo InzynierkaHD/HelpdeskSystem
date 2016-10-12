@@ -2,40 +2,51 @@ package pl.helpdesk.pages;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.wicket.extensions.markup.html.form.select.Select;
+import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IAdminDao;
-import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.IAgentDao;
+import pl.helpdesk.api.ICompanyDao;
 import pl.helpdesk.api.IUserDao;
-import pl.helpdesk.entity.Employee;
+import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.entity.Agent;
+import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.passwordHash.HashPassword;
 import pl.helpdesk.userSession.ApplicationSession;
 import pl.helpdesk.validation.Validation;
 
-public class AdminAddEmployee extends AdminSuccessPage {
+public class AdminAddAgent extends AdminSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
 	@SpringBean
+	ICompanyDao companyDao;
+	
+	@SpringBean
 	private IUserDao userSpring;
-
+	
 	@SpringBean
 	private IAdminDao adminDao;
-
+	
 	@SpringBean
-	private IEmployeeDao employeeDao;
+	private IAgentDao agentDao;
 
-	public AdminAddEmployee(PageParameters parameters) {
-		super(parameters);
-		if (!(ApplicationSession.getInstance().getUser() == null)
-				&& adminDao.isAdmin(ApplicationSession.getInstance().getUser())) {
+	private String selectedCompany; 
+	
+	public AdminAddAgent(PageParameters parameters) {
+			super(parameters);
+			if (!(ApplicationSession.getInstance().getUser() == null)
+					&& adminDao.isAdmin(ApplicationSession.getInstance().getUser())) {
 			final Label badName = new Label("badname", "Wpisz poprawnie imię!");
 			badName.setVisible(false);
 			final Label badSurname = new Label("badsurname", "Wpisz poprawnie nazwisko!");
@@ -50,13 +61,15 @@ public class AdminAddEmployee extends AdminSuccessPage {
 			userExist.setVisible(false);
 			final Label emailExist = new Label("emailExist", "Użytkownik o podanym adresie istnieje w systemie!");
 			emailExist.setVisible(false);
-			final Label przeszlo = new Label("przeszlo", "Dodano pracownika!");
+			final Label companyFail = new Label("companyFail", "Musisz wybrać firmę!");
+			companyFail.setVisible(false);
+			final Label przeszlo = new Label("przeszlo", "Dodano przedstawiciela!");
 			przeszlo.setVisible(false);
 
 			User userDataModel = new User();
-
-			final TextField<String> imie = new TextField<String>("imie",
-					new PropertyModel<String>(userDataModel, "imie"));
+			
+			final SelectForm selectCompany = new SelectForm("selectCompany",new PropertyModel<String>(this,"selectedCompany"),companyDao.getAllToString());
+			final TextField<String> imie = new TextField<String>("imie", new PropertyModel<String>(userDataModel, "imie"));
 			final TextField<String> nazwisko = new TextField<String>("nazwisko",
 					new PropertyModel<String>(userDataModel, "nazwisko"));
 			final TextField<String> email = new TextField<String>("email",
@@ -66,13 +79,14 @@ public class AdminAddEmployee extends AdminSuccessPage {
 
 			final PasswordTextField haslo = new PasswordTextField("haslo",
 					new PropertyModel<String>(userDataModel, "haslo"));
+			
 
 			Form<?> creating = new Form("creating") {
 				/**
 				 * 
 				 */
 				private static final long serialVersionUID = 1L;
-
+				
 				@Override
 				public void onSubmit() {
 					super.onSubmit();
@@ -84,18 +98,20 @@ public class AdminAddEmployee extends AdminSuccessPage {
 					userExist.setVisible(false);
 					emailExist.setVisible(false);
 					przeszlo.setVisible(false);
-
+					companyFail.setVisible(false);
+					
+					
 					String imie2 = imie.getInput();
 					String nazwisko2 = nazwisko.getInput();
 					String email2 = email.getInput();
 					String login2 = login.getInput();
 					String haslo2 = haslo.getInput();
 					String hasloHash = null;
-					try {
-						hasloHash = HashPassword.PasswordHash(haslo2);
-					} catch (NoSuchAlgorithmException e1) {
-						e1.printStackTrace();
-					}
+							try {
+								hasloHash = HashPassword.PasswordHash(haslo2);
+							} catch (NoSuchAlgorithmException e1) {
+								e1.printStackTrace();
+							}
 
 					boolean IsOk = true;
 					if (Validation.nameValidate(imie2) == false || imie2.length() < 2 || imie2.length() > 20
@@ -130,12 +146,17 @@ public class AdminAddEmployee extends AdminSuccessPage {
 						passLength.setVisible(true);
 						IsOk = false;
 					}
-
+					if(	companyDao.getCompanyByName(selectedCompany)==null){
+						companyFail.setVisible(true);
+						IsOk = false;
+					}
+					
 					if (IsOk) {
 						User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false, 0);
 						userSpring.save(newUser);
-						Employee employee = new Employee(newUser);
-						employeeDao.save(employee);
+						Company company=companyDao.getCompanyByName(selectedCompany);
+						Agent agent=new Agent(newUser, company);
+						agentDao.save(agent);
 						przeszlo.setVisible(true);
 					}
 
@@ -149,18 +170,20 @@ public class AdminAddEmployee extends AdminSuccessPage {
 			creating.add(passLength);
 			creating.add(userExist);
 			creating.add(emailExist);
+			creating.add(companyFail);
 			creating.add(przeszlo);
-
 			add(creating);
 			creating.add(login);
 			creating.add(imie);
 			creating.add(nazwisko);
 			creating.add(email);
 			creating.add(haslo);
+			creating.add(selectCompany);
 
-		} else {
+		}else{
 			setResponsePage(LoginPage.class);
 		}
 	}
+		
+	}
 
-}

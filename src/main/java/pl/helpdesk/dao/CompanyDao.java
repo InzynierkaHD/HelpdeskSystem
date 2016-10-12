@@ -1,19 +1,32 @@
 package pl.helpdesk.dao;
 
+import java.util.List;
+
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.ICompanyDao;
-import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Company;
+import pl.helpdesk.entity.IssueType;
 
 @Transactional
-public class CompanyDao extends GenericDao<Company,Integer> implements ICompanyDao{
+public class CompanyDao extends GenericDao<Company, Integer> implements ICompanyDao {
 
-	public CompanyDao(){
+	public CompanyDao() {
 		super();
 	}
-	
 
+	@Override
+	public Company getCompanyByName(String companyName) {
+		Company company = (Company) sessionFactory.getCurrentSession().createCriteria(Company.class)
+				.add(Restrictions.eq("nazwa", companyName)).uniqueResult();
+		return company;
+
+	}
 	
+	@Override 
+	public List <Company> getAllCompany(){
+		return getAll();
+	}
+
 }
