@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.hibernate.HibernateException;
 
@@ -46,108 +47,113 @@ public class LoginPage extends WebPage {
 
 	private User userDataModel = new User();
 
-	final Label badLogin;
-	final Label badPass;
-	final Label userBlocked;
+	public LoginPage(PageParameters parameters) {
+		super(parameters);
+		//setResponsePage(LoginPage.class);
+		if (!(ApplicationSession.getInstance().getUser() == null)
+				&& employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) {
+			setResponsePage(EmployeeFinalPage.class);
+		} else if (!(ApplicationSession.getInstance().getUser() == null)
+				&& agentDao.isAgent(ApplicationSession.getInstance().getUser())) {
+			setResponsePage(AgentFinalPage.class);
+		} else if (!(ApplicationSession.getInstance().getUser() == null)
+				&& adminDao.isAdmin(ApplicationSession.getInstance().getUser())) {
+			setResponsePage(AdminFinalPage.class);
+		} else if (!(ApplicationSession.getInstance().getUser() == null)
+				&& clientDao.isClient(ApplicationSession.getInstance().getUser())) {
+			setResponsePage(ClientFinalPage.class);
 
-	public LoginPage() {
+		} else {
+			final TextField<String> login = new TextField<String>("login",
+					new PropertyModel<String>(userDataModel, "login"));
 
-		if (!(ApplicationSession.getInstance().getUser() == null)) {
-			loggingHistoryDao
-					.setUserLogOutDate(userSpring.getUser(ApplicationSession.getInstance().getUser().getLogin()));
-			ApplicationSession.get().invalidateNow();
-		}
+			PasswordTextField haslo = new PasswordTextField("haslo", new PropertyModel<String>(userDataModel, "haslo"));
 
-		final TextField<String> login = new TextField<String>("login",
-				new PropertyModel<String>(userDataModel, "login"));
+			final Label badLogin = new Label("badLogin", "Nie ma takiego użytkownika!");
+			badLogin.setVisible(Boolean.FALSE);
 
-		PasswordTextField haslo = new PasswordTextField("haslo", new PropertyModel<String>(userDataModel, "haslo"));
+			final Label badPass = new Label("badPass", "Błędne hasło!");
+			badPass.setVisible(Boolean.FALSE);
 
-		badLogin = new Label("badLogin", "Nie ma takiego użytkownika!");
-		badLogin.setVisible(Boolean.FALSE);
+			final Label userBlocked = new Label("userBlocked", "Konto zablokowane!");
+			userBlocked.setVisible(Boolean.FALSE);
 
-		badPass = new Label("badPass", "Błędne hasło!");
-		badPass.setVisible(Boolean.FALSE);
+			Form<?> form = new Form<Void>("form") {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-		userBlocked = new Label("userBlocked", "Konto zablokowane!");
-		userBlocked.setVisible(Boolean.FALSE);
+				@Override
+				public void onSubmit() {
 
-		Form<?> form = new Form<Void>("form") {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+					super.onSubmit();
 
-			@Override
-			public void onSubmit() {
+					userBlocked.setVisible(Boolean.FALSE);
+					badPass.setVisible(Boolean.FALSE);
+					badLogin.setVisible(Boolean.FALSE);
 
-				super.onSubmit();
-
-				userBlocked.setVisible(Boolean.FALSE);
-				badPass.setVisible(Boolean.FALSE);
-				badLogin.setVisible(Boolean.FALSE);
-
-				if (userSpring.getUser(userDataModel.getLogin()) == null) {
-					System.out.println("Nie ma takiego usera");
-					badLogin.setVisible(Boolean.TRUE);
-				} else {
-					boolean badPassword = false;
-					try {
-						badPassword = userSpring.incorrectPassword(userDataModel.getLogin(), userDataModel.getHaslo());
-					} catch (HibernateException | NoSuchAlgorithmException e) {
-						e.printStackTrace();
-					}
-
-					LoggingHistory loggingHistory = new LoggingHistory();
-					User findedUser = null;
-
-					if (badPassword == false) {
+					if (userSpring.getUser(userDataModel.getLogin()) == null) {
+						System.out.println("Nie ma takiego usera");
+						badLogin.setVisible(Boolean.TRUE);
+					} else {
+						boolean badPassword = false;
 						try {
-							findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(),
+							badPassword = userSpring.incorrectPassword(userDataModel.getLogin(),
 									userDataModel.getHaslo());
 						} catch (HibernateException | NoSuchAlgorithmException e) {
 							e.printStackTrace();
 						}
-						if (findedUser.getCzy_usuniety() == true) {
-							System.out.println("Nie ma takiego usera");
-							badLogin.setVisible(Boolean.TRUE);
-						} else if (findedUser.getCzy_blokowany() == true && clientDao.isClient(findedUser)) {
-							System.out.println("Konto zablokowane");
-							userBlocked.setVisible(Boolean.TRUE);
-						} else {
-							Date date = new Date();
-							loggingHistory.setDataLogowania(date);
-							loggingHistory.setUserDataModel(findedUser);
-							loggingHistoryDao.save(loggingHistory);
-							findedUser.setOst_logowanie(date);
-							findedUser.setBadPassword(0);
-							userSpring.update(findedUser);
-							ApplicationSession.getInstance().setUser(findedUser);
-							if (adminDao.isAdmin(findedUser)) {
-								setResponsePage(AdminFinalPage.class);
-							} else if (employeeDao.isEmployee(findedUser)) {
-								setResponsePage(EmployeeFinalPage.class);
-							} else if (agentDao.isAgent(findedUser)) {
-								setResponsePage(AgentFinalPage.class);
-							} else if (clientDao.isClient(findedUser)) {
-								setResponsePage(ClientFinalPage.class);
+
+						LoggingHistory loggingHistory = new LoggingHistory();
+						User findedUser = null;
+
+						if (badPassword == false) {
+							try {
+								findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(),
+										userDataModel.getHaslo());
+							} catch (HibernateException | NoSuchAlgorithmException e) {
+								e.printStackTrace();
 							}
+							if (findedUser.getCzy_usuniety() == true) {
+								System.out.println("Nie ma takiego usera");
+								badLogin.setVisible(Boolean.TRUE);
+							} else if (findedUser.getCzy_blokowany() == true && clientDao.isClient(findedUser)) {
+								System.out.println("Konto zablokowane");
+								userBlocked.setVisible(Boolean.TRUE);
+							} else {
+								Date date = new Date();
+								loggingHistory.setDataLogowania(date);
+								loggingHistory.setUserDataModel(findedUser);
+								loggingHistoryDao.save(loggingHistory);
+								findedUser.setOst_logowanie(date);
+								findedUser.setBadPassword(0);
+								userSpring.update(findedUser);
+								ApplicationSession.getInstance().setUser(findedUser);
+								if (adminDao.isAdmin(findedUser)) {
+									setResponsePage(AdminFinalPage.class);
+								} else if (employeeDao.isEmployee(findedUser)) {
+									setResponsePage(EmployeeFinalPage.class);
+								} else if (agentDao.isAgent(findedUser)) {
+									setResponsePage(AgentFinalPage.class);
+								} else if (clientDao.isClient(findedUser)) {
+									setResponsePage(ClientFinalPage.class);
+								}
+							}
+						} else if (badPassword == true) {
+							System.out.println("Bledne haslo");
+							badPass.setVisible(Boolean.TRUE);
+							userSpring.incrementBadPassowrd(userDataModel.getLogin());
 						}
-					} else if (badPassword == true) {
-						System.out.println("Bledne haslo");
-						badPass.setVisible(Boolean.TRUE);
-						userSpring.incrementBadPassowrd(userDataModel.getLogin());
 					}
 				}
-			}
-		};
-		form.add(login);
-		form.add(haslo);
-		add(form);
-		add(badLogin);
-		add(userBlocked);
-		add(badPass);
-
+			};
+			form.add(login);
+			form.add(haslo);
+			add(form);
+			add(badLogin);
+			add(userBlocked);
+			add(badPass);
+		}
 	}
-
 }

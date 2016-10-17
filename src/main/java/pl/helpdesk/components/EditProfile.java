@@ -50,9 +50,7 @@ public class EditProfile extends Panel{
 		emailExist = new Label("emailExist", "Użytkownik o podanym adresie istnieje w systemie!");
 		emaillOK = new Label("emaillOK", "Zmieniono e-mail!");
 		loginOK = new Label("loginOK", "Zmieniono login!");
-		
-		
-		
+
 		badEmail.setVisible(false);
 		emaillOK.setVisible(false);
 		loginLength.setVisible(false);
