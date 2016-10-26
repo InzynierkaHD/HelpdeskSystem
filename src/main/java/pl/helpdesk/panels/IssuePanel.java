@@ -1,10 +1,10 @@
 package pl.helpdesk.panels;
 
-import java.util.Date;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
 
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -19,8 +19,8 @@ import pl.helpdesk.api.ICommentDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.filefinder.FileFinder;
 import pl.helpdesk.forms.comment.CommentForm;
-import pl.helpdesk.userSession.ApplicationSession;
 
 /**
  * Panel na którym zostaje wyświetlona informacja o zgłoszeniu, jego komentarze
@@ -78,13 +78,23 @@ public class IssuePanel extends Panel {
 	protected void onBeforeRender() {
 		commentForm.setIssue(this.getIssue());
 		clientComments.removeAll();
+		 URL url = this.getClass().getClassLoader().getResource("/Attachments");
+		 FileFinder finder = new FileFinder(url.getPath());
+		 List<File> foundFiles;
 		for (Comment comment : commentDao.getCommentByIssue(this.issue)) {
-			if (employeDao.isEmployee(comment.getUserDataModel()))
+			foundFiles = finder.getAllFilesFromFolderBeforeSeparator("_",String.valueOf(comment.getId()));
+			System.out.println("Lista pasujacych plikow do wzorca "+ comment.getId());
+			for(File file : foundFiles){
+				System.out.println(file.getName());
+			}
+			if (employeDao.isEmployee(comment.getUserDataModel())){
+				
 				clientComments.add(new WorkerComment(clientComments.newChildId(), comment.getUserDataModel().getLogin(),
-						comment.getTresc()));
+						comment.getTresc(),foundFiles));
+			}
 			else {
 				clientComments.add(new ClientComment(clientComments.newChildId(), comment.getUserDataModel().getLogin(),
-						comment.getTresc()));
+						comment.getTresc(),foundFiles));
 			}
 		}
 

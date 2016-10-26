@@ -1,5 +1,6 @@
 package pl.helpdesk.forms.comment;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.ICommentDao;
@@ -79,7 +79,6 @@ public class CommentForm extends Panel {
 		submitButton.add(new AjaxFormSubmitBehavior(addCommentForm, "click") {
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
-				System.out.println("Submit komentarza");
 				Comment comment = new Comment();
 				comment.setCzyWewnetrzny(false);
 				comment.setDataDodania(new Date());
@@ -87,11 +86,32 @@ public class CommentForm extends Panel {
 				comment.setTresc(content.getValue());
 				comment.setUserDataModel(ApplicationSession.getInstance().getUser());
 				commentDao.save(comment);
+				final FileUpload uploadedFile = fileUploadField.getFileUpload();
+				if (uploadedFile != null) {
+
+					// write to a new file
+					File newFile = new File("Attachments/"
+						+ uploadedFile.getClientFileName());
+
+					if (newFile.exists()) {
+						newFile.delete();
+					}
+
+					try {
+						newFile.createNewFile();
+						uploadedFile.writeTo(newFile);
+
+						info("saved file: " + uploadedFile.getClientFileName());
+					} catch (Exception e) {
+						throw new IllegalStateException("Error");
+					}
+				 }
 				super.onEvent(target);
 			}
 		});
+		addCommentForm.setMultiPart(true);
 		addCommentForm.add(content);
-		add(submitButton);
+		addCommentForm.add(submitButton);
 		addCommentForm.add(fileUploadField);
 		addCommentForm.setMultiPart(true);
 		add(addCommentForm);
