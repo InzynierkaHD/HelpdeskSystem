@@ -100,9 +100,7 @@ public class AddUserForm extends Panel {
 				new PropertyModel<String>(userDataModel, "haslo"));
 
 		Form<?> creating = new Form("creating") {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
