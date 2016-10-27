@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lista firm</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Lista firm</div>
+		</div>
+
+		<div class="container">
+			<div class="table-responsive">
+				<table id="listaUserow" class="table table-hover" wicket:id="data">
+					<thead>
+						<tr>
+							<th>Nazwa</th>
+							<th>Miejscowość</th>
+							<th>Kod pocztowy</th>
+							<th>Ulica</th>
+							<th>Numer</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr wicket:id="lista">
+							<td span wicket:id="nazwa"></td>
+							<td span wicket:id="mejscowosc"></td>
+							<td span wicket:id="kod_pocztowy"></td>
+							<td span wicket:id="ulica"></td>
+							<td span wicket:id="numer"></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td id="stopka_tab" colspan="5" wicket:id="nav"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

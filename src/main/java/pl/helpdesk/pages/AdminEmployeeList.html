@@ -25,7 +25,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr wicket:id="lista">
+						<tr wicket:id="lista" data-toggle="collapse" data-target="#wiecej"
+							class="accordion-toggle">
 							<td span wicket:id="imie"></td>
 							<td span wicket:id="nazwisko"></td>
 							<td span wicket:id="email"></td>
@@ -35,15 +36,27 @@
 							<td><a href="#" wicket:id="usunUsera"><span
 									wicket:id="usunWyswietl"></span></a><span wicket:id="czyUsuniety"></span></td>
 						</tr>
+						<tr>
+							<td colspan="6" class="hiddenRow"><div
+									class="accordian-body collapse" id="wiecej">Do odtwarzania
+									potrzebna jest przeglądarka internetowa (Internet Explorer,
+									Firefox, Chrome, itp.) wyposażona w Adobe Flash Player w wersji
+									9 lub nowszej. Najnowszą wersję Flash Player można ściągnąć
+									tutaj : http://get.adobe.com/pl/flashplayer/. Jeżeli poniższy
+									film odtwarza się prawidłowo to masz pewność, że zakupiony kurs
+									będzie działał na twoim komputerze: Kurs: wersja demo Wersje
+									elektroniczne to skompresowane pliki rar. Przez użyciem należy
+									je rozpakować za pomocą odpowiedniego programu (np. WinRar
+									www.winrar.pl/winrar/pobierz).</div></td>
+						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<td id="stopka_tab" colspan="5" wicket:id="nav"></td>
+							<td id="stopka_tab" colspan="6" wicket:id="nav"></td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
-
 		</div>
 	</wicket:extend>
 </body>
