@@ -87,7 +87,7 @@ public class IssueListPage extends ClientSuccessPage {
 				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");
 				target.appendJavaScript(" $(\"#myIssuesTable\").slideUp();");
 				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
-
+				target.appendJavaScript("window.scrollTo(0,document.body.scrollHeight);");
 				// super.rowClickEvent();
 			}
 
@@ -95,22 +95,24 @@ public class IssueListPage extends ClientSuccessPage {
 		issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
 		issuePanel.setOutputMarkupId(true);
 		this.myIssueTable = myIssueTable;
-		issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
+		/*issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
 	        @Override
 	        protected void onEvent(final AjaxRequestTarget target) {
+	        	System.out.println("AJAXEVENT");
 	            target.add(issuePanel);
 	        }
-	    });
+	    });*//*
 		add(new AjaxFormSubmitBehavior(issuePanel.getCommentForm().getAddCommentForm(),"onsubmit"){
 
 			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onSubmit(AjaxRequestTarget target) {
+				System.out.println("AJAXEVENT2");
 				target.add(issuePanel);
 				super.onSubmit(target);
 			}
 			
-		});
+		});*/
 		add(myIssueTable);
 		add(issuePanel);
 	}

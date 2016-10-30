@@ -1,13 +1,13 @@
 package pl.helpdesk.forms.comment;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
-import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
@@ -19,6 +19,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import pl.helpdesk.api.ICommentDao;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.panels.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
 /**
@@ -45,7 +46,7 @@ public class CommentForm extends Panel {
 	/**
 	 * Button Zatwierdzający dodanie komentarza
 	 */
-	private Button submitButton;
+	private AjaxButton submitButton;
 	/**
 	 * Lista uploadowanych załączników
 	 */
@@ -54,16 +55,17 @@ public class CommentForm extends Panel {
 	 * Zgłoszenie którego tyczy się komentarz
 	 */
 	private Issue issue;
+	
+	private IssuePanel panel;
 	@SpringBean
 	private ICommentDao commentDao;
 
-	public CommentForm(String id, Issue issue) {
+	public CommentForm(String id, Issue issue, final IssuePanel panel) {
 		super(id);
 		this.issue = issue;
-		submitButton = new Button("submit");
+		this.panel = panel;
 		fileUploadField = new FileUploadField("fileUpload");
 		content = new TextArea<String>("content", Model.of(""));
-		//Update modelu zawartości komentarza przy każdym wpisaniu /usunieciu litery 
 		content.add(new OnChangeAjaxBehavior() {
 
 			private static final long serialVersionUID = 2462233190993745889L;
@@ -76,9 +78,13 @@ public class CommentForm extends Panel {
 			}
 		});
 		addCommentForm = new Form<Void>("addCommentForm");
-		submitButton.add(new AjaxFormSubmitBehavior(addCommentForm, "click") {
+		addCommentForm.setMultiPart(true);
+		addCommentForm.add(submitButton = new AjaxButton("ajaxSubmit") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onEvent(AjaxRequestTarget target) {
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				System.out.println("This request was processed using AJAX");
 				Comment comment = new Comment();
 				comment.setCzyWewnetrzny(false);
 				comment.setDataDodania(new Date());
@@ -86,35 +92,46 @@ public class CommentForm extends Panel {
 				comment.setTresc(content.getValue());
 				comment.setUserDataModel(ApplicationSession.getInstance().getUser());
 				commentDao.save(comment);
-				final FileUpload uploadedFile = fileUploadField.getFileUpload();
-				if (uploadedFile != null) {
+				List<FileUpload> uploadedFiles = fileUploadField.getFileUploads();
+					URL url = this.getClass().getClassLoader().getResource("/Attachments");
+					File newFile2 = new File("/");
+					System.out.println("UPLOADED FILSE: "+uploadedFiles.size());
+					//File newFile1 = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + uploadedFile.getClientFileName());
+					for(FileUpload file : uploadedFiles){
+						File newFileToUpload = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + file.getClientFileName());
+						
+						if (newFileToUpload.exists()) {
+							newFileToUpload.delete();
+						}
 
-					// write to a new file
-					File newFile = new File("Attachments/"
-						+ uploadedFile.getClientFileName());
+						try {
+							newFileToUpload.createNewFile();
+							file.writeTo(newFileToUpload);
 
-					if (newFile.exists()) {
-						newFile.delete();
+							System.out.println("saved file: " + newFileToUpload.getAbsolutePath());
+						} catch (Exception e) {
+							throw new IllegalStateException("Error");
+						}
 					}
-
-					try {
-						newFile.createNewFile();
-						uploadedFile.writeTo(newFile);
-
-						info("saved file: " + uploadedFile.getClientFileName());
-					} catch (Exception e) {
-						throw new IllegalStateException("Error");
-					}
-				 }
-				super.onEvent(target);
+				
+				target.add(panel);
+					
+				// ajax-update the feedback panel
+				// target.add(feedback);
 			}
+
 		});
-		addCommentForm.setMultiPart(true);
 		addCommentForm.add(content);
-		addCommentForm.add(submitButton);
 		addCommentForm.add(fileUploadField);
-		addCommentForm.setMultiPart(true);
 		add(addCommentForm);
+	}
+
+	public AjaxButton getSubmitButton() {
+		return submitButton;
+	}
+
+	public void setSubmitButton(AjaxButton submitButton) {
+		this.submitButton = submitButton;
 	}
 
 	public Issue getIssue() {
@@ -147,14 +164,6 @@ public class CommentForm extends Panel {
 
 	public void setFileUploadField(FileUploadField fileUploadField) {
 		this.fileUploadField = fileUploadField;
-	}
-
-	public Button getSubmitButton() {
-		return submitButton;
-	}
-
-	public void setSubmitButton(Button submitButton) {
-		this.submitButton = submitButton;
 	}
 
 	public List<FileUpload> getListOfAttachments() {

@@ -49,7 +49,7 @@ public class IssuePanel extends Panel {
 		issueTopic = new Label("issueTopic", new PropertyModel<Issue>(this, "issue.temat"));
 		issueContent = new Label("issueContent", new PropertyModel<Issue>(this, "issue.tresc"));
 		clientComments = new RepeatingView("clientComments");
-		commentForm = new CommentForm("commentForm", this.issue);
+		commentForm = new CommentForm("commentForm", this.issue, this);
 		add(clientComments);
 		add(issueTopic);
 		add(issueContent);
@@ -79,7 +79,8 @@ public class IssuePanel extends Panel {
 		commentForm.setIssue(this.getIssue());
 		clientComments.removeAll();
 		 URL url = this.getClass().getClassLoader().getResource("/Attachments");
-		 FileFinder finder = new FileFinder(url.getPath());
+		 File newFile = new File("/");
+		 FileFinder finder = new FileFinder(newFile.getAbsolutePath());
 		 List<File> foundFiles;
 		for (Comment comment : commentDao.getCommentByIssue(this.issue)) {
 			foundFiles = finder.getAllFilesFromFolderBeforeSeparator("_",String.valueOf(comment.getId()));

@@ -1,5 +1,6 @@
 package pl.helpdesk.forms;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ import pl.helpdesk.userSession.ApplicationSession;
  * @author Krzysztof Krocz
  *
  */
-public class AddIssueForm extends Panel{
+public class AddIssueForm extends Panel implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	//@NotNull

@@ -15,6 +15,8 @@ public class FileFinder {
 	private String folderPath;
 	private File folder;
 	
+
+	
 	public FileFinder(String folderPath){
 		this.folderPath = folderPath;
 		this.folder = new File(folderPath);
@@ -42,14 +44,15 @@ public class FileFinder {
 		List<File> fileList = new ArrayList<File>();
 		String[] split;
 		File[] listOfFiles = folder.listFiles();
+		if( listOfFiles != null){
 	    for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
 	    	  split = listOfFiles[i].getName().split(separator);
-	    	  System.out.println("porównuję "+ pattern + " z " + split[0]);
 	    	  if(pattern.equals(split[0]))
 	    	  fileList.add(listOfFiles[i]);
 	      }
 	    }
+		}
 		return fileList;
 	}
 
