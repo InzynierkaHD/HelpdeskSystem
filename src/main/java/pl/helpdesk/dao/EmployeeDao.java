@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Employee;
+import pl.helpdesk.entity.Priority;
 import pl.helpdesk.entity.User;
 
 @Transactional
@@ -23,5 +24,15 @@ public class EmployeeDao extends GenericDao<Employee,Integer> implements IEmploy
 		else
 			return false;
 	}
+
+	@Override
+	public Employee getEmployeeByUser(User user) {
+		Employee employee=(Employee)sessionFactory.getCurrentSession().createCriteria(Employee.class).
+				add(Restrictions.eq("userDataModel", user))
+				.uniqueResult();
+		return employee;
+	}
+	
+	
 }
 

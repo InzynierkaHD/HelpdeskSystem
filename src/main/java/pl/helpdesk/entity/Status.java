@@ -40,4 +40,9 @@ public class Status implements Serializable {
 		this.nazwa = nazwa;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.nazwa;
+	}
 }

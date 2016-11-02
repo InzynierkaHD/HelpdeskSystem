@@ -9,8 +9,11 @@
 <div class="container">
 <button wicket:id="backToIssues" class="btn btn-success"><wicket:message key="back"></wicket:message></button>
  <div class="jumbotron infoOZgloszeniu">
+ <div style="display:inline-block">
      <h2><wicket:message key="temat"></wicket:message> <Label wicket:id="issueTopic"></Label></h2> 
      <p><wicket:message key="tresc"></wicket:message> <label wicket:id="issueContent"></label></p>  
+     <p><wicket:message key="pracownik"></wicket:message><label wicket:id="issueOwner"></label></p></div>
+     <div style="float:right" wicket:id="statusPanel"></div>
   </div>
   <h2><wicket:message key="komentarze"></wicket:message> </h2>
   <div class="well">

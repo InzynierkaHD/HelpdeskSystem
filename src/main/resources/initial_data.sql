@@ -48,3 +48,6 @@ INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tre
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowy komentarz', '2', '2');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (null, false, '2016-09-15 00:00:00', 'To jest przykladowy komentarz', '1', '1');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-06 00:00:00', 'tresc komentarza dla zgloszenia o id 3', '3', '9');
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")

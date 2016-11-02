@@ -21,4 +21,6 @@ public interface IEmployeeDao extends IGenericDao<Employee,Integer>{
 	 *         wypadku
 	 */
 	public Boolean isEmployee(User user);
+	
+	Employee getEmployeeByUser(User user);
 }

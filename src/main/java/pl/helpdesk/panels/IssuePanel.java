@@ -11,6 +11,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -38,6 +39,9 @@ public class IssuePanel extends Panel {
 	private Label issueTopic;
 	private Label issueContent;
 	private CommentForm commentForm;
+	private StatusPanel statusPanel;
+	private Label issueOwner;
+	private String issueOwnerName;
 	@SpringBean
 	private ICommentDao commentDao;
 	@SpringBean
@@ -50,6 +54,10 @@ public class IssuePanel extends Panel {
 		issueContent = new Label("issueContent", new PropertyModel<Issue>(this, "issue.tresc"));
 		clientComments = new RepeatingView("clientComments");
 		commentForm = new CommentForm("commentForm", this.issue, this);
+		statusPanel = new StatusPanel("statusPanel",this);
+		issueOwner = new Label("issueOwner",new PropertyModel<Issue>(this, "issue.employeeDataModel"));
+		add(issueOwner);
+		add(statusPanel);
 		add(clientComments);
 		add(issueTopic);
 		add(issueContent);
@@ -78,6 +86,11 @@ public class IssuePanel extends Panel {
 	protected void onBeforeRender() {
 		commentForm.setIssue(this.getIssue());
 		clientComments.removeAll();
+		/*if(issue != null)
+			issueOwner = new Label("issueOwner",Model.of(issue.getEmployee().getUserDataModel().getLogin()));
+			else{
+				issueOwner = new Label("issueOwner",Model.of("Brak"));
+			}*/
 		 URL url = this.getClass().getClassLoader().getResource("/Attachments");
 		 File newFile = new File("/");
 		 FileFinder finder = new FileFinder(newFile.getAbsolutePath());
@@ -89,7 +102,6 @@ public class IssuePanel extends Panel {
 				System.out.println(file.getName());
 			}
 			if (employeDao.isEmployee(comment.getUserDataModel())){
-				
 				clientComments.add(new WorkerComment(clientComments.newChildId(), comment.getUserDataModel().getLogin(),
 						comment.getTresc(),foundFiles));
 			}
