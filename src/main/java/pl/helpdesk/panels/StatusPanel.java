@@ -7,11 +7,11 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.api.IStatusDao;
 import pl.helpdesk.api.IStatusHistoryDao;
 import pl.helpdesk.components.SelectForm;
@@ -30,7 +30,7 @@ public class StatusPanel extends Panel{
 	private SelectForm statusSelect;
 	private String selectedStatus;
 	private Form setStatusForm;
-	private IssuePanel issue;
+	private IssuePanel issuePanel;
 	@SpringBean 
 	private IStatusHistoryDao statusHistoryDao;
 	
@@ -40,9 +40,12 @@ public class StatusPanel extends Panel{
 	@SpringBean
 	private IEmployeeDao employeeDao;
 	
+	@SpringBean
+	private IIssueDao issueDao;
+	
 	public StatusPanel(String id,IssuePanel issue) {
 		super(id);
-		this.issue = issue;
+		this.issuePanel = issue;
 		setStatusForm = new Form("setStatus");
 		//selectedStatus= statusHistoryDao.getCurrentStatus(this.getIssue().getIssue()).getNazwa();
 		status = new Label("status",new PropertyModel<String>(this,"selectedStatus"));
@@ -52,13 +55,16 @@ public class StatusPanel extends Panel{
 			protected void onUpdate(AjaxRequestTarget target) {
 				StatusHistory statusHistory = new StatusHistory();
 				statusHistory.setData(new Date());
-				statusHistory.setProblemDataModel(getIssue().getIssue());
+				statusHistory.setProblemDataModel(getIssuePanel().getIssue());
 				statusHistory.setStatusDataModel(statusDao.getStatusByName(selectedStatus));
 				if(employeeDao.getEmployeeByUser(ApplicationSession.getInstance().getUser()) != null){
 				Employee employee = employeeDao.getEmployeeByUser(ApplicationSession.getInstance().getUser());
 				statusHistory.setEmployeeDataModel(employee);
-				statusHistoryDao.save(statusHistory);
-				getIssue().getIssue().setEmployee(employee);
+				statusHistoryDao.update(statusHistory);
+				getIssuePanel().getIssue().setEmployee(employee);
+				Issue issueToSave = issueDao.getById(getIssuePanel().getIssue().getId());
+				issueToSave.setEmployee(employee);
+				issueDao.update(issueToSave);
 				}
 				System.out.println("update");
 			}
@@ -72,7 +78,7 @@ public class StatusPanel extends Panel{
 	@Override
 	protected void onBeforeRender() {
 		
-		Status currentStatus = statusHistoryDao.getCurrentStatus(this.getIssue().getIssue());
+		Status currentStatus = statusHistoryDao.getCurrentStatus(this.getIssuePanel().getIssue());
 		if(currentStatus != null){ selectedStatus = currentStatus.getNazwa();
 		System.out.println("zmieniam status na: "+selectedStatus);
 		}
@@ -113,12 +119,12 @@ public class StatusPanel extends Panel{
 
 	
 
-	public IssuePanel getIssue() {
-		return issue;
+	public IssuePanel getIssuePanel() {
+		return issuePanel;
 	}
 
-	public void setIssue(IssuePanel issue) {
-		this.issue = issue;
+	public void setIssuePanel(IssuePanel issue) {
+		this.issuePanel = issue;
 	}
 
 	public IStatusHistoryDao getStatusHistoryDao() {

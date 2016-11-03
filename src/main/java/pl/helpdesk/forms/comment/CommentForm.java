@@ -1,6 +1,7 @@
 package pl.helpdesk.forms.comment;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +96,7 @@ public class CommentForm extends Panel {
 				List<FileUpload> uploadedFiles = fileUploadField.getFileUploads();
 					URL url = this.getClass().getClassLoader().getResource("/Attachments");
 					File newFile2 = new File("/");
-					System.out.println("UPLOADED FILSE: "+uploadedFiles.size());
+					System.out.println("UPLOADED FILSE: "+newFile2.getAbsolutePath());
 					//File newFile1 = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + uploadedFile.getClientFileName());
 					for(FileUpload file : uploadedFiles){
 						File newFileToUpload = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + file.getClientFileName());
@@ -104,14 +105,20 @@ public class CommentForm extends Panel {
 							newFileToUpload.delete();
 						}
 
-						try {
-							newFileToUpload.createNewFile();
-							file.writeTo(newFileToUpload);
+							try {
+								newFileToUpload.createNewFile();
+								file.writeTo(newFileToUpload);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
 
 							System.out.println("saved file: " + newFileToUpload.getAbsolutePath());
-						} catch (Exception e) {
-							throw new IllegalStateException("Error");
-						}
+						
 					}
 				
 				target.add(panel);
