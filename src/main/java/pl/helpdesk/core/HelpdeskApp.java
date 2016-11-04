@@ -64,7 +64,6 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AgentMyProfile", AgentMyProfile.class);
 		mountPage("/EmployeeMyProfile", EmployeeMyProfile.class);
 		mountPage("/AdminAddAgent", AdminAddAgent.class);
-		mountPage("/AdminCompanyList", AdminCompanyList.class);
-		
+		mountPage("/AdminCompanyList", AdminCompanyList.class);	
 	}
 }

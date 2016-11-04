@@ -210,7 +210,7 @@ public class AddUserForm extends Panel {
 	private void createFormComponents(final String userType) {
 		userDataModel = new User();
 		selectCompany = new SelectForm("selectCompany", new PropertyModel<String>(this, "selectedCompany"),
-				companyDao.getAllToString());
+				companyDao.getCompaniesWithoutAgent());
 		selectCompany.setVisible(false);
 		if (userType.equals("agent")) {
 			selectCompany.setVisible(true);

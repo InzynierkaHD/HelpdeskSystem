@@ -30,7 +30,7 @@ public class AdminCompanyList extends AdminSuccessPage {
 
 	@SpringBean
 	private IUserDao userDao;
-	
+
 	@SpringBean
 	private ICompanyDao companyDao;
 
@@ -56,11 +56,14 @@ public class AdminCompanyList extends AdminSuccessPage {
 					final Company company = (Company) item.getModelObject();
 
 					item.add(new Label("nazwa", company.getNazwa()));
+					try {
+						item.add(new Label("przedstawiciel", company.getAgent().getUserDataModel().getImie() + " "
+								+ company.getAgent().getUserDataModel().getNazwisko()));
+					} catch (RuntimeException e) {
+						item.add(new Label("przedstawiciel", "Brak"));
+					}
 					item.add(new Label("mejscowosc", company.getMiejscowosc()));
-					item.add(new Label("kod_pocztowy", company.getKod_pocztowy()));
-					item.add(new Label("ulica",company.getUlica()));
-					item.add(new Label("numer",company.getNumer()));
-					
+
 				}
 
 			};

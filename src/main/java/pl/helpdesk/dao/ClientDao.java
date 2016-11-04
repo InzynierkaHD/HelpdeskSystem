@@ -14,6 +14,9 @@ import pl.helpdesk.entity.User;
 @Transactional
 public class ClientDao extends GenericDao<Client, Integer> implements IClientDao {
 
+	private List<Client> activeClientList;
+
+
 	public ClientDao() {
 		super();
 	}
@@ -34,6 +37,23 @@ public class ClientDao extends GenericDao<Client, Integer> implements IClientDao
 	}
 
 
+//	@Override
+//	public List<Client> clientsFromAgent(Agent agent) {
+//		
+//		 List<Client> clientList = sessionFactory.getCurrentSession().createCriteria(Client.class)
+//				.add(Restrictions.eq("agentDataModel", agent)).list();
+//		 System.out.println(clientList.size());
+//		 activeClientList = null;
+//		 for(Client client : clientList){
+//				if(client.getUserDataModel().getCzy_usuniety()!=true){
+//					activeClientList.add(client);
+//					 System.out.println("Po usunieciu: " +clientList.size());
+//				}
+//			}
+//		 System.out.println("Zwrocilo, koniec funkcji");
+//		 return (List<Client>) activeClientList;
+//	}
+	
 	@Override
 	public List<Client> clientsFromAgent(Agent agent) {
 		return (List<Client>) sessionFactory.getCurrentSession().createCriteria(Client.class)
