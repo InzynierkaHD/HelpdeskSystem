@@ -25,7 +25,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr wicket:id="lista">
+						<tr wicket:id="lista" data-toggle="collapse" data-target="#wiecej"
+							class="accordion-toggle">
 							<td span wicket:id="imie"></td>
 							<td span wicket:id="nazwisko"></td>
 							<td span wicket:id="email"></td>
@@ -38,12 +39,11 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td id="stopka_tab" colspan="5" wicket:id="nav"></td>
+							<td id="stopka_tab" colspan="6" wicket:id="nav"></td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
-
 		</div>
 	</wicket:extend>
 </body>

@@ -16,5 +16,7 @@ public interface ICompanyDao extends IGenericDao<Company,Integer>{
 	public Company getCompanyByName(String companyName);
 
 	public List <Company> getAllCompany();
+	
+	public List<String> getCompaniesWithoutAgent();
 		
 }

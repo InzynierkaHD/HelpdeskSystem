@@ -1,3 +1,18 @@
+ALTER DATABASE `helpdesk` CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `uzytkownicy` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `typy_zgloszen` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `priorytety` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `produkty` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `firmy` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `firma_produkt` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `pracownicy` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `firmy` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `przedstawiciele` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `klienci` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `zgloszenia` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `administratorzy` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `komentarze` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`) VALUES (1,0,0,"email1@gmail.com","04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb","Jan","user","Kowalski",null,0)
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (1,"Problem")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (2,"Wadliwy produkt")
@@ -18,6 +33,7 @@ INSERT INTO `pracownicy`(`Id_Pracownik`, `Id_uzytkownika`) VALUES (3,4)
 INSERT INTO `pracownicy`(`Id_Pracownik`, `Id_uzytkownika`) VALUES (4,5)
 INSERT INTO `firmy`(`Id_Firma`, `Kod_pocztowy`, `Miejscowosc`, `Nazwa`, `Numer`, `Ulica`) VALUES (2,"21450","Warszawa","Przykladowa firma2","Numer2","Przykladowa ulica2")
 INSERT INTO `firmy`(`Id_Firma`, `Kod_pocztowy`, `Miejscowosc`, `Nazwa`, `Numer`, `Ulica`) VALUES (3,"32450","Kraków","Przykladowa firma3","Numer3","Przykladowa ulica3")
+INSERT INTO `firmy`(`Id_Firma`, `Kod_pocztowy`, `Miejscowosc`, `Nazwa`, `Numer`, `Ulica`) VALUES (4,"21132","Gdansk","Przykladowa firma4","Numer4","Przykladowa ulica4")
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`) VALUES (6,0,0,"email6@gmail.com","085fcf44379b5ec76eb980f39050e69a7843649ac8e226ce0a74046eee2db173","Robert","przedstawiciel1","Kowalski",null,0)
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`) VALUES (7,0,0,"email7@gmail.com","8a3e341318a680b2b1abf2aee26646feb6af83d259586d56ecf0d6c673f7e9b2","Patryk","przedstawiciel2","Stepien",null,0)
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`) VALUES (8,0,0,"email8@gmail.com","f4fbdbee5d6557a171a261a8159ec59bf34868461ddf1420bb52b3488a0f8bcc","Dominik","przedstawiciel3","Zanwisko",null,0)
@@ -45,7 +61,7 @@ INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('2', '2016-09-07 00:00:00', NULL, 'Drugie zgłoszenie', 'Treść drugiego zgłoszenia', '1', '1', '1', '1', '1');
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('3', '2016-09-07 00:00:00', NULL, 'temt usera o id 9', 'tresc zgloszenia uzytkownika o id 9', '1', NULL, '2', '2', '9');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-08 00:00:00', 'komentarz pracownika', '1', '2');
-INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowy komentarz', '2', '2');
+INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowyół komentarz', '2', '2');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (null, false, '2016-09-15 00:00:00', 'To jest przykladowy komentarz', '1', '1');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-06 00:00:00', 'tresc komentarza dla zgloszenia o id 3', '3', '9');
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")

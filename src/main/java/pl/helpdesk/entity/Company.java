@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,6 +36,17 @@ public class Company implements Serializable {
 
 	@Column(name = "Miejscowosc", columnDefinition = "VARCHAR(30) NOT NULL")
 	private String miejscowosc;
+ 
+	@OneToOne(mappedBy="companyDataModel")
+	private Agent agent;
+	
+	public Agent getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
 
 	public int getId() {
 		return id;

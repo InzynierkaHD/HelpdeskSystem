@@ -29,8 +29,9 @@ public class Agent implements Serializable{
 	@JoinColumn(name = "Id_uzytkownika", nullable=false)
 	private User userDataModel;
 
+	
 	@OneToOne
-	@JoinColumn(name = "Id_firmy", columnDefinition="INTEGER(5) NOT NULL")
+	@JoinColumn(name="Id_firmy")
 	private Company companyDataModel;
 	
 	

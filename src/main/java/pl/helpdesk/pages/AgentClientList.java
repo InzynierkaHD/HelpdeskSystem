@@ -52,6 +52,7 @@ public class AgentClientList extends AgentSuccessPage {
 				final Client client = (Client) item.getModelObject();
 				item.add(new Label("imie", client.getUserDataModel().getImie()));
 				item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));
+				
 				item.add(new Label("email", client.getUserDataModel().getEmail()));
 				item.add(new Label("ostatnie_logowanie", client.getUserDataModel().getOst_logowanie()));
 
