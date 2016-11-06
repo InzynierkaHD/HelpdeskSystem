@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -21,6 +24,15 @@ import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.panels.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
+
+///*//DM start
+import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.INotificationDao;
+import pl.helpdesk.api.IUserNotificationsDao;
+import pl.helpdesk.entity.Notification;
+import pl.helpdesk.entity.UserNotifications;
+import pl.helpdesk.mailsender.mailSender;
+//*///DM stop
 
 /**
  * Panel zawierający formularz dodania zgłoszenia
@@ -59,6 +71,15 @@ public class CommentForm extends Panel {
 	private IssuePanel panel;
 	@SpringBean
 	private ICommentDao commentDao;
+	
+	///*// DM start
+	@SpringBean
+	private INotificationDao notificationDao;
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+	@SpringBean
+	private IEmployeeDao employeeDao;
+	//*/// DM stop
 
 	public CommentForm(String id, Issue issue, final IssuePanel panel) {
 		super(id);
@@ -92,6 +113,7 @@ public class CommentForm extends Panel {
 				comment.setTresc(content.getValue());
 				comment.setUserDataModel(ApplicationSession.getInstance().getUser());
 				commentDao.save(comment);
+				
 				List<FileUpload> uploadedFiles = fileUploadField.getFileUploads();
 					URL url = this.getClass().getClassLoader().getResource("/Attachments");
 					File newFile2 = new File("/");
@@ -118,8 +140,50 @@ public class CommentForm extends Panel {
 					
 				// ajax-update the feedback panel
 				// target.add(feedback);
+				
+				
+				///* DM start
+				if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser()))
+				{
+						try {
+							wyslanieMaila();
+						} catch (AddressException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (MessagingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+				}
+				//} catch(Exception e) {}
+				//*/ // DM stop
+			} //--------------------------------------------------------------------------------------------------------------
+			///*// DM start
+			private void wyslanieMaila() throws AddressException, MessagingException {
+				
+				Notification notification = new Notification();
+				notification.setNazwa("Powiadomienie - nowa odpowiedz");
+				notification.setTresc(content.getValue());
+				notificationDao.save(notification);
+				
+				
+				UserNotifications userNotifications = new UserNotifications();
+				userNotifications.setDataWyslania(new Date());
+				userNotifications.setNotificationDataModel(notification);
+				userNotifications.setUserDataModel(getIssue().getUser());
+				userNotifications.setEmail(getIssue().getUser().getEmail());
+				userNotificationsDao.save(userNotifications);
+				
+				System.out.println(notification.getNazwa() + "\n" + notification.getTresc() + "\n" + userNotifications.getDataWyslania().toString() + "\n" + userNotifications.getEmail());
+				mailSender mailsender = new mailSender();
+				mailsender.sendMail("pracownikhelpdesku", 
+						"damian.miacz@gmail.com", 
+						notification.getNazwa(), 
+						"Adresatem tej wiadomosci jest " + getIssue().getUser().getImie() + " " + getIssue().getUser().getNazwisko() + "\nPracownik HelpDesku odpowiedział na Twoje zgłoszenie!\n\nTresc odpowiedzi jest nastepujaca:\n" + notification.getTresc()
+				);
+				
 			}
-
+			// */// DM stop
 		});
 		addCommentForm.add(content);
 		addCommentForm.add(fileUploadField);

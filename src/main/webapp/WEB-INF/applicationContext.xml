@@ -53,5 +53,9 @@
     <bean id="issueDao" class="pl.helpdesk.dao.IssueDao" parent="genericDao"></bean>
     <bean id="commentDao" class="pl.helpdesk.dao.CommentDao" parent="genericDao"></bean>
      <bean id="companyDao" class="pl.helpdesk.dao.CompanyDao" parent="genericDao"></bean>
+     <bean id="notificationDao" class='pl.helpdesk.dao.NotificationDao'
+     	parent="genericDao">
+     </bean>
+     <bean id="userNotificationsDao" class="pl.helpdesk.dao.UserNotificationsDao" parent="genericDao"></bean>
 
 </beans>
