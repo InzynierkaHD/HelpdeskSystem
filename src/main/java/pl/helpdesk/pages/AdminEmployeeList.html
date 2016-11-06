@@ -12,6 +12,17 @@
 		</div>
 
 		<div class="container">
+		
+		
+
+	<form wicket:id="form">
+		
+			<label>Sortuj według :</label>
+			<span wicket:id="sortowanie"></span>
+		<input type="text" size="40" wicket:id="serachingSurname" class="form-control"
+						name="serachingSurname" placeholder="Nazwisko">
+		<input type="submit" value="Sortuj" />
+	</form>
 			<div class="table-responsive">
 				<table id="listaUserow" class="table table-hover" wicket:id="data">
 					<thead>

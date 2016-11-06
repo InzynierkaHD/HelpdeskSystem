@@ -1,25 +1,45 @@
 package pl.helpdesk.pages;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 
 import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.entity.Employee;
+import pl.helpdesk.entity.User;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class AdminEmployeeList extends AdminSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
+	private User userDataModel;
+	//private TextField<String> serachingSurname;
+	
+	//choices in radio button
+	private static final List<String> SORTUJ = Arrays
+			.asList(new String[] { "Nazwisko", "E-mail", "Ostatnie logowanie", "Blokowany" });
+
+	//variable to hold radio button values
+	private String selected = "Nazwisko";
+	
 	@SpringBean
 	private IEmployeeDao employeeDao;
 
@@ -35,11 +55,62 @@ public class AdminEmployeeList extends AdminSuccessPage {
 		if (!(ApplicationSession.getInstance().getUser() == null)
 				&& adminDao.isAdmin(ApplicationSession.getInstance().getUser())) {
 
+
+
+
+				//add(new FeedbackPanel("feedback"));
+
+
+				userDataModel = new User();
+				RadioChoice<String> sortingType = new RadioChoice<String>(
+						"sortowanie", new PropertyModel<String>(this, "selected"), SORTUJ);
+				
+				final TextField<String> serachingSurname = new TextField<String>("serachingSurname", new PropertyModel<String>(userDataModel, "nazwisko"));
+				Form<?> form = new Form<Void>("form") {
+					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected void onSubmit() {
+						 PageParameters parameterss = new PageParameters();
+						 parameterss.set("sortBy", selected );
+						 String serachingSurnameOK = serachingSurname.getInput();
+						 parameterss.set("serachingSurname", serachingSurnameOK );
+						
+						 setResponsePage(AdminEmployeeList.class, parameterss);
+						
+					}
+				};
+
+				add(form);
+				form.add(sortingType);
+				form.add(serachingSurname);
+				
+			
+			
 			WebMarkupContainer datacontainer = new WebMarkupContainer("data");
 			datacontainer.setOutputMarkupId(true);
 			add(datacontainer);
-
-			PageableListView<?> pageableListView = new PageableListView<Employee>("lista", employeeDao.getAll(), 8) {
+			
+			
+			String sorting = ""; 
+			if (parameters.get("sortBy").isEmpty()) {
+				sorting = "Nazwisko";
+			} else{
+				sorting = String.valueOf(parameters.get("sortBy"));
+			}
+			
+			String surnamee = ""; 
+			if (parameters.get("serachingSurname").isEmpty()) {
+				surnamee = "";
+			} else{
+				surnamee = String.valueOf(parameters.get("serachingSurname"));
+			}
+			
+			PageableListView<?> pageableListView = new PageableListView<Employee>("lista", employeeDao.getSortedEmployees(sorting, surnamee), 8) {
 
 				/**
 				 * 
