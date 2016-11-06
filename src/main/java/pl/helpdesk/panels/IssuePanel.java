@@ -50,7 +50,7 @@ public class IssuePanel extends Panel {
 	public IssuePanel(String id, Issue issue) {
 		super(id);
 		this.issue = issue;
-		issueTopic = new Label("issueTopic", new PropertyModel<Issue>(this, "issue.temat"));
+		issueTopic = new Label("issueTopic", new PropertyModel<Issue>(this, "issue.id"));
 		issueContent = new Label("issueContent", new PropertyModel<Issue>(this, "issue.tresc"));
 		clientComments = new RepeatingView("clientComments");
 		commentForm = new CommentForm("commentForm", this.issue, this);
@@ -97,16 +97,12 @@ public class IssuePanel extends Panel {
 		 List<File> foundFiles;
 		for (Comment comment : commentDao.getCommentByIssue(this.issue)) {
 			foundFiles = finder.getAllFilesFromFolderBeforeSeparator("_",String.valueOf(comment.getId()));
-			System.out.println("Lista pasujacych plikow do wzorca "+ comment.getId());
-			for(File file : foundFiles){
-				System.out.println(file.getName());
-			}
 			if (employeDao.isEmployee(comment.getUserDataModel())){
-				clientComments.add(new WorkerComment(clientComments.newChildId(), comment.getUserDataModel().getLogin(),
+				clientComments.add(new WorkerComment(clientComments.newChildId(), comment.getUserDataModel().getImie()+" "+comment.getUserDataModel().getNazwisko(),comment.getDataDodania(),
 						comment.getTresc(),foundFiles));
 			}
 			else {
-				clientComments.add(new ClientComment(clientComments.newChildId(), comment.getUserDataModel().getLogin(),
+				clientComments.add(new ClientComment(clientComments.newChildId(), comment.getUserDataModel().getImie()+" "+comment.getUserDataModel().getNazwisko(),comment.getDataDodania(),
 						comment.getTresc(),foundFiles));
 			}
 		}

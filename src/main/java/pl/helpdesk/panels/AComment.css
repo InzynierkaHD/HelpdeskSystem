@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+.panel-body{
+	word-wrap: break-word;
+}
+#dateComment{
+	float:right;
+}

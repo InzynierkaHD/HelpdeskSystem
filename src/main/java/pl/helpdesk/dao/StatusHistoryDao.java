@@ -11,9 +11,11 @@ public class StatusHistoryDao  extends GenericDao<StatusHistory,Integer> impleme
 
 	@Override
 	public Status getCurrentStatus(Issue issue) {
-		Status currentStatus = (Status)sessionFactory.getCurrentSession().createCriteria(StatusHistoryDao.class)
+		Status issueStatus = null;
+		StatusHistory currentStatusHistory = (StatusHistory)sessionFactory.getCurrentSession().createCriteria(StatusHistory.class)
 				.add(Restrictions.eqOrIsNull("problemDataModel", issue)).uniqueResult();
-		return currentStatus;
+		if(currentStatusHistory != null) issueStatus = currentStatusHistory.getStatusDataModel();
+		return issueStatus;
 	}
 
 	

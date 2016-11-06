@@ -48,8 +48,9 @@ public class StatusPanel extends Panel{
 		this.issuePanel = issue;
 		setStatusForm = new Form("setStatus");
 		//selectedStatus= statusHistoryDao.getCurrentStatus(this.getIssue().getIssue()).getNazwa();
-		status = new Label("status",new PropertyModel<String>(this,"selectedStatus"));
 		statusSelect = new SelectForm("statusSelect",new PropertyModel<String>(this,"selectedStatus"),statusDao.getAllToString());
+		status = new Label("status",new PropertyModel<String>(this,"selectedStatus"));
+		status.setOutputMarkupId(true);
 		statusSelect.add(new AjaxFormComponentUpdatingBehavior("onchange"){
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
@@ -65,8 +66,8 @@ public class StatusPanel extends Panel{
 				Issue issueToSave = issueDao.getById(getIssuePanel().getIssue().getId());
 				issueToSave.setEmployee(employee);
 				issueDao.update(issueToSave);
+				target.add(status);
 				}
-				System.out.println("update");
 			}
 		});
 		statusSelect.setVisible(false);
@@ -77,7 +78,7 @@ public class StatusPanel extends Panel{
 	}
 	@Override
 	protected void onBeforeRender() {
-		
+		selectedStatus = "nowe";
 		Status currentStatus = statusHistoryDao.getCurrentStatus(this.getIssuePanel().getIssue());
 		if(currentStatus != null){ selectedStatus = currentStatus.getNazwa();
 		System.out.println("zmieniam status na: "+selectedStatus);

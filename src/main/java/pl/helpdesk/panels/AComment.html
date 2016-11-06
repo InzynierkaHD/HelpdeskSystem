@@ -1,7 +1,11 @@
 <wicket:panel>
 <div class="panel " wicket:id="comment">
-      <div class="panel-heading" wicket:id="commentHeader"></div>
+      <div class="panel-heading">
+      <span wicket:id="commentHeader"></span>
+      <span wicket:id="date" id="dateComment"></span>
+      </div>
       <div class="panel-body" wicket:id="commentContent"></div>
-      <button wicket:id="attachments" style="background:yellowgreen">Za³¹cznik</button>
+      <input type="button" wicket:id="attachments" style="background:yellowgreen"/>
+      <!-- <a wicket:id="attachments" style="background:yellowgreen" ></a> -->
     </div>
 </wicket:panel>
