@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lista pracowników</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Lista klientów</div>
+		</div>
+
+		<div class="container">
+			<form wicket:id="form" role="form" class="form-horizontal"
+				id="form_dodawanieUsera">
+
+
+
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Nazwisko</label>
+				<div class="col-sm-5">
+					<input type="text" size="40" wicket:id="serachingSurname"
+						class="form-control" name="serachingSurname" placeholder="Nazwisko">
+				</div>
+				<div class="col-sm-4">
+					
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Sortuj według</label>
+				<div class="col-sm-5">
+					<select style="background: white; width: 100%; color: #555555;"
+						wicket:id="sortowanie"></select>
+				</div>
+				<div class="col-sm-4">
+				</div>
+			</div>
+		</div>
+		
+				<div class="row">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-5"></div>
+					<div class="col-sm-4">
+						<input type="submit" class="przycisk" id="przycisk" value="Pokaż" />
+					</div>
+				</div>
+
+
+			</form>
+		<br />
+		<div class="table-responsive">
+			<table id="listaUserow" class="table table-hover" wicket:id="data">
+				<thead>
+					<tr>
+						<th>Imie</th>
+						<th>Nazwisko</th>
+						<th>Firma</th>
+						<th>E-mail</th>
+						<th>Ostatnie logowanie</th>
+						<th colspan="2">Liczba klientów: <span wicket:id="liczbaKlientow"></span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr wicket:id="lista" data-toggle="collapse" data-target="#wiecej"
+						class="accordion-toggle">
+						<td span wicket:id="imie"></td>
+						<td span wicket:id="nazwisko"></td>
+						<td span wicket:id="firma"></td>
+						<td span wicket:id="email"></td>
+						<td span wicket:id="ostatnie_logowanie"></td>
+						<td><a href="#" wicket:id="zablokujUsera"><span
+								wicket:id="blokujWyswietl"></span></a></td>
+						<td><a href="#" wicket:id="usunUsera"><span
+								wicket:id="usunWyswietl"></span></a><span wicket:id="czyUsuniety"></span></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td id="stopka_tab" colspan="7" wicket:id="nav"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

@@ -5,6 +5,7 @@ import java.util.List;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
+import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.User;
 
 /**
@@ -39,4 +40,9 @@ public interface IClientDao extends IGenericDao<Client,Integer>{
 	 * @return lista klientów danego przedstawiciela
 	 */
 	public List <Client> clientsFromAgent(Agent agent);
+	
+	
+public List<Client> getSortedClients(String sortBy, String surname);
+	
+	public String numOfCl(String surname);
 }
