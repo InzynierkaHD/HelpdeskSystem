@@ -34,14 +34,12 @@ public class CompanyDao extends GenericDao<Company, Integer> implements ICompany
 	public List<String> getCompaniesWithoutAgent(){
 
 		List <Company> withoutAgent = getAllCompany();
-		System.out.println(withoutAgent.size());
 		List <Company> allCompanies = getAllCompany();
 		for(Company company : allCompanies){
 			if(company.getAgent()!=null){
 				withoutAgent.remove(company);
 			}
 		}
-		System.out.println("liczba firm bez przedstawieiela: "+withoutAgent.size());
 		List<String> listOfString = new ArrayList<String>();
 		for(Object value : withoutAgent){
 			listOfString.add(value.toString());

@@ -29,4 +29,6 @@ public interface IEmployeeDao extends IGenericDao<Employee,Integer>{
 	Employee getEmployeeByUser(User user);
 	
 	public List<Employee> getSortedEmployees(String sortBy, String surname);
+	
+	public String numOfEmpl(String surname);
 }
