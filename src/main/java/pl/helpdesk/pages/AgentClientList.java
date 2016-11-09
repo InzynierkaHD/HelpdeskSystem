@@ -2,7 +2,11 @@ package pl.helpdesk.pages;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -17,6 +21,7 @@ import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
+import pl.helpdesk.mailsender.mailSender;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class AgentClientList extends AgentSuccessPage {
@@ -31,6 +36,7 @@ public class AgentClientList extends AgentSuccessPage {
 
 	@SpringBean
 	private IClientDao clientDao;
+	
 
 	final Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
 
@@ -85,6 +91,11 @@ public class AgentClientList extends AgentSuccessPage {
 							client.getUserDataModel().setCzy_blokowany(true);
 							userDao.update(client.getUserDataModel());
 						}
+						
+						
+						// DM - wyslanie maila
+						sendMail(client);
+						// DM stop
 					}
 				};
 				item.add(zablokujUsera.add(blokujWyswietl));
@@ -101,6 +112,10 @@ public class AgentClientList extends AgentSuccessPage {
 					public void onClick() {
 						client.getUserDataModel().setCzy_usuniety(true);
 						userDao.update(client.getUserDataModel());
+						
+						// DM - wyslanie maila
+						sendMail(client);
+						// DM stop
 					}
 				};
 				usunUsera.setVisible(false);
@@ -121,4 +136,22 @@ public class AgentClientList extends AgentSuccessPage {
 		setResponsePage(LoginPage.class);
 	}
 	}
+	
+	// DM start
+		private void sendMail(final Client client) {
+			
+			String statusKlienta;
+			if(client.getUserDataModel().getCzy_blokowany()) statusKlienta = "zablokowane";
+			else if (client.getUserDataModel().getCzy_usuniety()) statusKlienta = "usunięte";
+			else statusKlienta = "odblokowane";
+			
+			mailSender mailsender = new mailSender();
+			mailsender.sendNotify("Powiadomienie - stan konta", 
+					"Adresatem tej wiadomosci jest " + client.getUserDataModel().getImie() + " " + client.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + client.getUserDataModel().getLogin() + " zostalo " + statusKlienta + "!", 
+					new Date(), 
+					client.getUserDataModel());
+			
+			
+		};
+	// DM stop
 }

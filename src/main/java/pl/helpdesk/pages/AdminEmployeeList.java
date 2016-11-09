@@ -1,5 +1,10 @@
 package pl.helpdesk.pages;
 
+import java.util.Date;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -12,8 +17,13 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.entity.Employee;
+import pl.helpdesk.entity.Notification;
+import pl.helpdesk.entity.UserNotifications;
+import pl.helpdesk.mailsender.mailSender;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class AdminEmployeeList extends AdminSuccessPage {
@@ -25,9 +35,10 @@ public class AdminEmployeeList extends AdminSuccessPage {
 
 	@SpringBean
 	private IAdminDao adminDao;
-
+	
 	@SpringBean
 	private IUserDao userDao;
+
 
 	public AdminEmployeeList(PageParameters parameters) {
 		super(parameters);
@@ -77,6 +88,8 @@ public class AdminEmployeeList extends AdminSuccessPage {
 
 						@Override
 						public void onClick() {
+							
+							
 							if (employee.getUserDataModel().getCzy_blokowany()) {
 								employee.getUserDataModel().setCzy_blokowany(false);
 								userDao.update(employee.getUserDataModel());
@@ -84,7 +97,12 @@ public class AdminEmployeeList extends AdminSuccessPage {
 								employee.getUserDataModel().setCzy_blokowany(true);
 								userDao.update(employee.getUserDataModel());
 							}
+							// DM - wyslanie maila
+							sendMail(employee);
+							// DM stop
 						}
+
+						
 					};
 					item.add(zablokujUsera.add(blokujWyswietl));
 
@@ -100,6 +118,10 @@ public class AdminEmployeeList extends AdminSuccessPage {
 						public void onClick() {
 							employee.getUserDataModel().setCzy_usuniety(true);
 							userDao.update(employee.getUserDataModel());
+							
+							// DM - wyslanie maila
+							sendMail(employee);
+							// DM stop
 						}
 					};
 					usunUsera.setVisible(false);
@@ -121,6 +143,23 @@ public class AdminEmployeeList extends AdminSuccessPage {
 		} else {
 			setResponsePage(LoginPage.class);
 		}
-	}
 
+	}
+// DM start
+	private void sendMail(final Employee employee) {
+		
+		String statusPracownika;
+		if(employee.getUserDataModel().getCzy_blokowany()) statusPracownika = "zablokowane";
+		else if (employee.getUserDataModel().getCzy_usuniety()) statusPracownika = "usunięte";
+		else statusPracownika = "odblokowane";
+		
+		
+		mailSender mailsender = new mailSender();
+		mailsender.sendNotify("Powiadomienie - stan konta", 
+				"Adresatem tej wiadomosci jest " + employee.getUserDataModel().getImie() + " " + employee.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + employee.getUserDataModel().getLogin() + " zostalo " + statusPracownika + "!", 
+				new Date(), 
+				employee.getUserDataModel());
+
+	};
+// DM stop
 }

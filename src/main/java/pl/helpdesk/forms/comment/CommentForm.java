@@ -18,8 +18,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.ICommentDao;
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.mailsender.mailSender;
 import pl.helpdesk.panels.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
@@ -60,6 +62,12 @@ public class CommentForm extends Panel {
 	private IssuePanel panel;
 	@SpringBean
 	private ICommentDao commentDao;
+	
+	///*// DM start
+	@SpringBean
+	private IEmployeeDao employeeDao;
+	
+	//*/// DM stop
 
 	public CommentForm(String id, Issue issue, final IssuePanel panel) {
 		super(id);
@@ -125,6 +133,17 @@ public class CommentForm extends Panel {
 					
 				// ajax-update the feedback panel
 				// target.add(feedback);
+				
+				///* DM start
+				if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser()))
+				{
+					mailSender mailsender = new mailSender();
+					mailsender.sendNotify("Powiadomienie - stan konta", 
+							"Adresatem tej wiadomosci jest " + getIssue().getUser().getImie() + " " + getIssue().getUser().getNazwisko() + "\nPracownik HelpDesku odpowiedział na Twoje zgłoszenie!\n\nTresc odpowiedzi jest nastepujaca:\n" + content.getValue(), 
+							new Date(), 
+							getIssue().getUser());
+				}
+				//*/ // DM stop
 			}
 
 		});
