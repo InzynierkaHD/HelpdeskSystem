@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans.xsd 
            http://www.springframework.org/schema/context 
            http://www.springframework.org/schema/context/spring-context-3.1.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
-	
+
 	<context:component-scan base-package="pl.helpdesk.impl" />
-	<context:property-placeholder location="classpath:application.properties"/>
-	<context:annotation-config/>
-	<tx:annotation-driven/>
-	
-	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.show_sql">>${hibernate.show_sql}</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-                <prop key="hibernate.hbm2ddl.import_files">initial_data.sql</prop>
-                <prop key="hibernate.connection.useUnicode">true</prop>
-                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
-                <prop key="hibernate.connection.charSet">UTF-8</prop>    
-                <prop key="hibernate.connection.charSet">${hibernate.connection.CharSet}</prop>
-        		<prop key="hibernate.connection.characterEncoding">${hibernate.connection.characterEncoding}</prop>
-        		<prop key="hibernate.connection.useUnicode">${hibernate.connection.useUnicode}</prop>
-            </props>
-        </property>
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="pl.helpdesk.entity"/>
-    </bean>
-    
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-<property name="driverClassName" value="${jdbc.driverClassName}" />
-<property name="url" value="${jdbc.url}" /> 
-<property name="username" value="${jdbc.username}" />
-<property name="password" value="${jdbc.password}" />
+	<context:property-placeholder location="classpath:application.properties" />
+	<context:annotation-config />
+	<tx:annotation-driven />
 
 
-</bean>
-    
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    <bean id="genericDao" abstract="true" class="pl.helpdesk.dao.GenericDao"></bean>
-    <bean id="userSpring" class="pl.helpdesk.dao.UserSpringDao"></bean>
-    <bean id="issueTypeDao" class="pl.helpdesk.dao.IssueTypeDao" parent="genericDao"></bean>
-    <bean id="priorityDao" class="pl.helpdesk.dao.PriorityDao" parent="genericDao"></bean>
-    <bean id="companyProductDao" class="pl.helpdesk.dao.CompanyProductDao" parent="genericDao"></bean>
-    <bean id="employeeDao" class="pl.helpdesk.dao.EmployeeDao" parent="genericDao"></bean>
-    <bean id="adminDao" class="pl.helpdesk.dao.AdminDao" parent="genericDao"></bean>
-    <bean id="agentDao" class="pl.helpdesk.dao.AgentDao" parent="genericDao"></bean>
-    <bean id="clientDao" class="pl.helpdesk.dao.ClientDao" parent="genericDao"></bean>
-    <bean id="loggingHistoryDao" class="pl.helpdesk.dao.LoggingHistoryDao" parent="genericDao"></bean>
-    <bean id="productDao" class="pl.helpdesk.dao.ProductDao" parent="genericDao"></bean>
-    <bean id="issueDao" class="pl.helpdesk.dao.IssueDao" parent="genericDao"></bean>
-    <bean id="commentDao" class="pl.helpdesk.dao.CommentDao" parent="genericDao"></bean>
-     <bean id="companyDao" class="pl.helpdesk.dao.CompanyDao" parent="genericDao"></bean>
-	<bean id="statusHistoryDao" class="pl.helpdesk.dao.StatusHistoryDao" parent="genericDao"></bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">>${hibernate.show_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>
+				<prop key="hibernate.hbm2ddl.import_files">initial_data.sql</prop>
+
+				<!-- <prop key="hibernate.connection.charSet">${hibernate.connection.CharSet}</prop> 
+					<prop key="hibernate.connection.characterEncoding">${hibernate.connection.characterEncoding}</prop> 
+					<prop key="hibernate.connection.useUnicode">${hibernate.connection.useUnicode}</prop> -->
+			</props>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="pl.helpdesk.entity" />
+
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/helpdesk?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		
+	</bean>
+	<bean id="genericDao" abstract="true" class="pl.helpdesk.dao.GenericDao"></bean>
+	<bean id="userSpring" class="pl.helpdesk.dao.UserSpringDao"></bean>
+	<bean id="issueTypeDao" class="pl.helpdesk.dao.IssueTypeDao"
+		parent="genericDao"></bean>
+	<bean id="priorityDao" class="pl.helpdesk.dao.PriorityDao" parent="genericDao"></bean>
+	<bean id="companyProductDao" class="pl.helpdesk.dao.CompanyProductDao"
+		parent="genericDao"></bean>
+	<bean id="employeeDao" class="pl.helpdesk.dao.EmployeeDao" parent="genericDao"></bean>
+	<bean id="adminDao" class="pl.helpdesk.dao.AdminDao" parent="genericDao"></bean>
+	<bean id="agentDao" class="pl.helpdesk.dao.AgentDao" parent="genericDao"></bean>
+	<bean id="clientDao" class="pl.helpdesk.dao.ClientDao" parent="genericDao"></bean>
+	<bean id="loggingHistoryDao" class="pl.helpdesk.dao.LoggingHistoryDao"
+		parent="genericDao"></bean>
+	<bean id="productDao" class="pl.helpdesk.dao.ProductDao" parent="genericDao"></bean>
+	<bean id="issueDao" class="pl.helpdesk.dao.IssueDao" parent="genericDao"></bean>
+	<bean id="commentDao" class="pl.helpdesk.dao.CommentDao" parent="genericDao"></bean>
+	<bean id="companyDao" class="pl.helpdesk.dao.CompanyDao" parent="genericDao"></bean>
+	<bean id="statusHistoryDao" class="pl.helpdesk.dao.StatusHistoryDao"
+		parent="genericDao"></bean>
 	<bean id="statusDao" class="pl.helpdesk.dao.StatusDao" parent="genericDao"></bean>
 </beans>
