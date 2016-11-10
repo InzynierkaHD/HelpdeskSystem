@@ -8,7 +8,7 @@
 <body>
 	<wicket:extend>
 		<div class="container-fluid">
-			<div id="tytul_strony">Lista pracowników</div>
+			<div id="tytul_strony">Lista klientów</div>
 		</div>
 
 		<div class="container">
@@ -58,9 +58,10 @@
 					<tr>
 						<th>Imie</th>
 						<th>Nazwisko</th>
+						<th>Firma</th>
 						<th>E-mail</th>
 						<th>Ostatnie logowanie</th>
-						<th colspan="2">Liczba Pracowników: <span wicket:id="liczbaPracownikow"></span></th>
+						<th colspan="2">Liczba klientów: <span wicket:id="liczbaKlientow"></span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -68,6 +69,7 @@
 						class="accordion-toggle">
 						<td span wicket:id="imie"></td>
 						<td span wicket:id="nazwisko"></td>
+						<td span wicket:id="firma"></td>
 						<td span wicket:id="email"></td>
 						<td span wicket:id="ostatnie_logowanie"></td>
 						<td><a href="#" wicket:id="zablokujUsera"><span
@@ -78,7 +80,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td id="stopka_tab" colspan="6" wicket:id="nav"></td>
+						<td id="stopka_tab" colspan="7" wicket:id="nav"></td>
 					</tr>
 				</tfoot>
 			</table>

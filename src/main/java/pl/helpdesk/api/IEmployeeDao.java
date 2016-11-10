@@ -1,5 +1,9 @@
 package pl.helpdesk.api;
 
+import java.util.List;
+
+import org.apache.wicket.util.string.StringValue;
+
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.User;
 
@@ -23,4 +27,8 @@ public interface IEmployeeDao extends IGenericDao<Employee,Integer>{
 	public Boolean isEmployee(User user);
 	
 	Employee getEmployeeByUser(User user);
+	
+	public List<Employee> getSortedEmployees(String sortBy, String surname);
+	
+	public String numOfEmpl(String surname);
 }
