@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
@@ -117,11 +118,14 @@ public class AdminEmployeeList extends AdminSuccessPage {
 				@Override
 				protected void populateItem(ListItem<Employee> item) {
 					final Employee employee = (Employee) item.getModelObject();
-
 					item.add(new Label("imie", employee.getUserDataModel().getImie()));
 					item.add(new Label("nazwisko", employee.getUserDataModel().getNazwisko()));
 					item.add(new Label("email", employee.getUserDataModel().getEmail()));
 					item.add(new Label("ostatnie_logowanie", employee.getUserDataModel().getOst_logowanie()));
+					PageParameters a= new PageParameters();
+					a.add("userId", employee.getUserDataModel().getId());
+					item.add(new BookmarkablePageLink<>("editUser", AdminEditUser.class, a));
+					
 
 					final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 						/**

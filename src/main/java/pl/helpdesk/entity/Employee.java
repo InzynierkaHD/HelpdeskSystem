@@ -1,6 +1,8 @@
 package pl.helpdesk.entity;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "pracownicy")
@@ -57,4 +60,5 @@ public class Employee implements Serializable {
 		// TODO Auto-generated method stub
 		return this.getUserDataModel().getLogin();
 	}
+
 }

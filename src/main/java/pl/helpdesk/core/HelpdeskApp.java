@@ -11,6 +11,7 @@ import pl.helpdesk.pages.AdminAddAgent;
 import pl.helpdesk.pages.AdminAddEmployee;
 import pl.helpdesk.pages.AdminClientList;
 import pl.helpdesk.pages.AdminCompanyList;
+import pl.helpdesk.pages.AdminEditUser;
 import pl.helpdesk.pages.AdminEmployeeList;
 import pl.helpdesk.pages.AdminFinalPage;
 import pl.helpdesk.pages.AdminMyProfile;
@@ -21,10 +22,9 @@ import pl.helpdesk.pages.AgentMyProfile;
 import pl.helpdesk.pages.ClientFinalPage;
 import pl.helpdesk.pages.ClientMyProfile;
 import pl.helpdesk.pages.EmployeeFinalPage;
-import pl.helpdesk.pages.EmployeeIssuesList;
 import pl.helpdesk.pages.EmployeeMyProfile;
-import pl.helpdesk.pages.LoginPage;
 import pl.helpdesk.pages.IssueListPage;
+import pl.helpdesk.pages.LoginPage;
 import pl.helpdesk.userSession.ApplicationSession;
 
 //Klasa startowa w niej definiujemy z jakiej klasy startujemy aplikacje
@@ -67,5 +67,6 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AdminAddAgent", AdminAddAgent.class);
 		mountPage("/AdminCompanyList", AdminCompanyList.class);	
 		mountPage("/AdminClientList", AdminClientList.class);	
+		mountPage("/AdminEditUser", AdminEditUser.class);	
 	}
 }
