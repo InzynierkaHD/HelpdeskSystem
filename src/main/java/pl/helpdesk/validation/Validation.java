@@ -42,4 +42,16 @@ public abstract class Validation {
 			return true;
 		}
 	}
+	
+	public static boolean phoneValidate(String phone) {
+		String illegal_regex = "[^0-9]";
+		Pattern p = Pattern.compile(illegal_regex);
+		Matcher m = p.matcher(phone);
+
+		if (m.find()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

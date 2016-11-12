@@ -41,8 +41,18 @@ public class User implements Serializable{
 	@Column(name="Email", unique=true ,columnDefinition="VARCHAR(45) NOT NULL")
 	private String email;
 	
+	@Column(name="Telefon" ,columnDefinition="VARCHAR(15) NOT NULL")
+	private String telefon;
+	
 
 	
+	public String getTelefon() {
+		return telefon;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
 	@Column(name="Ostatnie_logowanie")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ost_logowanie;

@@ -22,14 +22,17 @@ public class AdminEditProfile extends Panel{
 	private User user;
 	private String userLogin;
 	private String userEmail;
+	private String userPhone;
 
 	final Label badEmail;
+	final Label badPhone;
 	final Label loginLength;
 	final Label passLength;
 	final Label userExist;
 	final Label emailExist;
 	final Label emaillOK;
 	final Label loginOK;
+	final Label phoneOK;
 	
 	final Form<AdminEditProfile> form;
 	
@@ -42,19 +45,24 @@ public class AdminEditProfile extends Panel{
 		user = userDao.getById(userId);
 		userLogin = user.getLogin();
 		userEmail = user.getEmail();
+		userPhone= user.getTelefon();
 		
 		badEmail = new Label("bademail", "Wpisz poprawnie email!");
+		badPhone = new Label("badphone", "Wpisz poprawnie numer!");
 		loginLength = new Label("loginlength", "Login musi zawierac od 4 do 15 znaków!");
 		passLength = new Label("passlength", "Hasło musi zawierac od 4 do 15 znaków!");
 		userExist = new Label("userExist", "Użytkownik o podanym loginie istnieje w systemie!");
 		emailExist = new Label("emailExist", "Użytkownik o podanym adresie istnieje w systemie!");
 		emaillOK = new Label("emaillOK", "Zmieniono e-mail!");
 		loginOK = new Label("loginOK", "Zmieniono login!");
+		phoneOK = new Label("phoneOK", "Zmieniono numer telefonu!");
 
+		badPhone.setVisible(false);
 		badEmail.setVisible(false);
 		emaillOK.setVisible(false);
 		loginLength.setVisible(false);
 		loginOK.setVisible(false);
+		phoneOK.setVisible(false);
 		passLength.setVisible(false);
 		userExist.setVisible(false);
 		emailExist.setVisible(false);
@@ -68,9 +76,11 @@ public class AdminEditProfile extends Panel{
 	}
 
 	public void setUserLogin(String userLogin) {
+		badPhone.setVisible(false);
 		badEmail.setVisible(false);
 		emaillOK.setVisible(false);
 		loginLength.setVisible(false);
+		phoneOK.setVisible(false);
 		loginOK.setVisible(false);
 		userExist.setVisible(false);
 		emailExist.setVisible(false);
@@ -96,8 +106,10 @@ public class AdminEditProfile extends Panel{
 	}
 
 	public void setUserEmail(String userEmail) {
+		badPhone.setVisible(false);
 		badEmail.setVisible(false);
 		emaillOK.setVisible(false);
+		phoneOK.setVisible(false);
 		loginLength.setVisible(false);
 		loginOK.setVisible(false);
 		passLength.setVisible(false);
@@ -122,6 +134,37 @@ public class AdminEditProfile extends Panel{
 		setResponsePage(getPage());
 	}
 	
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		badPhone.setVisible(false);
+		badEmail.setVisible(false);
+		emaillOK.setVisible(false);
+		loginLength.setVisible(false);
+		loginOK.setVisible(false);
+		phoneOK.setVisible(false);
+		passLength.setVisible(false);
+		userExist.setVisible(false);
+		emailExist.setVisible(false);
+		try {
+			if (Validation.phoneValidate(userPhone) == false) {
+				badPhone.setVisible(true);
+			}else if (userPhone.equals("") || userPhone.length() > 11 ||  userPhone.length() < 7) {
+				badPhone.setVisible(true);
+			} else {
+				user.setTelefon(userPhone);
+				userDao.update(user);
+				this.userPhone = userPhone;
+				phoneOK.setVisible(true);
+			}
+		} catch (RuntimeException e) {
+			badPhone.setVisible(true);
+		}
+		setResponsePage(getPage());
+	}
+	
 	
 	
 	private void addComponents(){
@@ -130,12 +173,15 @@ public class AdminEditProfile extends Panel{
 		form.add(new Label("userSurname", user.getNazwisko()));
 		form.add(new AjaxEditableLabel<Object>("userLogin"));
 		form.add(new AjaxEditableLabel<Object>("userEmail"));
+		form.add(new AjaxEditableLabel<Object>("userPhone"));
 		form.add(userExist);
 		form.add(loginLength);
 		form.add(emailExist);
 		form.add(badEmail);
+		form.add(badPhone);
 		form.add(emaillOK);
 		form.add(loginOK);
+		form.add(phoneOK);
 		
 	}
 }
