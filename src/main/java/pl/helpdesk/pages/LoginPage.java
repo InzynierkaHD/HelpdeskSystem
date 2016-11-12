@@ -118,7 +118,7 @@ public class LoginPage extends WebPage {
 							if (findedUser.getCzy_usuniety() == true) {
 								System.out.println("Nie ma takiego usera");
 								badLogin.setVisible(Boolean.TRUE);
-							} else if (findedUser.getCzy_blokowany() == true && clientDao.isClient(findedUser)) {
+							} else if (findedUser.getCzy_blokowany() == true ) {
 								System.out.println("Konto zablokowane");
 								userBlocked.setVisible(Boolean.TRUE);
 							} else {
@@ -143,7 +143,9 @@ public class LoginPage extends WebPage {
 						} else if (badPassword == true) {
 							System.out.println("Bledne haslo");
 							badPass.setVisible(Boolean.TRUE);
-							userSpring.incrementBadPassowrd(userDataModel.getLogin());
+							if(clientDao.isClient(findedUser)){
+								userSpring.incrementBadPassowrd(userDataModel.getLogin());
+							}
 						}
 					}
 				}
