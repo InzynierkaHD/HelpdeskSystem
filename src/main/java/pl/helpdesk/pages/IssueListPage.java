@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,6 +19,7 @@ import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.components.table.Tabelka;
 import pl.helpdesk.components.table.TableCol;
+import pl.helpdesk.components.table.TableColumn;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.IssuePanel;
@@ -77,8 +79,14 @@ public class IssueListPage extends ClientSuccessPage {
 		else{
 			listOfRows = issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser());
 		}
-		Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
-				new String[] { "Temat", "Priorytet", "Typ", "Data Dodania", "Pracownik obsługujący" }, listOfRows,issueDao, true) {
+		List<TableColumn> listColumnName = new ArrayList<TableColumn>();
+		listColumnName.add(new TableColumn("Temat","temat"));
+		listColumnName.add(new TableColumn("Priorytet","prioritoryDataModel"));
+		listColumnName.add(new TableColumn("Typ","typeDataModel"));
+		listColumnName.add(new TableColumn("Data Dodania","dataDodania"));
+		listColumnName.add(new TableColumn("Pracownik Obsługujący","employeeDataModel"));
+		final Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
+				listColumnName, listOfRows,issueDao, true) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();

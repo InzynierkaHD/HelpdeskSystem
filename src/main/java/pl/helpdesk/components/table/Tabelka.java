@@ -6,15 +6,13 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -23,9 +21,11 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IGenericDao;
-import pl.helpdesk.forms.AddIssueForm;
+import pl.helpdesk.api.IIssueDao;
+import pl.helpdesk.userSession.ApplicationSession;
 
 public class Tabelka<T> extends Panel {
 
@@ -60,6 +60,10 @@ public class Tabelka<T> extends Panel {
 
 	private List<TableCol> listOfTableColumn;
 	private int rowsPerPage;
+	private List<TableColumn> listOfTableColumnName;
+	
+	@SpringBean
+	private IIssueDao issueDao;
 	/**
 	 * 
 	 * @param id
@@ -79,7 +83,7 @@ public class Tabelka<T> extends Panel {
 	 *            tabelki) jeśli ta opcja jest włączona wszystkie komponenty w
 	 *            tabelce nie są edytowalne!!!
 	 */
-	public Tabelka(String id, final List<TableCol> listOfTableColumn, final String columnHeaders[], List listOfRows,
+	public Tabelka(String id, final List<TableCol> listOfTableColumn, final  List<TableColumn> listOfTableColumnName, List listOfRows,
 			IGenericDao dao, final boolean clickableRow) {
 		super(id);
 		this.rowsPerPage = 10;
@@ -87,13 +91,46 @@ public class Tabelka<T> extends Panel {
 		this.listOfRows = listOfRows;
 		this.clickableRow = clickableRow;
 		this.listOfTableColumn = listOfTableColumn;
+		this.listOfTableColumnName = listOfTableColumnName;
 		listDataProvider = new ListDataProvider(listOfRows);
 		tableHead = new RepeatingView("tableHead");
-		for (String headerName : columnHeaders) {
-			tableHead.add(new Label(tableHead.newChildId(), Model.of(headerName)));
+		final Tabelka thisTable = this;
+		thisTable.setOutputMarkupId(true);
+
+		for (final TableColumn headerName : listOfTableColumnName) {
+			Label headerLabel = new Label(tableHead.newChildId(), Model.of(headerName.getName()));
+			headerLabel.add(new AjaxEventBehavior("click"){
+				@Override
+				protected void onEvent(AjaxRequestTarget target) {
+					
+					if(!headerName.isSortAsc()){ 
+						thisTable.setListOfRows(issueDao.getSortingIssuesForUser(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
+						headerName.setSortAsc(true);
+						System.out.println("counter true");
+						thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
+						target.add(thisTable);
+						return;
+						}
+					if(headerName.isSortAsc()){
+						thisTable.setListOfRows(issueDao.getSortingIssuesForUserDesc(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
+					headerName.setSortAsc(false);
+					System.out.println("counter false");
+					thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
+					target.add(thisTable);
+					return;
+					}
+					
+				}
+				
+			});
+			tableHead.add(headerLabel);
 		}
 		add(tableHead);
+	}
 
+
+	@Override
+	protected void onBeforeRender() {
 		dataView = new DataView<T>("rows", listDataProvider) {
 			@Override
 			protected void populateItem(Item<T> item) {
@@ -125,11 +162,10 @@ public class Tabelka<T> extends Panel {
 			}
 		};
 		dataView.setItemsPerPage(rowsPerPage);
-		add(dataView);
-		add(new AjaxPagingNavigator("pagingNavigator", dataView));
+		addOrReplace(dataView);
+		addOrReplace(new AjaxPagingNavigator("pagingNavigator", dataView));
+		super.onBeforeRender();
 	}
-
-
 
 
 	/**
@@ -167,28 +203,12 @@ public class Tabelka<T> extends Panel {
 
 	}
 
-	void addColumnEditableCheckBox(String entityPropertyName) {
-		this.rowElements.add(new AjaxCheckBox("searchByFio", new PropertyModel(entity, "entityPropertyName")) {
-			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
-				System.out.println("wartosc checkboxa: " + getModelValue());
-				// target.add(nameField);
-			}
-		});
-	}
-
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		PackageResourceReference cssFile = new PackageResourceReference(Tabelka.class, "Tabelka.css");
 		CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
 
 		response.render(cssItem);
-	}
-
-	@Override
-	protected void onRender() {
-		System.out.println("render");
-		super.onRender();
 	}
 
 	/**
