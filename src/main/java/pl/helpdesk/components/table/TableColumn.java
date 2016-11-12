@@ -9,7 +9,7 @@ public class TableColumn {
 	public TableColumn(String name, String daoColumnName){
 		this.name = name;
 		this.daoColumnName = daoColumnName;
-		this.sortAsc = true;
+		this.sortAsc = false;
 	}
 
 	public String getName() {

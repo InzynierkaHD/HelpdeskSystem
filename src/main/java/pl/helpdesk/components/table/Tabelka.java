@@ -106,7 +106,6 @@ public class Tabelka<T> extends Panel {
 					if(!headerName.isSortAsc()){ 
 						thisTable.setListOfRows(issueDao.getSortingIssuesForUser(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
 						headerName.setSortAsc(true);
-						System.out.println("counter true");
 						thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
 						target.add(thisTable);
 						return;
@@ -114,7 +113,6 @@ public class Tabelka<T> extends Panel {
 					if(headerName.isSortAsc()){
 						thisTable.setListOfRows(issueDao.getSortingIssuesForUserDesc(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
 					headerName.setSortAsc(false);
-					System.out.println("counter false");
 					thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
 					target.add(thisTable);
 					return;
