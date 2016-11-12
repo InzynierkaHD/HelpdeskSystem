@@ -42,6 +42,7 @@ public abstract class AdminSuccessPage extends WebPage {
 				options);
 		options.clear();
 		options.put("Lista firm", "AdminCompanyList");
+		options.put("Lista przedstawicieli", "AdminAgentList");
 		options.put("Lista użytkowników", "AdminClientList");
 		options.put("Dodaj przedstawiciela", "AdminAddAgent");
 		INavbarComponent firmy = new Dropdown("<span class=\"glyphicon glyphicon-briefcase\"></span> Firmy", options);

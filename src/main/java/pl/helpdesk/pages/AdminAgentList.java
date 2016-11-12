@@ -13,21 +13,21 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import pl.helpdesk.api.IAdminDao;
-import pl.helpdesk.api.IClientDao;
-import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
-import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class AdminClientList extends AdminSuccessPage {
+public class AdminAgentList extends AdminSuccessPage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class AdminClientList extends AdminSuccessPage {
 	private String selected= "Nazwisko";
 	
 	@SpringBean
-	private IClientDao clientDao;
+	private IAgentDao agentDao;
 
 	@SpringBean
 	private IAdminDao adminDao;
@@ -47,7 +47,7 @@ public class AdminClientList extends AdminSuccessPage {
 	@SpringBean
 	private IUserDao userDao;
 
-	public AdminClientList(PageParameters parameters) {
+	public AdminAgentList(PageParameters parameters) {
 		super(parameters);
 
 		if (!(ApplicationSession.getInstance().getUser() == null)
@@ -69,7 +69,7 @@ public class AdminClientList extends AdminSuccessPage {
 					parameterss.set("sortBy", sortByOK);
 					String serachingSurnameOK = serachingSurname.getInput();
 					parameterss.set("serachingSurname", serachingSurnameOK);
-					setResponsePage(AdminClientList.class, parameterss);
+					setResponsePage(AdminAgentList.class, parameterss);
 				}
 			};
 
@@ -95,23 +95,23 @@ public class AdminClientList extends AdminSuccessPage {
 				surnamee = String.valueOf(parameters.get("serachingSurname"));
 			}
 			
-			datacontainer.add(new Label("liczbaKlientow", clientDao.numOfCl(surnamee)));
-			PageableListView<?> pageableListView = new PageableListView<Client>("lista",
-					clientDao.getSortedClients(sorting, surnamee), 8) {
+			datacontainer.add(new Label("liczbaPrzedstawicieli", agentDao.numOfAg(surnamee)));
+			PageableListView<?> pageableListView = new PageableListView<Agent>("lista",
+					agentDao.getSortedAgents(sorting, surnamee), 8) {
 
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void populateItem(ListItem<Client> item) {
-					final Client client = (Client) item.getModelObject();
+				protected void populateItem(ListItem<Agent> item) {
+					final Agent agent = (Agent) item.getModelObject();
 
-					item.add(new Label("imie", client.getUserDataModel().getImie()));
-					item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));
-					item.add(new Label("firma", client.getCompanyDataModel().getNazwa()));
-					item.add(new Label("email", client.getUserDataModel().getEmail()));
-					item.add(new Label("ostatnie_logowanie", client.getUserDataModel().getOst_logowanie()));
+					item.add(new Label("imie", agent.getUserDataModel().getImie()));
+					item.add(new Label("nazwisko", agent.getUserDataModel().getNazwisko()));
+					item.add(new Label("firma", agent.getCompanyDataModel().getNazwa()));
+					item.add(new Label("email", agent.getUserDataModel().getEmail()));
+					item.add(new Label("ostatnie_logowanie", agent.getUserDataModel().getOst_logowanie()));
 					PageParameters a= new PageParameters();
-					a.add("userId", client.getUserDataModel().getId());
+					a.add("userId", agent.getUserDataModel().getId());
 					item.add(new BookmarkablePageLink<>("editUser", AdminEditUser.class, a));
 					final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 
@@ -119,7 +119,7 @@ public class AdminClientList extends AdminSuccessPage {
 
 						@Override
 						public String getObject() {
-							if (client.getUserDataModel().getCzy_blokowany()) {
+							if (agent.getUserDataModel().getCzy_blokowany()) {
 								return "Odblokuj";
 							} else {
 								return "Zablokuj";
@@ -133,12 +133,12 @@ public class AdminClientList extends AdminSuccessPage {
 
 						@Override
 						public void onClick() {
-							if (client.getUserDataModel().getCzy_blokowany()) {
-								client.getUserDataModel().setCzy_blokowany(false);
-								userDao.update(client.getUserDataModel());
+							if (agent.getUserDataModel().getCzy_blokowany()) {
+								agent.getUserDataModel().setCzy_blokowany(false);
+								userDao.update(agent.getUserDataModel());
 							} else {
-								client.getUserDataModel().setCzy_blokowany(true);
-								userDao.update(client.getUserDataModel());
+								agent.getUserDataModel().setCzy_blokowany(true);
+								userDao.update(agent.getUserDataModel());
 							}
 						}
 					};
@@ -154,14 +154,14 @@ public class AdminClientList extends AdminSuccessPage {
 
 						@Override
 						public void onClick() {
-							client.getUserDataModel().setCzy_usuniety(true);
-							userDao.update(client.getUserDataModel());
+							agent.getUserDataModel().setCzy_usuniety(true);
+							userDao.update(agent.getUserDataModel());
 						}
 					};
 					usunUsera.setVisible(false);
 					item.add(usunUsera.add(usunWyswietl));
 					item.add(Usuniety);
-					if (client.getUserDataModel().getCzy_usuniety()) {
+					if (agent.getUserDataModel().getCzy_usuniety()) {
 						zablokujUsera.setVisible(false);
 						Usuniety.setVisible(true);
 					} else {

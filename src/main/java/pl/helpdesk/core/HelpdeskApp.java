@@ -9,6 +9,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 import pl.helpdesk.pages.AdminAddAgent;
 import pl.helpdesk.pages.AdminAddEmployee;
+import pl.helpdesk.pages.AdminAgentList;
 import pl.helpdesk.pages.AdminClientList;
 import pl.helpdesk.pages.AdminCompanyList;
 import pl.helpdesk.pages.AdminEditUser;
@@ -17,6 +18,7 @@ import pl.helpdesk.pages.AdminFinalPage;
 import pl.helpdesk.pages.AdminMyProfile;
 import pl.helpdesk.pages.AgentAddClient;
 import pl.helpdesk.pages.AgentClientList;
+import pl.helpdesk.pages.AgentEditUser;
 import pl.helpdesk.pages.AgentFinalPage;
 import pl.helpdesk.pages.AgentMyProfile;
 import pl.helpdesk.pages.ClientFinalPage;
@@ -68,5 +70,7 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AdminCompanyList", AdminCompanyList.class);	
 		mountPage("/AdminClientList", AdminClientList.class);	
 		mountPage("/AdminEditUser", AdminEditUser.class);	
+		mountPage("/AdminAgentList", AdminAgentList.class);	
+		mountPage("/AgentEditUser", AgentEditUser.class);	
 	}
 }

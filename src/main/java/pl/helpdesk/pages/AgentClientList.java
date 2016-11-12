@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -57,11 +58,12 @@ public class AgentClientList extends AgentSuccessPage {
 			protected void populateItem(ListItem<Client> item) {
 				final Client client = (Client) item.getModelObject();
 				item.add(new Label("imie", client.getUserDataModel().getImie()));
-				item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));
-				
+				item.add(new Label("nazwisko", client.getUserDataModel().getNazwisko()));			
 				item.add(new Label("email", client.getUserDataModel().getEmail()));
 				item.add(new Label("ostatnie_logowanie", client.getUserDataModel().getOst_logowanie()));
-
+				PageParameters a= new PageParameters();
+				a.add("userId", client.getUserDataModel().getId());
+				item.add(new BookmarkablePageLink<>("editUser", AgentEditUser.class, a));
 				final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 					/**
 					 * 

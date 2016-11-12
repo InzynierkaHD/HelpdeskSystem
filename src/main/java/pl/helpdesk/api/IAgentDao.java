@@ -3,6 +3,7 @@ package pl.helpdesk.api;
 import java.util.List;
 
 import pl.helpdesk.entity.Agent;
+import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 
@@ -37,4 +38,7 @@ public interface IAgentDao extends IGenericDao<Agent,Integer>{
 	
 	
 	public List <String> getCompanyWithoutAgent();
+	
+	public String numOfAg(String surname);
+	public List<Agent> getSortedAgents(String sortBy, String surname);
 }
