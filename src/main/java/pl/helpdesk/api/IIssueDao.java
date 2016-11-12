@@ -15,4 +15,13 @@ public interface IIssueDao extends IGenericDao<Issue,Integer>{
 	 * 		Lista zgłoszeń
 	 */
 	List<Issue> getAllIssuesForUser(User user);
+	/**
+	 * Pobiera zgłoszenia z posortowanym parametrem
+	 * @param user dla jakiego usera
+	 * @param issuePropertyName nazwa pola klasy encji np. "temat"
+	 * @return
+	 */
+	List<Issue> getSortingIssuesForUser(User user,String issuePropertyName);
+	
+	List<Issue> getSortingIssuesForUserDesc(User user,String issuePropertyName);
 }

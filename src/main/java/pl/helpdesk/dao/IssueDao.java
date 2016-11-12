@@ -2,6 +2,7 @@ package pl.helpdesk.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import pl.helpdesk.api.IIssueDao;
@@ -14,8 +15,20 @@ public class IssueDao extends GenericDao<Issue,Integer> implements IIssueDao{
 	public List<Issue> getAllIssuesForUser(User user) {
 		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
 		.add(Restrictions.eqOrIsNull("user", user)).list();
-
 	}
 	
+	@Override
+	public List<Issue> getSortingIssuesForUser(User user,String issuePropertyName){
+		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.add(Restrictions.eqOrIsNull("user", user))
+				.addOrder(Order.asc(issuePropertyName)).list();
+	}
+
+	@Override
+	public List<Issue> getSortingIssuesForUserDesc(User user, String issuePropertyName) {
+		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.add(Restrictions.eqOrIsNull("user", user))
+				.addOrder(Order.desc(issuePropertyName)).list();
+	}
 	
 }

@@ -24,5 +24,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce3455', end
     color: white !important;
 }
 
+.naglowek :hover{
+	cursor:pointer;
+}
+
 .wiersz:nth-child(even) {background: #f5f5ef}
 .wiersz:nth-child(odd) {background: #ebebe0}
