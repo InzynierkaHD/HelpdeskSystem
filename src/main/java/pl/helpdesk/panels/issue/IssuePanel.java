@@ -23,7 +23,7 @@ import pl.helpdesk.entity.Issue;
 import pl.helpdesk.filefinder.FileFinder;
 import pl.helpdesk.forms.comment.CommentForm;
 import pl.helpdesk.panels.comment.ClientComment;
-import pl.helpdesk.panels.comment.WorkerComment;
+import pl.helpdesk.panels.comment.EmployeeComment;
 import pl.helpdesk.panels.issuestatus.IssueStatusPanel;
 
 /**
@@ -101,7 +101,7 @@ public class IssuePanel extends Panel {
 		for (Comment comment : commentDao.getCommentByIssue(this.issue)) {
 			foundFiles = finder.getAllFilesFromFolderBeforeSeparator("_",String.valueOf(comment.getId()));
 			if (employeDao.isEmployee(comment.getUserDataModel())){
-				clientComments.add(new WorkerComment(clientComments.newChildId(), comment.getUserDataModel().getImie()+" "+comment.getUserDataModel().getNazwisko(),comment.getDataDodania(),
+				clientComments.add(new EmployeeComment(clientComments.newChildId(), comment.getUserDataModel().getImie()+" "+comment.getUserDataModel().getNazwisko(),comment.getDataDodania(),
 						comment.getTresc(),foundFiles));
 			}
 			else {

@@ -9,11 +9,11 @@ import org.apache.wicket.model.Model;
 
 import pl.helpdesk.panels.AComment;
 
-public class WorkerComment extends AComment {
+public class EmployeeComment extends AComment {
 
 	private static final long serialVersionUID = 1L;
 
-	public WorkerComment(String id, String commentHeader,Date dateAdded, String commentContent, List<File> listOfAttachments) {
+	public EmployeeComment(String id, String commentHeader,Date dateAdded, String commentContent, List<File> listOfAttachments) {
 		super(id, commentHeader, dateAdded, commentContent,listOfAttachments);
 		comment.add(new AttributeAppender("class", Model.of(" panel-info")));
 		add(new AttributeAppender("class", Model.of("komentarzPracownik")));
