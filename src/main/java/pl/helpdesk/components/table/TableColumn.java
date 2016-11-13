@@ -2,9 +2,9 @@ package pl.helpdesk.components.table;
 
 public class TableColumn {
 
-	String name;
-	String daoColumnName;
-	boolean sortAsc;
+	private String name;
+	private String daoColumnName;
+	private boolean sortAsc;
 	
 	public TableColumn(String name, String daoColumnName){
 		this.name = name;
@@ -35,6 +35,5 @@ public class TableColumn {
 	public void setSortAsc(boolean sortAsc) {
 		this.sortAsc = sortAsc;
 	}
-	
 	
 }

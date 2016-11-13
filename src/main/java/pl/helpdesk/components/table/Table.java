@@ -1,5 +1,6 @@
 package pl.helpdesk.components.table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,7 +28,7 @@ import pl.helpdesk.api.IGenericDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class Tabelka<T> extends Panel {
+public class Table<T> extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +38,7 @@ public class Tabelka<T> extends Panel {
 	private List listOfRows;
 	private DataView<T> dataView;
 	private boolean clickableRow;
-	Logger log = Logger.getLogger(Tabelka.class.getName());
+	Logger log = Logger.getLogger(Table.class.getName());
 	/**
 	 * Componenty które umieszczamy w kolejnych kolumnach np. add(new
 	 * Lable("kol",Model.of("To jest wyswietloona kolumna").
@@ -61,6 +62,7 @@ public class Tabelka<T> extends Panel {
 	private List<TableCol> listOfTableColumn;
 	private int rowsPerPage;
 	private List<TableColumn> listOfTableColumnName;
+	private TableSearch tableSearch;
 	
 	@SpringBean
 	private IIssueDao issueDao;
@@ -83,21 +85,22 @@ public class Tabelka<T> extends Panel {
 	 *            tabelki) jeśli ta opcja jest włączona wszystkie komponenty w
 	 *            tabelce nie są edytowalne!!!
 	 */
-	public Tabelka(String id, final List<TableCol> listOfTableColumn, final  List<TableColumn> listOfTableColumnName, List listOfRows,
-			IGenericDao dao, final boolean clickableRow) {
+	public Table(String id, List listOfRows,IGenericDao dao) {
 		super(id);
-		this.rowsPerPage = 10;
+		//this.rowsPerPage = 10;
+		//this.listOfTableColumn = listOfTableColumn;
+		//this.listOfTableColumnName = listOfTableColumnName;
+		//this.clickableRow = clickableRow;
 		this.dao = dao;
 		this.listOfRows = listOfRows;
-		this.clickableRow = clickableRow;
-		this.listOfTableColumn = listOfTableColumn;
-		this.listOfTableColumnName = listOfTableColumnName;
+		loadConfiguration();
 		listDataProvider = new ListDataProvider(listOfRows);
 		tableHead = new RepeatingView("tableHead");
-		final Tabelka thisTable = this;
+		final Table thisTable = this;
 		thisTable.setOutputMarkupId(true);
-
-		for (final TableColumn headerName : listOfTableColumnName) {
+		tableSearch = new TableSearch("search",this);
+		add(tableSearch);
+		for (final TableColumn headerName : getListOfTableColumnName()) {
 			Label headerLabel = new Label(tableHead.newChildId(), Model.of(headerName.getName()));
 			headerLabel.add(new AjaxEventBehavior("click"){
 				@Override
@@ -124,9 +127,64 @@ public class Tabelka<T> extends Panel {
 			tableHead.add(headerLabel);
 		}
 		add(tableHead);
+		dataView = new DataView<T>("rows", listDataProvider) {
+			@Override
+			protected void populateItem(Item<T> item) {
+				rowElements = new RepeatingView("dataRow");
+				entity = item.getModelObject();
+
+				for (TableColumn column : listOfTableColumnName) {
+						addColumnNoEditable(column.getDaoColumnName());
+					column.getDaoColumnName();
+				}
+				item.add(rowElements);
+				if (clickableRow) {
+					item.add(new AjaxEventBehavior("onclick") {
+
+						private static final long serialVersionUID = 6720512493017210281L;
+
+						@Override
+						protected void onEvent(AjaxRequestTarget target) {
+
+							rowClickEvent(target, getComponent());
+						}
+
+					});
+				}
+			}
+		};
+		dataView.setItemsPerPage(rowsPerPage);
+		add(dataView);
+		dataView.setOutputMarkupId(true);
+		add(new AjaxPagingNavigator("pagingNavigator", dataView){
+			@Override
+			protected void onAjaxEvent(AjaxRequestTarget target) {
+				target.add(dataView);
+				target.add(thisTable);
+				super.onAjaxEvent(target);
+			}
+		});
 	}
 
 
+	private void loadConfiguration(){
+		this.rowsPerPage = Integer.parseInt(getString("liczbaWierszyNaStrone"));
+		this.clickableRow = Boolean.parseBoolean(getString("klikalneWiersze"));
+		String columnHeaders[] = getString("naglowkiKolumn").split(",");
+		String columnPropertyEntity[] = getString("poleEncjiDlaKolumny").split(",");
+		if(columnHeaders.length == columnPropertyEntity.length){
+		List<TableColumn> listColumnName = new ArrayList<TableColumn>();
+		
+		for(int i=0; i< columnHeaders.length; i++){
+				listColumnName.add(new TableColumn(columnHeaders[i],columnPropertyEntity[i]));	
+		}
+		setListOfTableColumnName(listColumnName);
+		}
+		else{
+			log.error("########################### BŁĘDNA KONFIGURACJA 'naglowki kolumn' lub 'pole encji dla kolumny w pliku Table.properties'");
+		}
+	}
+	
 	@Override
 	protected void onBeforeRender() {
 		dataView = new DataView<T>("rows", listDataProvider) {
@@ -135,13 +193,9 @@ public class Tabelka<T> extends Panel {
 				rowElements = new RepeatingView("dataRow");
 				entity = item.getModelObject();
 
-				for (TableCol column : listOfTableColumn) {
-					if (column.isEditable() && !clickableRow) {
-						addColumnEditable(column.getPropertyName());
-					} else {
-						addColumnNoEditable(column.getPropertyName());
-					}
-					column.getPropertyName();
+				for (TableColumn column : listOfTableColumnName) {
+						addColumnNoEditable(column.getDaoColumnName());
+					column.getDaoColumnName();
 				}
 				item.add(rowElements);
 				if (clickableRow) {
@@ -161,6 +215,7 @@ public class Tabelka<T> extends Panel {
 		};
 		dataView.setItemsPerPage(rowsPerPage);
 		addOrReplace(dataView);
+		//addOrReplace(dataView);
 		addOrReplace(new AjaxPagingNavigator("pagingNavigator", dataView));
 		super.onBeforeRender();
 	}
@@ -203,7 +258,7 @@ public class Tabelka<T> extends Panel {
 
 	@Override
 	public void renderHead(IHeaderResponse response) {
-		PackageResourceReference cssFile = new PackageResourceReference(Tabelka.class, "Tabelka.css");
+		PackageResourceReference cssFile = new PackageResourceReference(Table.class, "Table.css");
 		CssHeaderItem cssItem = CssHeaderItem.forReference(cssFile);
 
 		response.render(cssItem);
@@ -264,6 +319,36 @@ public class Tabelka<T> extends Panel {
 	}
 
 
+
+
+	public boolean isClickableRow() {
+		return clickableRow;
+	}
+
+
+	public void setClickableRow(boolean clickableRow) {
+		this.clickableRow = clickableRow;
+	}
+
+
+	public List<TableColumn> getListOfTableColumnName() {
+		return listOfTableColumnName;
+	}
+
+
+	public void setListOfTableColumnName(List<TableColumn> listOfTableColumnName) {
+		this.listOfTableColumnName = listOfTableColumnName;
+	}
+
+
+	public IIssueDao getIssueDao() {
+		return issueDao;
+	}
+
+
+	public void setIssueDao(IIssueDao issueDao) {
+		this.issueDao = issueDao;
+	}
 
 
 	public void setRowElements(RepeatingView rowElements) {

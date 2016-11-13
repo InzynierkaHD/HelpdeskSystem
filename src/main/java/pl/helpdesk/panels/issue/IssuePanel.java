@@ -1,4 +1,4 @@
-package pl.helpdesk.panels;
+package pl.helpdesk.panels.issue;
 
 import java.io.File;
 import java.net.URL;
@@ -22,6 +22,9 @@ import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.filefinder.FileFinder;
 import pl.helpdesk.forms.comment.CommentForm;
+import pl.helpdesk.panels.comment.ClientComment;
+import pl.helpdesk.panels.comment.WorkerComment;
+import pl.helpdesk.panels.issuestatus.IssueStatusPanel;
 
 /**
  * Panel na którym zostaje wyświetlona informacja o zgłoszeniu, jego komentarze
@@ -39,7 +42,7 @@ public class IssuePanel extends Panel {
 	private Label issueTopic;
 	private Label issueContent;
 	private CommentForm commentForm;
-	private StatusPanel statusPanel;
+	private IssueStatusPanel statusPanel;
 	private Label issueOwner;
 	private String issueOwnerName;
 	@SpringBean
@@ -54,7 +57,7 @@ public class IssuePanel extends Panel {
 		issueContent = new Label("issueContent", new PropertyModel<Issue>(this, "issue.tresc"));
 		clientComments = new RepeatingView("clientComments");
 		commentForm = new CommentForm("commentForm", this.issue, this);
-		statusPanel = new StatusPanel("statusPanel",this);
+		statusPanel = new IssueStatusPanel("statusPanel",this);
 		issueOwner = new Label("issueOwner",new PropertyModel<Issue>(this, "issue.employeeDataModel"));
 		add(issueOwner);
 		add(statusPanel);

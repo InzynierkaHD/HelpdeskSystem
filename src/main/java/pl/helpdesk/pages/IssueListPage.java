@@ -17,12 +17,12 @@ import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
-import pl.helpdesk.components.table.Tabelka;
+import pl.helpdesk.components.table.Table;
 import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.components.table.TableColumn;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
-import pl.helpdesk.panels.IssuePanel;
+import pl.helpdesk.panels.issue.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class IssueListPage extends ClientSuccessPage {
@@ -31,7 +31,7 @@ public class IssueListPage extends ClientSuccessPage {
 	private AjaxLink<String> addIssue;
 	private AlertModal alert;
 	private AddIssueForm addIssueForm;
-	private Tabelka<Issue> myIssueTable;
+	private Table<Issue> myIssueTable;
 	private IssuePanel issuePanel;
 
 	@SpringBean
@@ -60,17 +60,6 @@ public class IssueListPage extends ClientSuccessPage {
 			}
 
 		});
-		TableCol col = new TableCol(true, "temat");
-		TableCol col2 = new TableCol(false, "prioritoryDataModel");
-		TableCol col3 = new TableCol(false, "typeDataModel");
-		TableCol col4 = new TableCol(false, "dataDodania");
-		TableCol col5 = new TableCol(false, "employeeDataModel");
-		List<TableCol> listaCol = new ArrayList<TableCol>();
-		listaCol.add(col);
-		listaCol.add(col2);
-		listaCol.add(col3);
-		listaCol.add(col4);
-		listaCol.add(col5);
 		List listOfRows;
 		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser()) || adminDao.isAdmin(ApplicationSession.getInstance().getUser())){
 			listOfRows = issueDao.getAll();
@@ -80,13 +69,12 @@ public class IssueListPage extends ClientSuccessPage {
 			listOfRows = issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser());
 		}
 		List<TableColumn> listColumnName = new ArrayList<TableColumn>();
-		listColumnName.add(new TableColumn("Temat","temat"));
+		/*listColumnName.add(new TableColumn("Temat","temat"));
 		listColumnName.add(new TableColumn("Priorytet","prioritoryDataModel"));
 		listColumnName.add(new TableColumn("Typ","typeDataModel"));
 		listColumnName.add(new TableColumn("Data Dodania","dataDodania"));
-		listColumnName.add(new TableColumn("Pracownik Obsługujący","employeeDataModel"));
-		final Tabelka<Issue> myIssueTable = new Tabelka<Issue>("myIssues", listaCol,
-				listColumnName, listOfRows,issueDao, true) {
+		listColumnName.add(new TableColumn("Pracownik Obsługujący","employeeDataModel"));*/
+		final Table<Issue> myIssueTable = new Table<Issue>("myIssues", listOfRows,issueDao) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();

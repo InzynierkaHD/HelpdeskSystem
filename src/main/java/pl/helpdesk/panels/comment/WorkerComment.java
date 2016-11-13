@@ -1,4 +1,4 @@
-package pl.helpdesk.panels;
+package pl.helpdesk.panels.comment;
 
 import java.io.File;
 import java.util.Date;
@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.model.Model;
+
+import pl.helpdesk.panels.AComment;
 
 public class WorkerComment extends AComment {
 
