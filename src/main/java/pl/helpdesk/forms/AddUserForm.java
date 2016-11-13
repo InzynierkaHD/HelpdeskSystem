@@ -52,6 +52,7 @@ public class AddUserForm extends Panel {
 	private User userDataModel;
 
 	private Label badName;
+	private Label badPhone;
 	private Label badSurname;
 	private Label badEmail;
 	private Label loginLength;
@@ -67,6 +68,7 @@ public class AddUserForm extends Panel {
 	private TextField<String> imie;
 	private TextField<String> nazwisko;
 	private TextField<String> email;
+	private TextField<String> telefon;
 	private TextField<String> login;
 	private PasswordTextField haslo;
 	private Form<?> creating;
@@ -94,6 +96,7 @@ public class AddUserForm extends Panel {
 
 				String imie2 = imie.getInput();
 				String nazwisko2 = nazwisko.getInput();
+				String telefon2 = telefon.getInput();
 				String email2 = email.getInput();
 				String login2 = login.getInput();
 				String haslo2 = haslo.getInput();
@@ -105,12 +108,17 @@ public class AddUserForm extends Panel {
 				}
 				boolean IsOk = true;
 				if (Validation.nameValidate(imie2) == false || imie2.length() < 2 || imie2.length() > 20
-						|| imie2.isEmpty()) {
+						|| imie2.equals("")) {
 					badName.setVisible(true);
 					IsOk = false;
 				}
+				if (Validation.phoneValidate(telefon2) == false || telefon2.length() < 7 || telefon2.length() > 11
+						|| telefon2.equals("")) {
+					badPhone.setVisible(true);
+					IsOk = false;
+				}
 				if (Validation.nameValidate(nazwisko2) == false || nazwisko2.length() < 2 || nazwisko2.length() > 20
-						|| nazwisko2.isEmpty()) {
+						|| nazwisko2.equals("")) {
 					badSurname.setVisible(true);
 					IsOk = false;
 				}
@@ -121,14 +129,14 @@ public class AddUserForm extends Panel {
 					emailExist.setVisible(true);
 					IsOk = false;
 				}
-				if (login2.length() < 4 || login2.length() > 15 || login2.isEmpty()) {
+				if (login2.length() < 4 || login2.length() > 15 || login2.equals("")) {
 					loginLength.setVisible(true);
 					IsOk = false;
 				} else if (userSpring.loginExist(login2)) {
 					userExist.setVisible(true);
 					IsOk = false;
 				}
-				if (haslo2.length() < 4 || haslo2.length() > 15 || haslo2.isEmpty()) {
+				if (haslo2.length() < 4 || haslo2.length() > 15 || haslo2.equals("")) {
 					passLength.setVisible(true);
 					IsOk = false;
 				}
@@ -151,7 +159,7 @@ public class AddUserForm extends Panel {
 					}
 				}
 				if (IsOk) {
-					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, false, false, 0);
+					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, telefon2, false, false, 0);
 					userSpring.save(newUser);
 					if (userType.equals("employee")) {
 						Employee employee = new Employee(newUser);
@@ -178,6 +186,7 @@ public class AddUserForm extends Panel {
 	}
 	
 	private void CreateMessageLabels() {
+		badPhone = new Label("badphone", "Wpisz poprawnie numer telefonu!");
 		badName = new Label("badname", "Wpisz poprawnie imię!");
 		badSurname = new Label("badsurname", "Wpisz poprawnie nazwisko!");
 		badEmail = new Label("bademail", "Wpisz poprawnie email!");
@@ -192,6 +201,7 @@ public class AddUserForm extends Panel {
 	}
 
 	private void setMessageLabelsInvisible(final String userType) {
+		badPhone.setVisible(false);
 		badName.setVisible(false);
 		badSurname.setVisible(false);
 		badEmail.setVisible(false);
@@ -219,6 +229,7 @@ public class AddUserForm extends Panel {
 		imie = new TextField<String>("imie", new PropertyModel<String>(userDataModel, "imie"));
 		nazwisko = new TextField<String>("nazwisko", new PropertyModel<String>(userDataModel, "nazwisko"));
 		email = new TextField<String>("email", new PropertyModel<String>(userDataModel, "email"));
+		telefon = new TextField<String>("telefon", new PropertyModel<String>(userDataModel, "telefon"));
 		login = new TextField<String>("login", new PropertyModel<String>(userDataModel, "login"));
 		haslo = new PasswordTextField("haslo", new PropertyModel<String>(userDataModel, "haslo"));
 	}
@@ -232,9 +243,11 @@ public class AddUserForm extends Panel {
 		creating.add(haslo);
 		creating.add(selectCompany);
 		creating.add(company);
+		creating.add(telefon);
 	}
 
 	private void AddMessageLabels() {
+		creating.add(badPhone);
 		creating.add(badName);
 		creating.add(badSurname);
 		creating.add(badEmail);

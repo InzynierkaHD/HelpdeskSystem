@@ -70,7 +70,7 @@ public class User implements Serializable{
 		super();
 	}
 	
-	public User(String login, String haslo, String imie, String nazwisko, String email, Boolean czy_blokowany,
+	public User(String login, String haslo, String imie, String nazwisko, String email, String telefon, Boolean czy_blokowany,
 			Boolean czy_usuniety, int badPassword) {
 		super();
 		this.login = login;
@@ -78,6 +78,7 @@ public class User implements Serializable{
 		this.imie = imie;
 		this.nazwisko = nazwisko;
 		this.email = email;
+		this.telefon = telefon;
 		this.czy_blokowany = czy_blokowany;
 		this.czy_usuniety = czy_usuniety;
 		this.badPassword=badPassword;
