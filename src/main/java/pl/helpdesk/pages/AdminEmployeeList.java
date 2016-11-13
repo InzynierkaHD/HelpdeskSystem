@@ -212,8 +212,8 @@ public class AdminEmployeeList extends AdminSuccessPage {
 		
 		
 		mailSender mailsender = new mailSender();
-		mailsender.sendNotify("Powiadomienie - stan konta", 
-				"Adresatem tej wiadomosci jest " + employee.getUserDataModel().getImie() + " " + employee.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + employee.getUserDataModel().getLogin() + " zostalo " + statusPracownika + "!", 
+		mailsender.sendNotify("Powiadomienie - status konta", 
+				"Adresatem tej wiadomości jest " + employee.getUserDataModel().getImie() + " " + employee.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + employee.getUserDataModel().getLogin() + " zostało " + statusPracownika + "!", 
 				new Date(), 
 				employee.getUserDataModel());
 

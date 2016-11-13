@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Raport aktywności użytkowników</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Raport aktywności użytkowników</div>
+		</div>
+
+		<div class="container">
+			<form wicket:id="form" role="form" class="form-horizontal"
+				id="form_raport">
+
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Typ</label>
+				<div class="col-sm-4">
+					<select style="background: white; width: 100%; color: #555555;"
+						wicket:id="typeShowUser"></select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Imię</label>
+				<div class="col-sm-4">
+					<input type="text" size="40" wicket:id="serachingName"
+						class="form-control" name="serachingName" placeholder="imię">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Nazwisko</label>
+				<div class="col-sm-4">
+					<input type="text" size="40" wicket:id="serachingSurname"
+						class="form-control" name="serachingSurname" placeholder="nazwisko">
+				</div>
+				
+					
+				</div>
+			</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">E-mail</label>
+				<div class="col-sm-4">
+					<input type="text" size="40" wicket:id="serachingMail"
+						class="form-control" name="serachingMail" placeholder="email">
+				</div>
+				</div>
+			</div>
+		
+				<div class="row">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-5"></div>
+					<div class="col-sm-4">
+						<input type="submit" class="przycisk" id="przycisk" value="Pokaż" />
+					</div>
+				</div>
+
+
+		</form>
+		<br />
+		<div class="table-responsive">
+			<table id="listaUserow" class="table table-hover" wicket:id="data">
+				<thead>
+					<tr>
+						<th>Imię</th>
+						<th>Nazwisko</th>
+						<th>E-mail</th>
+						<th>Ostatnie logowanie</th>
+						<th>Szczegóły</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-toggle="collapse" data-target="#wiecej"
+						class="accordion-toggle">
+						<td>Jan</td>
+						<td>Kowalski</td>
+						<td>email1@gmail.com</td>
+						<td>13.11.16 17:54</td>
+						<td><a href="#" >Szczegóły</a></td>
+					</tr>
+				</tbody>
+				<!--  
+				<tbody>
+					<tr wicket:id="lista" data-toggle="collapse" data-target="#wiecej"
+						class="accordion-toggle">
+						<td span wicket:id="imie"></td>
+						<td span wicket:id="nazwisko"></td>
+						<td span wicket:id="email"></td>
+						<td span wicket:id="ostatnie_logowanie"></td>
+					</tr>
+				</tbody>
+				
+				<tfoot>
+					<tr>
+						<td id="stopka_tab" colspan="6" wicket:id="nav"></td>
+					</tr>
+				</tfoot>
+				-->
+			</table>
+		</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package pl.helpdesk.pages;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
@@ -24,7 +25,9 @@ import pl.helpdesk.components.SelectForm;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.User;
+import pl.helpdesk.mailsender.mailSender;
 import pl.helpdesk.userSession.ApplicationSession;
+import pl.helpdesk.mailsender.mailSender;
 
 public class AdminClientList extends AdminSuccessPage {
 
@@ -136,6 +139,10 @@ public class AdminClientList extends AdminSuccessPage {
 								client.getUserDataModel().setCzy_blokowany(true);
 								userDao.update(client.getUserDataModel());
 							}
+							
+							// DM - wyslanie maila
+							sendMail(client);
+							// DM stop
 						}
 					};
 					item.add(zablokujUsera.add(blokujWyswietl));
@@ -152,6 +159,10 @@ public class AdminClientList extends AdminSuccessPage {
 						public void onClick() {
 							client.getUserDataModel().setCzy_usuniety(true);
 							userDao.update(client.getUserDataModel());
+							
+							// DM - wyslanie maila
+							sendMail(client);
+							// DM stop
 						}
 					};
 					usunUsera.setVisible(false);
@@ -174,5 +185,23 @@ public class AdminClientList extends AdminSuccessPage {
 			setResponsePage(LoginPage.class);
 		}
 	}
+	
+	// DM start
+			private void sendMail(final Client client) {
+				
+				String statusKlienta;
+				if(client.getUserDataModel().getCzy_blokowany()) statusKlienta = "zablokowane";
+				else if (client.getUserDataModel().getCzy_usuniety()) statusKlienta = "usunięte";
+				else statusKlienta = "odblokowane";
+				
+				mailSender mailsender = new mailSender();
+				mailsender.sendNotify("Powiadomienie - status konta", 
+						"Adresatem tej wiadomości jest " + client.getUserDataModel().getImie() + " " + client.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + client.getUserDataModel().getLogin() + " zostało " + statusKlienta + "!", 
+						new Date(), 
+						client.getUserDataModel());
+				
+				
+			};
+		// DM stop
 
 }

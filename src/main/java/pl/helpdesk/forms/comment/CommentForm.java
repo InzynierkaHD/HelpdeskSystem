@@ -138,8 +138,8 @@ public class CommentForm extends Panel {
 				if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser()))
 				{
 					mailSender mailsender = new mailSender();
-					mailsender.sendNotify("Powiadomienie - stan konta", 
-							"Adresatem tej wiadomosci jest " + getIssue().getUser().getImie() + " " + getIssue().getUser().getNazwisko() + "\nPracownik HelpDesku odpowiedział na Twoje zgłoszenie!\n\nTresc odpowiedzi jest nastepujaca:\n" + content.getValue(), 
+					mailsender.sendNotify("Powiadomienie - nowa odpowiedź", 
+							"Adresatem tej wiadomości jest " + getIssue().getUser().getImie() + " " + getIssue().getUser().getNazwisko() + "\nPracownik HelpDesku odpowiedział na Twoje zgłoszenie!\n\nTreść odpowiedzi jest następująca:\n" + content.getValue(), 
 							new Date(), 
 							getIssue().getUser());
 				}
