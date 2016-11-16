@@ -1,5 +1,7 @@
 package pl.helpdesk.api;
 
+import java.util.List;
+
 import pl.helpdesk.entity.LoggingHistory;
 import pl.helpdesk.entity.User;
 
@@ -19,4 +21,6 @@ public interface ILoggingHistoryDao  extends IGenericDao<LoggingHistory,Integer>
 	 *            
 	 */
 	public void setUserLogOutDate(User user);
+	
+	public List<LoggingHistory> getDateSortedUserLoggingHistory(int id);
 }

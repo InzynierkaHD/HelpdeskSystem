@@ -32,7 +32,6 @@ public class mailSender {
 		  // init sesji
 		  Session sesjaMail = Session.getDefaultInstance(ustawienia);
 
-
 		  // stworzenie ciala maila
 		  MimeMessage wiadomosc = new MimeMessage(sesjaMail);
 		  wiadomosc.setSubject(subject);
@@ -67,8 +66,7 @@ public class mailSender {
 		
 		try {
 			sendMail("pracownikhelpdesku", 
-					//userNotifications.getEmail(), 
-					"damian.miacz@gmail.com",
+					userNotifications.getEmail(), 
 					nazwa, 
 					tresc
 			);

@@ -15,7 +15,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.entity.Admin;
+import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.User;
 
@@ -325,5 +331,5 @@ public class UserDao implements Serializable {
 	// return "none";
 	//
 	// }
-
+	
 }

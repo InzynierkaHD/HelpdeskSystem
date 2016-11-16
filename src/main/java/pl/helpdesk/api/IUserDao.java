@@ -1,6 +1,7 @@
 package pl.helpdesk.api;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 
@@ -45,4 +46,5 @@ public interface IUserDao extends IGenericDao<User,Integer> {
 	public boolean loginExist(String login);
 	boolean incorrectPassword(String login, String password) throws HibernateException, NoSuchAlgorithmException;
 	void incrementBadPassowrd(String login);
+	public List<User> getDateSortedUser(String id);
 }

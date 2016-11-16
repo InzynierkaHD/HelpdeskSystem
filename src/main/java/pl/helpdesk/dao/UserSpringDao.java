@@ -1,8 +1,11 @@
 package pl.helpdesk.dao;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,6 +88,14 @@ public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao
 			update(user);
 		}
 		update(user);
+	}
+	
+	public List<User> getDateSortedUser(String id)
+	{
+		return sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("czy_usuniety", false))
+				//.add(Restrictions.like("id", id, MatchMode.ANYWHERE))
+				.addOrder(Order.asc("ost_logowanie")).list();
 	}
 	
 

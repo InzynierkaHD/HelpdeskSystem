@@ -1,6 +1,7 @@
 package pl.helpdesk.pages;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
@@ -25,6 +26,7 @@ import pl.helpdesk.components.SelectForm;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.User;
+import pl.helpdesk.mailsender.mailSender;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class AdminAgentList extends AdminSuccessPage {
@@ -113,6 +115,8 @@ public class AdminAgentList extends AdminSuccessPage {
 					PageParameters a= new PageParameters();
 					a.add("userId", agent.getUserDataModel().getId());
 					item.add(new BookmarkablePageLink<>("editUser", AdminEditUser.class, a));
+					item.add(new BookmarkablePageLink<>("showRaport", AdminShowRaport.class, a));
+					
 					final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 
 						private static final long serialVersionUID = 1L;
@@ -139,6 +143,11 @@ public class AdminAgentList extends AdminSuccessPage {
 							} else {
 								agent.getUserDataModel().setCzy_blokowany(true);
 								userDao.update(agent.getUserDataModel());
+								
+								
+								// DM - wyslanie maila
+								sendMail(agent);
+								// DM stop
 							}
 						}
 					};
@@ -156,6 +165,11 @@ public class AdminAgentList extends AdminSuccessPage {
 						public void onClick() {
 							agent.getUserDataModel().setCzy_usuniety(true);
 							userDao.update(agent.getUserDataModel());
+							
+							
+							// DM - wyslanie maila
+							sendMail(agent);
+							// DM stop
 						}
 					};
 					usunUsera.setVisible(false);
@@ -178,5 +192,24 @@ public class AdminAgentList extends AdminSuccessPage {
 			setResponsePage(LoginPage.class);
 		}
 	}
+	
+	
+	// DM start
+			private void sendMail(final Agent agent) {
+				
+				String statusAgenta;
+				if(agent.getUserDataModel().getCzy_blokowany()) statusAgenta = "zablokowane";
+				else if (agent.getUserDataModel().getCzy_usuniety()) statusAgenta = "usunięte";
+				else statusAgenta = "odblokowane";
+				
+				mailSender mailsender = new mailSender();
+				mailsender.sendNotify("Powiadomienie - status konta", 
+						"Adresatem tej wiadomości jest " + agent.getUserDataModel().getImie() + " " + agent.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + agent.getUserDataModel().getLogin() + " zostało " + statusAgenta + "!", 
+						new Date(), 
+						agent.getUserDataModel());
+				
+				
+			};
+		// DM stop
 
 }

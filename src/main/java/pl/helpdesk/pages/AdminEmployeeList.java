@@ -125,6 +125,7 @@ public class AdminEmployeeList extends AdminSuccessPage {
 					PageParameters a= new PageParameters();
 					a.add("userId", employee.getUserDataModel().getId());
 					item.add(new BookmarkablePageLink<>("editUser", AdminEditUser.class, a));
+					item.add(new BookmarkablePageLink<>("showRaport", AdminShowRaport.class, a));
 					
 
 					final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
@@ -216,8 +217,8 @@ public class AdminEmployeeList extends AdminSuccessPage {
 		
 		
 		mailSender mailsender = new mailSender();
-		mailsender.sendNotify("Powiadomienie - stan konta", 
-				"Adresatem tej wiadomosci jest " + employee.getUserDataModel().getImie() + " " + employee.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + employee.getUserDataModel().getLogin() + " zostalo " + statusPracownika + "!", 
+		mailsender.sendNotify("Powiadomienie - status konta", 
+				"Adresatem tej wiadomości jest " + employee.getUserDataModel().getImie() + " " + employee.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + employee.getUserDataModel().getLogin() + " zostało " + statusPracownika + "!", 
 				new Date(), 
 				employee.getUserDataModel());
 

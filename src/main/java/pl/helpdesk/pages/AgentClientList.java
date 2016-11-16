@@ -64,6 +64,8 @@ public class AgentClientList extends AgentSuccessPage {
 				PageParameters a= new PageParameters();
 				a.add("userId", client.getUserDataModel().getId());
 				item.add(new BookmarkablePageLink<>("editUser", AgentEditUser.class, a));
+				item.add(new BookmarkablePageLink<>("showRaport", AdminShowRaport.class, a));
+				
 				final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 					/**
 					 * 
@@ -148,8 +150,8 @@ public class AgentClientList extends AgentSuccessPage {
 			else statusKlienta = "odblokowane";
 			
 			mailSender mailsender = new mailSender();
-			mailsender.sendNotify("Powiadomienie - stan konta", 
-					"Adresatem tej wiadomosci jest " + client.getUserDataModel().getImie() + " " + client.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + client.getUserDataModel().getLogin() + " zostalo " + statusKlienta + "!", 
+			mailsender.sendNotify("Powiadomienie - status konta", 
+					"Adresatem tej wiadomości jest " + client.getUserDataModel().getImie() + " " + client.getUserDataModel().getNazwisko() + "\nTwoje konto o loginie " + client.getUserDataModel().getLogin() + " zostało " + statusKlienta + "!", 
 					new Date(), 
 					client.getUserDataModel());
 			
