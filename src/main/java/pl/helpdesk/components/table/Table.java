@@ -7,8 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -24,6 +22,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IGenericDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -63,9 +62,13 @@ public class Table<T> extends Panel {
 	private int rowsPerPage;
 	private List<TableColumn> listOfTableColumnName;
 	private TableSearch tableSearch;
+	private Table thisTable;
 	
 	@SpringBean
 	private IIssueDao issueDao;
+	
+	@SpringBean
+	private IEmployeeDao employeeDao;
 	/**
 	 * 
 	 * @param id
@@ -96,7 +99,7 @@ public class Table<T> extends Panel {
 		loadConfiguration();
 		listDataProvider = new ListDataProvider(listOfRows);
 		tableHead = new RepeatingView("tableHead");
-		final Table thisTable = this;
+		thisTable = this;
 		thisTable.setOutputMarkupId(true);
 		tableSearch = new TableSearch("search",this);
 		add(tableSearch);
@@ -108,6 +111,7 @@ public class Table<T> extends Panel {
 					
 					if(!headerName.isSortAsc()){ 
 						thisTable.setListOfRows(issueDao.getSortingIssuesForUser(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
+						if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) thisTable.setListOfRows(issueDao.getSortingIssuesForall(headerName.getDaoColumnName()));
 						headerName.setSortAsc(true);
 						thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
 						target.add(thisTable);
@@ -115,7 +119,8 @@ public class Table<T> extends Panel {
 						}
 					if(headerName.isSortAsc()){
 						thisTable.setListOfRows(issueDao.getSortingIssuesForUserDesc(ApplicationSession.getInstance().getUser(), headerName.getDaoColumnName()));
-					headerName.setSortAsc(false);
+						if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) thisTable.setListOfRows(issueDao.getSortingIssuesForAllDesc(headerName.getDaoColumnName()));
+						headerName.setSortAsc(false);
 					thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
 					target.add(thisTable);
 					return;
@@ -159,8 +164,8 @@ public class Table<T> extends Panel {
 		add(new AjaxPagingNavigator("pagingNavigator", dataView){
 			@Override
 			protected void onAjaxEvent(AjaxRequestTarget target) {
-				target.add(dataView);
-				target.add(thisTable);
+			//	target.add(dataView);
+			//	target.add(thisTable);
 				super.onAjaxEvent(target);
 			}
 		});
@@ -187,6 +192,7 @@ public class Table<T> extends Panel {
 	
 	@Override
 	protected void onBeforeRender() {
+		
 		dataView = new DataView<T>("rows", listDataProvider) {
 			@Override
 			protected void populateItem(Item<T> item) {
@@ -213,12 +219,25 @@ public class Table<T> extends Panel {
 				}
 			}
 		};
-		dataView.setItemsPerPage(rowsPerPage);
+		
+		//dataView.setItemsPerPage(rowsPerPage);
+		
+		//dataView.setOutputMarkupId(true);
+		setDataView(dataView);
 		addOrReplace(dataView);
 		//addOrReplace(dataView);
-		addOrReplace(new AjaxPagingNavigator("pagingNavigator", dataView));
+		//addOrReplace(dataView);
+		/*addOrReplace(new AjaxPagingNavigator("pagingNavigator", dataView){
+			@Override
+			protected void onAjaxEvent(AjaxRequestTarget target) {
+				//target.add(thisTable);
+				super.onAjaxEvent(target);
+			}
+		});*/
 		super.onBeforeRender();
 	}
+	
+	
 
 
 	/**
