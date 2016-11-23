@@ -1,4 +1,4 @@
-package pl.helpdesk.panels;
+package pl.helpdesk.panels.issuestatus;
 
 import java.util.Date;
 
@@ -19,9 +19,10 @@ import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.entity.Status;
 import pl.helpdesk.entity.StatusHistory;
+import pl.helpdesk.panels.issue.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
-public class StatusPanel extends Panel{
+public class IssueStatusPanel extends Panel{
 	/**
 	 * 
 	 */
@@ -43,7 +44,7 @@ public class StatusPanel extends Panel{
 	@SpringBean
 	private IIssueDao issueDao;
 	
-	public StatusPanel(String id,IssuePanel issue) {
+	public IssueStatusPanel(String id,IssuePanel issue) {
 		super(id);
 		this.issuePanel = issue;
 		setStatusForm = new Form("setStatus");

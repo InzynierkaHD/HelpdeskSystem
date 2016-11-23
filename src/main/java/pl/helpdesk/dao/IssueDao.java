@@ -30,5 +30,28 @@ public class IssueDao extends GenericDao<Issue,Integer> implements IIssueDao{
 				.add(Restrictions.eqOrIsNull("user", user))
 				.addOrder(Order.desc(issuePropertyName)).list();
 	}
+
+	@Override
+	public List<Issue> getSortingIssuesForall(String issuePropertyName) {
+		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.addOrder(Order.asc(issuePropertyName)).list();
+	}
+
+	@Override
+	public List<Issue> getSortingIssuesForAllDesc(String issuePropertyName) {
+		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.addOrder(Order.desc(issuePropertyName)).list();
+	}
+
+	@Override
+	public List<Issue> getIssuesForUserbyId(User user, Integer id) {
+		return sessionFactory.getCurrentSession().createCriteria(Issue.class)
+				.add(Restrictions.eqOrIsNull("user", user))
+				.add(Restrictions.eqOrIsNull("id", id)).list();
+	}
+
+	
+	
+	
 	
 }

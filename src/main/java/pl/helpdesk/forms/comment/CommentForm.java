@@ -22,7 +22,7 @@ import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.mailsender.mailSender;
-import pl.helpdesk.panels.IssuePanel;
+import pl.helpdesk.panels.issue.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
 
 /**
@@ -104,7 +104,6 @@ public class CommentForm extends Panel {
 				List<FileUpload> uploadedFiles = fileUploadField.getFileUploads();
 					URL url = this.getClass().getClassLoader().getResource("/Attachments");
 					File newFile2 = new File("/");
-					System.out.println("UPLOADED FILSE: "+newFile2.getAbsolutePath());
 					//File newFile1 = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + uploadedFile.getClientFileName());
 					for(FileUpload file : uploadedFiles){
 						File newFileToUpload = new File(newFile2.getAbsolutePath() + comment.getId() + "_" + file.getClientFileName());
@@ -124,8 +123,6 @@ public class CommentForm extends Panel {
 								e.printStackTrace();
 							}
 							
-
-							System.out.println("saved file: " + newFileToUpload.getAbsolutePath());
 						
 					}
 				

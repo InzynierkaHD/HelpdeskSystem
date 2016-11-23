@@ -32,7 +32,7 @@ import pl.helpdesk.api.IIssueTypeDao;
 import pl.helpdesk.api.IPriorityDao;
 import pl.helpdesk.api.IProductDao;
 import pl.helpdesk.components.SelectForm;
-import pl.helpdesk.components.table.Tabelka;
+import pl.helpdesk.components.table.Table;
 import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
