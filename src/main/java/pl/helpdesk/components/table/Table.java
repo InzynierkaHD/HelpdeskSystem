@@ -3,11 +3,14 @@ package pl.helpdesk.components.table;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.Attribute;
+
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -25,6 +28,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IGenericDao;
 import pl.helpdesk.api.IIssueDao;
+import pl.helpdesk.api.IStatusHistoryDao;
+import pl.helpdesk.entity.Issue;
+import pl.helpdesk.entity.Status;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class Table<T> extends Panel {
@@ -69,6 +75,9 @@ public class Table<T> extends Panel {
 	
 	@SpringBean
 	private IEmployeeDao employeeDao;
+	
+	@SpringBean
+	private IStatusHistoryDao statusHistoryDao;
 	/**
 	 * 
 	 * @param id
@@ -139,7 +148,9 @@ public class Table<T> extends Panel {
 				entity = item.getModelObject();
 
 				for (TableColumn column : listOfTableColumnName) {
-						addColumnNoEditable(column.getDaoColumnName());
+					Issue issue = (Issue)entity;
+					//statusHistoryDao.getCurrentStatus(issue);
+						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue));
 					column.getDaoColumnName();
 				}
 				item.add(rowElements);
@@ -200,7 +211,9 @@ public class Table<T> extends Panel {
 				entity = item.getModelObject();
 
 				for (TableColumn column : listOfTableColumnName) {
-						addColumnNoEditable(column.getDaoColumnName());
+					Issue issue = (Issue)entity;
+					//statusHistoryDao.getCurrentStatus(issue);
+						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue));
 					column.getDaoColumnName();
 				}
 				item.add(rowElements);
@@ -269,8 +282,13 @@ public class Table<T> extends Panel {
 	 *            Nazwa pola encji, którą chcemy wyświetlić w tabelce np "id",
 	 *            "name"
 	 */
-	void addColumnNoEditable(String entityPropertyName) {
+	void addColumnNoEditable(String entityPropertyName,Status status) {
 		Label label = new Label(rowElements.newChildId(), new PropertyModel(entity, entityPropertyName));
+		if(status == null){
+			label.add(new AttributeAppender("style", "background:#ffff99"));
+		}
+		else if(status.getNazwa().equals("Przyjęte")) label.add(new AttributeAppender("style", "background:lightblue"));
+		else if(status.getNazwa().equals("Odrzucone")) label.add(new AttributeAppender("style", "background:tomato"));
 		this.rowElements.add(label);
 
 	}
