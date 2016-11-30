@@ -53,10 +53,13 @@ public class Table<T> extends Panel {
 	 * Componenty jako Nazwy kolumn w tabelce.
 	 */
 	private RepeatingView tableHead;
+	
+	private RepeatingView tableHeadC;
 	/**
 	 * Encja którą będzie reprezentować tabelka np. zgłoszenia.
 	 */
 	private T entity;
+	private Status entityStatus;
 	/**
 	 * Dao do encji powyższej.
 	 */
@@ -106,6 +109,7 @@ public class Table<T> extends Panel {
 		this.dao = dao;
 		this.listOfRows = listOfRows;
 		loadConfiguration();
+		entityStatus = new Status();
 		listDataProvider = new ListDataProvider(listOfRows);
 		tableHead = new RepeatingView("tableHead");
 		thisTable = this;
@@ -113,7 +117,8 @@ public class Table<T> extends Panel {
 		tableSearch = new TableSearch("search",this);
 		add(tableSearch);
 		for (final TableColumn headerName : getListOfTableColumnName()) {
-			Label headerLabel = new Label(tableHead.newChildId(), Model.of(headerName.getName()));
+			final Label headerLabel = new Label(tableHead.newChildId(), Model.of(headerName.getName()+" <i class=\"glyphicon glyphicon-menu-up\"></i>"));
+			headerLabel.setEscapeModelStrings(false);
 			headerLabel.add(new AjaxEventBehavior("click"){
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
@@ -123,6 +128,7 @@ public class Table<T> extends Panel {
 						if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) thisTable.setListOfRows(issueDao.getSortingIssuesForall(headerName.getDaoColumnName()));
 						headerName.setSortAsc(true);
 						thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
+						headerLabel.setDefaultModel(Model.of(headerName.getName()+" <i class=\"glyphicon glyphicon-menu-down\"></i>"));
 						target.add(thisTable);
 						return;
 						}
@@ -131,6 +137,7 @@ public class Table<T> extends Panel {
 						if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) thisTable.setListOfRows(issueDao.getSortingIssuesForAllDesc(headerName.getDaoColumnName()));
 						headerName.setSortAsc(false);
 					thisTable.setListDataProvider(new ListDataProvider(thisTable.getListOfRows()));
+					headerLabel.setDefaultModel(Model.of(headerName.getName()+" <i class=\"glyphicon glyphicon-menu-up\"></i>"));
 					target.add(thisTable);
 					return;
 					}
@@ -140,6 +147,7 @@ public class Table<T> extends Panel {
 			});
 			tableHead.add(headerLabel);
 		}
+		tableHead.add(new Label(tableHead.newChildId(),Model.of("Status")));
 		add(tableHead);
 		dataView = new DataView<T>("rows", listDataProvider) {
 			@Override
@@ -150,7 +158,7 @@ public class Table<T> extends Panel {
 				for (TableColumn column : listOfTableColumnName) {
 					Issue issue = (Issue)entity;
 					//statusHistoryDao.getCurrentStatus(issue);
-						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue));
+						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue),entity);
 					column.getDaoColumnName();
 				}
 				item.add(rowElements);
@@ -209,13 +217,15 @@ public class Table<T> extends Panel {
 			protected void populateItem(Item<T> item) {
 				rowElements = new RepeatingView("dataRow");
 				entity = item.getModelObject();
-
+				Issue issue = (Issue)entity;
 				for (TableColumn column : listOfTableColumnName) {
-					Issue issue = (Issue)entity;
 					//statusHistoryDao.getCurrentStatus(issue);
-						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue));
+						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue),entity);
+						
 					column.getDaoColumnName();
 				}
+				if(statusHistoryDao.getCurrentStatus(issue) != null) addColumnNoEditable(statusHistoryDao.getCurrentStatus(issue).getNazwa(),statusHistoryDao.getCurrentStatus(issue));
+				else  addColumnNoEditable("nowe",statusHistoryDao.getCurrentStatus(issue));
 				item.add(rowElements);
 				if (clickableRow) {
 					item.add(new AjaxEventBehavior("onclick") {
@@ -282,13 +292,26 @@ public class Table<T> extends Panel {
 	 *            Nazwa pola encji, którą chcemy wyświetlić w tabelce np "id",
 	 *            "name"
 	 */
-	void addColumnNoEditable(String entityPropertyName,Status status) {
+	void addColumnNoEditable(String entityPropertyName,Status status,Object entity) {
 		Label label = new Label(rowElements.newChildId(), new PropertyModel(entity, entityPropertyName));
 		if(status == null){
 			label.add(new AttributeAppender("style", "background:#ffff99"));
 		}
 		else if(status.getNazwa().equals("Przyjęte")) label.add(new AttributeAppender("style", "background:lightblue"));
 		else if(status.getNazwa().equals("Odrzucone")) label.add(new AttributeAppender("style", "background:tomato"));
+		else if(status.getNazwa().equals("Zrealizowane")) label.add(new AttributeAppender("style", "background:green; color:white"));
+		this.rowElements.add(label);
+
+	}
+	
+	void addColumnNoEditable(String value,Status status) {
+		Label label = new Label(rowElements.newChildId(), Model.of(value));
+		if(status == null){
+			label.add(new AttributeAppender("style", "background:#ffff99"));
+		}
+		else if(status.getNazwa().equals("Przyjęte")) label.add(new AttributeAppender("style", "background:lightblue"));
+		else if(status.getNazwa().equals("Odrzucone")) label.add(new AttributeAppender("style", "background:tomato"));
+		else if(status.getNazwa().equals("Zrealizowane")) label.add(new AttributeAppender("style", "background:green; color:white"));
 		this.rowElements.add(label);
 
 	}

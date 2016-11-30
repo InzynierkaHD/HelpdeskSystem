@@ -63,3 +63,4 @@ INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tre
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizowane")

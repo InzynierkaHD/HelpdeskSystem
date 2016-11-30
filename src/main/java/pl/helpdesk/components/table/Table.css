@@ -19,9 +19,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce3455', end
 }
 
 .wiersz:hover{
-	opacity: 0.7 !important;
-    background: #b30000 !important;
-    color: white !important;
+	opacity: 0.9 !important;
+
 }
 
 .naglowek :hover{
