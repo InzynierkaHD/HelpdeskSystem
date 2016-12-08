@@ -49,7 +49,7 @@ public class LoginPage extends WebPage {
 
 	public LoginPage(PageParameters parameters) {
 		super(parameters);
-		//setResponsePage(LoginPage.class);
+		// setResponsePage(LoginPage.class);
 		if (!(ApplicationSession.getInstance().getUser() == null)
 				&& employeeDao.isEmployee(ApplicationSession.getInstance().getUser())) {
 			setResponsePage(EmployeeFinalPage.class);
@@ -108,17 +108,17 @@ public class LoginPage extends WebPage {
 						LoggingHistory loggingHistory = new LoggingHistory();
 						User findedUser = null;
 
+						try {
+							findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(),
+									userDataModel.getHaslo());
+						} catch (HibernateException | NoSuchAlgorithmException e) {
+							e.printStackTrace();
+						}
 						if (badPassword == false) {
-							try {
-								findedUser = userSpring.findUserByLoginAndPassword(userDataModel.getLogin(),
-										userDataModel.getHaslo());
-							} catch (HibernateException | NoSuchAlgorithmException e) {
-								e.printStackTrace();
-							}
 							if (findedUser.getCzy_usuniety() == true) {
 								System.out.println("Nie ma takiego usera");
 								badLogin.setVisible(Boolean.TRUE);
-							} else if (findedUser.getCzy_blokowany() == true ) {
+							} else if (findedUser.getCzy_blokowany() == true) {
 								System.out.println("Konto zablokowane");
 								userBlocked.setVisible(Boolean.TRUE);
 							} else {
@@ -140,10 +140,11 @@ public class LoginPage extends WebPage {
 									setResponsePage(ClientFinalPage.class);
 								}
 							}
-						} else if (badPassword == true) {
+						}
+						if (badPassword == true) {
 							System.out.println("Bledne haslo");
 							badPass.setVisible(Boolean.TRUE);
-							if(clientDao.isClient(findedUser)){
+							if(clientDao.isClientFromLogin(userDataModel.getLogin())){
 								userSpring.incrementBadPassowrd(userDataModel.getLogin());
 							}
 						}

@@ -45,4 +45,6 @@ public interface IClientDao extends IGenericDao<Client,Integer>{
 public List<Client> getSortedClients(String sortBy, String surname);
 	
 	public String numOfCl(String surname);
+	
+	public Boolean isClientFromLogin(String login);
 }
