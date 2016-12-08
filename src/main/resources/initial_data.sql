@@ -57,7 +57,7 @@ INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('11', '2016-09-07 00:00:00', NULL, 'Temat10', 'To jest 10 temat', '1', '1', '3', '1', '1');
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('12', '2016-09-11 00:00:00', NULL, 'Temat11', 'To jest 11 temat', '1', '1', '3', '1', '1');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-08 00:00:00', 'komentarz pracownika', '1', '2');
-INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowyół komentarz', '2', '2');
+INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowy komentarz', '2', '2');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (null, false, '2016-09-15 00:00:00', 'To jest przykladowy komentarz', '1', '1');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-06 00:00:00', 'tresc komentarza dla zgloszenia o id 3', '3', '9');
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")

@@ -25,42 +25,38 @@ and open the template in the editor.
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
- <div class="container-fluid">
-	<header class="row" id="gora">
-		<div id="tytul" class="col-sm-12">
-			<b>H</b>elp<b>D</b>esk System
-		</div>
-	
-		
-	</header>
-	
-	<div id="cytat">Wpisz swoje dane, żeby zalogować się do systemu</div>
+	<div class="container-fluid">
+		<header class="row" id="gora">
+			<div id="tytul" class="col-sm-12">
+				<b>H</b>elp<b>D</b>esk System
+			</div>
 
-	<div style="clear: both"></div>
-	
-    <div class="row">
-		<div class="col-sm-12" id="logowanie">
-			<form wicket:id="form">
-				<br /> Login <br />
-			<input type="text" size="40" wicket:id="login" class="form-control"
-						name="email" placeholder="Login"><br />
-				
-				<br /> Hasło<br />
-				<input type="password" size="40" wicket:id="haslo" class="form-control"
-						name="email" placeholder="Hasło"><br />
-				
-				<br /> <input type="submit" class="przycisk"  value="ZALOGUJ" />
-			</form>
-			<br />
-			<font color="B04862"><b><span wicket:id="badLogin" ></span>
-			<span wicket:id="userBlocked" ></span>
-			<span wicket:id="badPass" ></span></b></font>
-		</div>
+
+		</header>
+
+		<div id="cytat">Wpisz swoje dane, żeby zalogować się do systemu</div>
+
+		<div style="clear: both"></div>
+		<div class="row">
+			<div class="col-sm-12" id="logowanie">
+				<form wicket:id="form">
+					<br /> Login <br /> <input type="text" size="40"
+						wicket:id="login" class="form-control" name="email"
+						placeholder="Login"><br /> Hasło<br /> <input
+						type="password" size="40" wicket:id="haslo" class="form-control"
+						name="email" placeholder="Hasło"><br /> <br /> <input
+						type="submit" class="przycisk" value="ZALOGUJ" />
+				</form>
+				<br /> <font color="B04862"><b><span
+						wicket:id="badLogin"></span> <span wicket:id="userBlocked"></span>
+						<span wicket:id="badPass"></span></b></font>
+			</div>
 		</div>
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
 
