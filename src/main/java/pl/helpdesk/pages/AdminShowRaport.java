@@ -21,11 +21,13 @@ import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.ILoggingHistoryDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.AdminEditPassword;
 import pl.helpdesk.components.AdminEditProfile;
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.LoggingHistory;
 import pl.helpdesk.entity.User;
+import pl.helpdesk.entity.UserNotifications;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public final class AdminShowRaport extends AdminSuccessPage {
@@ -45,6 +47,9 @@ public final class AdminShowRaport extends AdminSuccessPage {
 	
 	@SpringBean
 	private ILoggingHistoryDao loggingHistoryDao;
+	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,17 +62,16 @@ public final class AdminShowRaport extends AdminSuccessPage {
 			String userIdString = "";
 			userIdString = String.valueOf(parameters.get("userId"));
 			int id = Integer.parseInt(userIdString);
-			
-			WebMarkupContainer datacontainer = new WebMarkupContainer("data");
-			datacontainer.setOutputMarkupId(true);
-			add(datacontainer);
-			
 			String typ = "";
 			if (employeeDao.isEmployee(userDao.getById(id))) typ = "(Pracownik)";
 			else if (agentDao.isAgent(userDao.getById(id))) typ = "(Przedstawiciel klienta)";
 			else typ = "(Klient)";
 			
-			datacontainer.add(new Label("theWho", "Raport użytkownika: " + userDao.getById(id).getImie() + " " + userDao.getById(id).getNazwisko() + " " + typ));
+			add(new Label("theWho", userDao.getById(id).getImie() + " " + userDao.getById(id).getNazwisko() + " " + typ));
+			
+			WebMarkupContainer datacontainer = new WebMarkupContainer("data");
+			datacontainer.setOutputMarkupId(true);
+			add(datacontainer);
 			
 			PageableListView<?> pageableListView = new PageableListView<LoggingHistory>("lista", loggingHistoryDao.getDateSortedUserLoggingHistory(id), 10) {
 
@@ -90,6 +94,29 @@ public final class AdminShowRaport extends AdminSuccessPage {
 			datacontainer.add(pageableListView);
 			datacontainer.add(new AjaxPagingNavigator("nav", pageableListView));
 			datacontainer.setVersioned(false);
+			
+			
+			
+			WebMarkupContainer datacontainer2 = new WebMarkupContainer("powiadomienia");
+			datacontainer.setOutputMarkupId(true);
+			add(datacontainer2);
+			PageableListView<?> pageableListView2 = new PageableListView<UserNotifications>("listaPowiadomien", userNotificationsDao.getNotificationByUser(userDao.getById(id)), 8) {
+				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void populateItem(ListItem<UserNotifications> item) {
+					final UserNotifications userNotifications = (UserNotifications) item.getModelObject();
+					item.add(new Label("dataa", userNotifications.getDataWyslania()));
+					item.add(new Label("tresc", userNotifications.getNotificationDataModel().getTresc()));
+				}
+			};
+			datacontainer2.add(pageableListView2);
+			datacontainer2.add(new AjaxPagingNavigator("nav2", pageableListView2));
+			datacontainer2.setVersioned(false);
 			
 		} else {
 			setResponsePage(LoginPage.class);

@@ -10,7 +10,21 @@
 <div id="tytul_strony">Witaj w panelu Klienta</div>
 </div>
 <div class="container">
-To jest Strona po zalogowaniu klienta
+			<div class="table-responsive">
+				<table id="listaUserow" class="table table-hover" wicket:id="data">
+					<tbody>
+						<tr wicket:id="lista">
+							<td span wicket:id="dataa"></td>
+							<td span wicket:id="tresc"></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td id="stopka_tab" colspan="2" wicket:id="nav"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 </div>
 </wicket:extend>
 </body>

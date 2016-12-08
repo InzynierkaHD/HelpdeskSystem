@@ -16,8 +16,11 @@ import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.ICompanyDao;
 import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
@@ -37,7 +40,13 @@ public class AddUserForm extends Panel {
 
 	@SpringBean
 	private IAgentDao agentDao;
+	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
 
+	@SpringBean
+	private INotificationDao notificationDao;
+	
 	@SpringBean
 	private IClientDao clientDao;
 
@@ -157,6 +166,12 @@ public class AddUserForm extends Panel {
 						tooMany.setVisible(true);
 						IsOk = false;
 					}
+					if(IsOk){
+					for (Client clientsListt : clientsList) {
+						userNotificationsDao.addNotification(clientsListt.getUserDataModel() , notificationDao.getById(3));
+					}
+					}
+					
 				}
 				if (IsOk) {
 					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, telefon2, false, false, 0);
@@ -168,6 +183,12 @@ public class AddUserForm extends Panel {
 					} else if (userType.equals("client")) {
 						Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
 						clientDao.save(client);
+						userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser() , notificationDao.getById(1));
+						List <Admin> allAdmins = adminDao.getAll();
+						for(Admin allAdminss : allAdmins){
+							userNotificationsDao.addNotification(allAdminss.getUserDataModel() , notificationDao.getById(2));
+						}
+						
 						przeszlo.setVisible(true);
 					} else if (userType.equals("agent")) {
 						Company company = companyDao.getCompanyByName(selectedCompany);
