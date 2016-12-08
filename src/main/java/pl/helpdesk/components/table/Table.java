@@ -154,13 +154,15 @@ public class Table<T> extends Panel {
 			protected void populateItem(Item<T> item) {
 				rowElements = new RepeatingView("dataRow");
 				entity = item.getModelObject();
-
+				Issue issue = (Issue)entity;
 				for (TableColumn column : listOfTableColumnName) {
-					Issue issue = (Issue)entity;
 					//statusHistoryDao.getCurrentStatus(issue);
 						addColumnNoEditable(column.getDaoColumnName(),statusHistoryDao.getCurrentStatus(issue),entity);
+						
 					column.getDaoColumnName();
 				}
+				if(statusHistoryDao.getCurrentStatus(issue) != null) addColumnNoEditable(statusHistoryDao.getCurrentStatus(issue).getNazwa(),statusHistoryDao.getCurrentStatus(issue));
+				else  addColumnNoEditable("nowe",statusHistoryDao.getCurrentStatus(issue));
 				item.add(rowElements);
 				if (clickableRow) {
 					item.add(new AjaxEventBehavior("onclick") {

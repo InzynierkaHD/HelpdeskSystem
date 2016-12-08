@@ -39,10 +39,16 @@ and open the template in the editor.
 	<div style="clear: both"></div>
 	
     <div class="row">
-		<div class="col-sm-5" id="logowanie">
+		<div class="col-sm-12" id="logowanie">
 			<form wicket:id="form">
-				<br /> Login <br /> <input type="text" wicket:id="login" /><br />
-				<br /> Hasło<br /> <input type="password" wicket:id="haslo" /><br />
+				<br /> Login <br />
+			<input type="text" size="40" wicket:id="login" class="form-control"
+						name="email" placeholder="Login"><br />
+				
+				<br /> Hasło<br />
+				<input type="password" size="40" wicket:id="haslo" class="form-control"
+						name="email" placeholder="Hasło"><br />
+				
 				<br /> <input type="submit" class="przycisk"  value="ZALOGUJ" />
 			</form>
 			<br />
@@ -50,13 +56,11 @@ and open the template in the editor.
 			<span wicket:id="userBlocked" ></span>
 			<span wicket:id="badPass" ></span></b></font>
 		</div>
-		<div class="col-sm-7" id="informacje">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse laoreet pharetra turpis tincidunt commodo. Donec ornare malesuada metus, non condimentum leo consequat sed. Sed viverra enim sed justo euismod gravida. In hac habitasse platea dictumst. Etiam ac nisl sed justo viverra euismod vel ut arcu. In sed velit in massa porttitor egestas nec vel augue. Praesent congue venenatis leo, sit amet aliquam felis.</p>
-			<p>Sed ultricies, ex sit amet consectetur iaculis, nunc augue fermentum velit, vitae finibus est nunc vel massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien sapien, auctor pulvinar commodo vel, malesuada quis nisi. Vivamus viverra dignissim sapien, ut convallis leo condimentum a. Nam ornare placerat sem, eget efficitur dui semper euismod. Etiam posuere urna sit amet justo convallis convallis id auctor felis. Nam eget iaculis mi. Donec auctor erat eget felis molestie, sed tristique nisl tempor. Donec tempus, augue et vehicula faucibus, urna augue aliquam magna, a volutpat ipsum nibh ac nulla. Phasellus laoreet sapien et elit tincidunt sollicitudin.</p>
 		</div>
 	</div>
-	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
+

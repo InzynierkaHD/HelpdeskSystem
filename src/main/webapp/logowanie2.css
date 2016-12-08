@@ -99,12 +99,12 @@ color:black;
 
 input[type="text"] {
     width: 200px;
-	height:25px;
+	margin:auto;
 }
 
 input[type="password"] {
     width: 200px;
-	height:25px;
+	margin:auto;
 }
 
 #informacje{

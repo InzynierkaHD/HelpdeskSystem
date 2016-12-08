@@ -1,12 +1,12 @@
 @CHARSET "UTF-8";
 
 .komentarzKlient{
-	width:50%;
+	width:90%;
 }
 
 .komentarzPracownik{
-	width:50%;
-	margin-left:50%;
+	width:90%;
+	margin-left:10%;
 }
 
 .infoOZgloszeniu{
