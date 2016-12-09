@@ -22,18 +22,21 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-
-
+import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.ICompanyProductDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.api.IIssueTypeDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IPriorityDao;
 import pl.helpdesk.api.IProductDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.SelectForm;
 import pl.helpdesk.components.table.Table;
 import pl.helpdesk.components.table.TableCol;
+import pl.helpdesk.dao.UserDao;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
@@ -81,6 +84,14 @@ public class AddIssueForm extends Panel implements Serializable{
 	IProductDao productDao;
 	@SpringBean
 	IIssueDao issueDao;
+	@SpringBean
+	private IAdminDao adminDao;
+	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+	
+	@SpringBean
+	private INotificationDao notificationDao;
 	
 	public AddIssueForm(String id) {
 		super(id);
@@ -140,7 +151,16 @@ public class AddIssueForm extends Panel implements Serializable{
 					issueDao.save(newIssue);
 					getPage().setResponsePage(IssueListPage.class);
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
-				}
+					List<Admin> allAdmins = adminDao.getAll();
+					for (Admin allAdminss : allAdmins) {
+						userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+								notificationDao.getById(23), loggedUser.getLogin());
+					}
+					userNotificationsDao.addNotification(loggedUser,
+							notificationDao.getById(23), loggedUser.getLogin());
+					}
+					
+				
 				
 				
 				super.onSubmit(target, form);

@@ -37,6 +37,8 @@ public class AgentDao extends GenericDao<Agent, Integer> implements IAgentDao {
 		return (Agent) sessionFactory.getCurrentSession().createCriteria(Agent.class)
 				.add(Restrictions.eq("userDataModel", user)).uniqueResult();
 	}
+	
+
 
 	public List<String> getCompanyWithoutAgent() {
 		CompanyDao compDao = new CompanyDao();

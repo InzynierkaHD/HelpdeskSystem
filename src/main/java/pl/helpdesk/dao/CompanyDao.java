@@ -25,6 +25,8 @@ public class CompanyDao extends GenericDao<Company, Integer> implements ICompany
 
 	}
 	
+
+	
 	@Override 
 	public List <Company> getAllCompany(){
 		return getAll();

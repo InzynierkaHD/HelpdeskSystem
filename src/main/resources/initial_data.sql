@@ -85,5 +85,5 @@ INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (18,"Us
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (19,"User_odbl_a","Konto zostalo odblokowane przez administratora")
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (20,"User_zabl_p","Konto zostalo zablokowane przez przedstawiciela klienta")
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (21,"User_odbl_p","Konto zostalo odblokowane przez przedstawiciela klienta")
-INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (22,"User_dodanie_zgl_prz","Dodanie nowego zgloszenia")
-INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (23,"User_dodanie zgl_pra","Dodanie nowego zgloszenia")
+INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (22,"User_dodanie_kom","Dodanie nowego komentarza do zgloszenia")
+INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (23,"User_dodanie_zgl","Dodanie nowego zgloszenia")

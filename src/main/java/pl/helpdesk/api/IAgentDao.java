@@ -35,7 +35,7 @@ public interface IAgentDao extends IGenericDao<Agent,Integer>{
 	 * @return Szukany przedstawiciel
 	 */
 	public Agent findAgentByUser(User user);
-	
+
 	
 	public List <String> getCompanyWithoutAgent();
 	

@@ -17,8 +17,12 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.ICommentDao;
 import pl.helpdesk.api.IEmployeeDao;
+import pl.helpdesk.api.INotificationDao;
+import pl.helpdesk.api.IUserNotificationsDao;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.mailsender.mailSender;
@@ -68,6 +72,17 @@ public class CommentForm extends Panel {
 	private IEmployeeDao employeeDao;
 	
 	//*/// DM stop
+	
+	
+	
+	@SpringBean
+	private IAdminDao adminDao;
+	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+	
+	@SpringBean
+	private INotificationDao notificationDao;
 
 	public CommentForm(String id, Issue issue, final IssuePanel panel) {
 		super(id);
@@ -141,6 +156,16 @@ public class CommentForm extends Panel {
 							getIssue().getUser());
 				}
 				//*/ // DM stop
+				
+				
+				
+				List<Admin> allAdmins = adminDao.getAll();
+				for (Admin allAdminss : allAdmins) {
+					userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+							notificationDao.getById(22), ApplicationSession.getInstance().getUser().getLogin());
+				}
+				userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+						notificationDao.getById(22), ApplicationSession.getInstance().getUser().getLogin());	
 			}
 
 		});
