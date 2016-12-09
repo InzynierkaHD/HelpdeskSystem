@@ -47,12 +47,11 @@ public class AdminFinalPage extends AdminSuccessPage {
 				protected void populateItem(ListItem<UserNotifications> item) {
 					final UserNotifications userNotifications = (UserNotifications) item.getModelObject();
 					item.add(new Label("dataa", userNotifications.getDataWyslania()));	
-					if(userNotifications.getUserDataModel().getLogin().equals(ApplicationSession.getInstance().getUser().getLogin())){
+					if(userNotifications.getSprawca().equals(ApplicationSession.getInstance().getUser().getLogin())){
 						item.add(new Label("uzytkownik","Ty"));
 					} else{
-					item.add(new Label("uzytkownik", userNotifications.getUserDataModel().getLogin()));
-					}
-				
+						item.add(new Label("uzytkownik", userNotifications.getSprawca()));
+					}				
 					item.add(new Label("tresc", userNotifications.getNotificationDataModel().getTresc()));
 				}
 			};

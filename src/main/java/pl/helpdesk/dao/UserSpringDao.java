@@ -3,17 +3,23 @@ package pl.helpdesk.dao;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.helpdesk.api.IAdminDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.passwordHash.HashPassword;
+import pl.helpdesk.userSession.ApplicationSession;
 
 /**
  * Dao dla encji użytkownika
@@ -24,6 +30,12 @@ import pl.helpdesk.passwordHash.HashPassword;
 @Transactional
 public class UserSpringDao extends GenericDao<User, Integer> implements IUserDao {
 
+	
+	
+	
+	@SpringBean
+	private IAdminDao adminDao;
+	
 	@Override
 	public void saveUser(User user) {
 		sessionFactory.getCurrentSession().save(user);

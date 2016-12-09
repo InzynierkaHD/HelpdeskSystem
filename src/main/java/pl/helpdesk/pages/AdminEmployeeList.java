@@ -28,6 +28,7 @@ import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
 import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.Notification;
 import pl.helpdesk.entity.User;
@@ -56,6 +57,11 @@ public class AdminEmployeeList extends AdminSuccessPage {
 	@SpringBean
 	private IUserDao userDao;
 
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+	
+	@SpringBean
+	private INotificationDao notificationDao;
 
 	public AdminEmployeeList(PageParameters parameters) {
 		super(parameters);
@@ -150,14 +156,28 @@ public class AdminEmployeeList extends AdminSuccessPage {
 
 						@Override
 						public void onClick() {
-							
+							List<Admin> allAdmins = adminDao.getAll();
 							
 							if (employee.getUserDataModel().getCzy_blokowany()) {
 								employee.getUserDataModel().setCzy_blokowany(false);
 								userDao.update(employee.getUserDataModel());
+								for (Admin allAdminss : allAdmins) {
+									userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+											notificationDao.getById(15), ApplicationSession.getInstance().getUser().getLogin());
+								}
+								userNotificationsDao.addNotification(employee.getUserDataModel(),
+										notificationDao.getById(19), "");
+								
 							} else {
 								employee.getUserDataModel().setCzy_blokowany(true);
 								userDao.update(employee.getUserDataModel());
+								
+								for (Admin allAdminss : allAdmins) {
+									userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+											notificationDao.getById(11), ApplicationSession.getInstance().getUser().getLogin());
+								}
+								userNotificationsDao.addNotification(employee.getUserDataModel(),
+										notificationDao.getById(18), "");
 							}
 							// DM - wyslanie maila
 							sendMail(employee);
@@ -178,9 +198,13 @@ public class AdminEmployeeList extends AdminSuccessPage {
 
 						@Override
 						public void onClick() {
+							List<Admin> allAdmins = adminDao.getAll();
 							employee.getUserDataModel().setCzy_usuniety(true);
 							userDao.update(employee.getUserDataModel());
-							
+							for (Admin allAdminss : allAdmins) {
+								userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+										notificationDao.getById(12), ApplicationSession.getInstance().getUser().getLogin());
+							}
 							// DM - wyslanie maila
 							sendMail(employee);
 							// DM stop

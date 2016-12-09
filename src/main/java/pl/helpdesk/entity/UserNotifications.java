@@ -30,9 +30,20 @@ public class UserNotifications implements Serializable {
 	@JoinColumn(name = "Id_powiadomienia", columnDefinition = "INTEGER(11) NOT NULL")
 	private Notification notificationDataModel;
 
+	@Column(name="Sprawca",columnDefinition="VARCHAR(20) NOT NULL")
+	private String sprawca;
+	
 	@OneToOne
 	@JoinColumn(name = "Id_uzytkownika", columnDefinition = "INTEGER(11) NOT NULL")
 	private User userDataModel;
+
+	public String getSprawca() {
+		return sprawca;
+	}
+
+	public void setSprawca(String sprawca) {
+		this.sprawca = sprawca;
+	}
 
 	@Column(name = "Data_wyslania")
 	@Temporal(TemporalType.TIMESTAMP)

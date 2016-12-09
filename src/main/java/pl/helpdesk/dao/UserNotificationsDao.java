@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import pl.helpdesk.api.INotificationDao;
@@ -23,16 +24,17 @@ public class UserNotificationsDao extends GenericDao<UserNotifications,Integer> 
 	
 	public List<UserNotifications> getNotificationByUser(User user){
 		List<UserNotifications> listOfUserNotifications = sessionFactory.getCurrentSession().createCriteria(UserNotifications.class)
-		.add(Restrictions.eq("userDataModel", user)).list();
+		.add(Restrictions.eq("userDataModel", user)).addOrder(Order.desc("dataWyslania")).list();
 		return listOfUserNotifications;
 		
 	};
 
 	
-	public void addNotification(User user, Notification notification){
+	public void addNotification(User user, Notification notification, String sprawca){
 		UserNotifications newUN = new UserNotifications();
 		newUN.setEmail(user.getEmail());
 		newUN.setDataWyslania(new Date());
+		newUN.setSprawca(sprawca);
 		newUN.setUserDataModel(user);
 		newUN.setNotificationDataModel(notification);
 		save(newUN);

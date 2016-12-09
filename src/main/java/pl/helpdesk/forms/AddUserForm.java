@@ -40,13 +40,13 @@ public class AddUserForm extends Panel {
 
 	@SpringBean
 	private IAgentDao agentDao;
-	
+
 	@SpringBean
 	private IUserNotificationsDao userNotificationsDao;
 
 	@SpringBean
 	private INotificationDao notificationDao;
-	
+
 	@SpringBean
 	private IClientDao clientDao;
 
@@ -82,8 +82,6 @@ public class AddUserForm extends Panel {
 	private PasswordTextField haslo;
 	private Form<?> creating;
 
-	
-
 	private static final long serialVersionUID = 1L;
 
 	public AddUserForm(String id, final String userType) {
@@ -94,7 +92,6 @@ public class AddUserForm extends Panel {
 		createFormComponents(userType);
 
 		creating = new Form("creating") {
-
 
 			private static final long serialVersionUID = 1L;
 
@@ -166,12 +163,13 @@ public class AddUserForm extends Panel {
 						tooMany.setVisible(true);
 						IsOk = false;
 					}
-					if(IsOk){
-					for (Client clientsListt : clientsList) {
-						userNotificationsDao.addNotification(clientsListt.getUserDataModel() , notificationDao.getById(3));
+					if (IsOk) {
+						for (Client clientsListt : clientsList) {
+							userNotificationsDao.addNotification(clientsListt.getUserDataModel(),
+									notificationDao.getById(3), ApplicationSession.getInstance().getUser().getLogin());
+						}
 					}
-					}
-					
+
 				}
 				if (IsOk) {
 					User newUser = new User(login2, hasloHash, imie2, nazwisko2, email2, telefon2, false, false, 0);
@@ -179,21 +177,33 @@ public class AddUserForm extends Panel {
 					if (userType.equals("employee")) {
 						Employee employee = new Employee(newUser);
 						employeeDao.save(employee);
+						List<Admin> allAdmins = adminDao.getAll();
+						for (Admin allAdminss : allAdmins) {
+							userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+									notificationDao.getById(5), ApplicationSession.getInstance().getUser().getLogin());
+						}
 						przeszlo.setVisible(true);
 					} else if (userType.equals("client")) {
 						Client client = new Client(newUser, agent.getCompanyDataModel(), agent);
 						clientDao.save(client);
-						userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser() , notificationDao.getById(1));
-						List <Admin> allAdmins = adminDao.getAll();
-						for(Admin allAdminss : allAdmins){
-							userNotificationsDao.addNotification(allAdminss.getUserDataModel() , notificationDao.getById(2));
+						userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+								notificationDao.getById(1), ApplicationSession.getInstance().getUser().getLogin());
+						List<Admin> allAdmins = adminDao.getAll();
+						for (Admin allAdminss : allAdmins) {
+							userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+									notificationDao.getById(2), ApplicationSession.getInstance().getUser().getLogin());
 						}
-						
+
 						przeszlo.setVisible(true);
 					} else if (userType.equals("agent")) {
 						Company company = companyDao.getCompanyByName(selectedCompany);
 						Agent agent = new Agent(newUser, company);
 						agentDao.save(agent);
+						List<Admin> allAdmins = adminDao.getAll();
+						for (Admin allAdminss : allAdmins) {
+							userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+									notificationDao.getById(4), ApplicationSession.getInstance().getUser().getLogin());
+						}
 						przeszlo.setVisible(true);
 					}
 
@@ -205,7 +215,7 @@ public class AddUserForm extends Panel {
 		AddMessageLabels();
 		AddForm();
 	}
-	
+
 	private void CreateMessageLabels() {
 		badPhone = new Label("badphone", "Wpisz poprawnie numer telefonu!");
 		badName = new Label("badname", "Wpisz poprawnie imię!");
@@ -254,7 +264,7 @@ public class AddUserForm extends Panel {
 		login = new TextField<String>("login", new PropertyModel<String>(userDataModel, "login"));
 		haslo = new PasswordTextField("haslo", new PropertyModel<String>(userDataModel, "haslo"));
 	}
-	
+
 	private void AddForm() {
 		add(creating);
 		creating.add(login);

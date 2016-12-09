@@ -18,7 +18,9 @@ import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.ILoggingHistoryDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.entity.LoggingHistory;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -44,6 +46,7 @@ public class LoginPage extends WebPage {
 
 	@SpringBean
 	private ILoggingHistoryDao loggingHistoryDao;
+
 
 	private User userDataModel = new User();
 

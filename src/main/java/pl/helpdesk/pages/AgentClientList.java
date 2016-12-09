@@ -17,9 +17,13 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IUserDao;
+import pl.helpdesk.api.IUserNotificationsDao;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.mailsender.mailSender;
@@ -33,11 +37,19 @@ public class AgentClientList extends AgentSuccessPage {
 	private IUserDao userDao;
 
 	@SpringBean
+	private IAdminDao adminDao;
+	
+	@SpringBean
 	private IAgentDao agentDao;
 
 	@SpringBean
 	private IClientDao clientDao;
 	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+	
+	@SpringBean
+	private INotificationDao notificationDao;
 
 	final Agent agent = agentDao.findAgentByUser(ApplicationSession.getInstance().getUser());
 
@@ -88,12 +100,29 @@ public class AgentClientList extends AgentSuccessPage {
 
 					@Override
 					public void onClick() {
+						List<Admin> allAdmins = adminDao.getAll();
 						if (client.getUserDataModel().getCzy_blokowany()) {
 							client.getUserDataModel().setCzy_blokowany(false);
 							userDao.update(client.getUserDataModel());
+							for (Admin allAdminss : allAdmins) {
+								userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+										notificationDao.getById(17), ApplicationSession.getInstance().getUser().getLogin());
+							}
+							userNotificationsDao.addNotification(client.getUserDataModel(),
+									notificationDao.getById(21), "");
+							userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+									notificationDao.getById(17), ApplicationSession.getInstance().getUser().getLogin());
 						} else {
 							client.getUserDataModel().setCzy_blokowany(true);
 							userDao.update(client.getUserDataModel());
+							for (Admin allAdminss : allAdmins) {
+								userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+										notificationDao.getById(9), ApplicationSession.getInstance().getUser().getLogin());
+							}
+							userNotificationsDao.addNotification(client.getUserDataModel(),
+									notificationDao.getById(20), "");
+							userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+									notificationDao.getById(9), ApplicationSession.getInstance().getUser().getLogin());
 						}
 						
 						
@@ -114,9 +143,15 @@ public class AgentClientList extends AgentSuccessPage {
 
 					@Override
 					public void onClick() {
+						List<Admin> allAdmins = adminDao.getAll();
 						client.getUserDataModel().setCzy_usuniety(true);
 						userDao.update(client.getUserDataModel());
-						
+						for (Admin allAdminss : allAdmins) {
+							userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+									notificationDao.getById(10), ApplicationSession.getInstance().getUser().getLogin());
+						}
+						userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+								notificationDao.getById(10), ApplicationSession.getInstance().getUser().getLogin());
 						// DM - wyslanie maila
 						sendMail(client);
 						// DM stop
