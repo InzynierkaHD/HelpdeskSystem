@@ -76,7 +76,7 @@ public class AgentClientList extends AgentSuccessPage {
 				PageParameters a= new PageParameters();
 				a.add("userId", client.getUserDataModel().getId());
 				item.add(new BookmarkablePageLink<>("editUser", AgentEditUser.class, a));
-				item.add(new BookmarkablePageLink<>("showRaport", AdminShowRaport.class, a));
+				item.add(new BookmarkablePageLink<>("showRaport", AgentShowRaport.class, a));
 				
 				final Label blokujWyswietl = new Label("blokujWyswietl", new AbstractReadOnlyModel<String>() {
 					/**

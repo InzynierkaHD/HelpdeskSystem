@@ -22,6 +22,7 @@ import pl.helpdesk.pages.AgentClientList;
 import pl.helpdesk.pages.AgentEditUser;
 import pl.helpdesk.pages.AgentFinalPage;
 import pl.helpdesk.pages.AgentMyProfile;
+import pl.helpdesk.pages.AgentShowRaport;
 import pl.helpdesk.pages.ClientFinalPage;
 import pl.helpdesk.pages.ClientMyProfile;
 import pl.helpdesk.pages.EmployeeFinalPage;
@@ -74,5 +75,6 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AdminAgentList", AdminAgentList.class);	
 		mountPage("/AgentEditUser", AgentEditUser.class);	
 		mountPage("/AdminShowRaport", AdminShowRaport.class);
+		mountPage("/AgentShowRaport", AgentShowRaport.class);
 	}
 }

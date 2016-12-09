@@ -11,6 +11,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.IUserNotificationsDao;
+import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.UserNotifications;
 import pl.helpdesk.userSession.ApplicationSession;
 
@@ -24,6 +25,7 @@ public class AgentFinalPage extends AgentSuccessPage {
 	@SpringBean
 	private IUserNotificationsDao userNotificationsDao;
 	
+
 	public AgentFinalPage(PageParameters parameters) {
 		super(parameters);
 		if (!(ApplicationSession.getInstance().getUser() == null)
@@ -32,6 +34,8 @@ public class AgentFinalPage extends AgentSuccessPage {
 			WebMarkupContainer datacontainer = new WebMarkupContainer("data");
 			datacontainer.setOutputMarkupId(true);
 			add(datacontainer);
+
+
 			PageableListView<?> pageableListView = new PageableListView<UserNotifications>("lista", userNotificationsDao.getNotificationByUser(ApplicationSession.getInstance().getUser()), 8) {
 				
 				/**

@@ -70,7 +70,7 @@ public class ClientDao extends GenericDao<Client, Integer> implements IClientDao
 	@Override
 	public List<Client> clientsFromAgent(Agent agent) {
 		return (List<Client>) sessionFactory.getCurrentSession().createCriteria(Client.class)
-				.add(Restrictions.eq("agentDataModel", agent)).list();
+				.add(Restrictions.eq("agentDataModel", agent)).createCriteria("userDataModel", "user").add(Restrictions.eq("user.czy_usuniety", false)).list();
 	}
 
 	@Override
