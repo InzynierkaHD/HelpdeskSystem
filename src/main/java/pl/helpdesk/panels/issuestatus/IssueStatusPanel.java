@@ -1,6 +1,7 @@
 package pl.helpdesk.panels.issuestatus;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -10,11 +11,15 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
+import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IStatusDao;
 import pl.helpdesk.api.IStatusHistoryDao;
+import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.SelectForm;
+import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.entity.Status;
@@ -35,9 +40,17 @@ public class IssueStatusPanel extends Panel{
 	@SpringBean 
 	private IStatusHistoryDao statusHistoryDao;
 	
+	@SpringBean
+	private IAdminDao adminDao;
+	
 	@SpringBean 
 	private IStatusDao statusDao;
 	
+	@SpringBean
+	private IUserNotificationsDao userNotificationsDao;
+
+	@SpringBean
+	private INotificationDao notificationDao;
 	@SpringBean
 	private IEmployeeDao employeeDao;
 	
@@ -67,7 +80,15 @@ public class IssueStatusPanel extends Panel{
 				Issue issueToSave = issueDao.getById(getIssuePanel().getIssue().getId());
 				issueToSave.setEmployee(employee);
 				issueDao.update(issueToSave);
+				List<Admin> allAdmins = adminDao.getAll();
+				for (Admin allAdminss : allAdmins) {
+					userNotificationsDao.addNotification(allAdminss.getUserDataModel(),
+							notificationDao.getById(24), ApplicationSession.getInstance().getUser().getLogin());
+				}
+				userNotificationsDao.addNotification(ApplicationSession.getInstance().getUser(),
+						notificationDao.getById(24), ApplicationSession.getInstance().getUser().getLogin());
 				target.add(status);
+				
 				}
 			}
 		});
