@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,8 +15,8 @@ import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.components.table.Table;
-import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.components.table.TableColumn;
+import pl.helpdesk.components.tableNew.TableNew;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.issue.IssuePanel;
@@ -74,7 +71,7 @@ public class IssueListPage extends ClientSuccessPage {
 		listColumnName.add(new TableColumn("Typ","typeDataModel"));
 		listColumnName.add(new TableColumn("Data Dodania","dataDodania"));
 		listColumnName.add(new TableColumn("Pracownik Obsługujący","employeeDataModel"));*/
-		final Table<Issue> myIssueTable = new Table<Issue>("myIssues", listOfRows,issueDao) {
+		/*final Table<Issue> myIssueTable = new Table<Issue>("myIssues", listOfRows,issueDao) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();
@@ -87,9 +84,11 @@ public class IssueListPage extends ClientSuccessPage {
 				// super.rowClickEvent();
 			}
 
-		};
-		issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
-		issuePanel.setOutputMarkupId(true);
+		};*/
+		TableNew table = new TableNew("tableNew");
+		add(table);
+		/*issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
+		issuePanel.setOutputMarkupId(true);*/
 		this.myIssueTable = myIssueTable;
 		/*issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
 	        @Override
@@ -109,8 +108,8 @@ public class IssueListPage extends ClientSuccessPage {
 			}
 			
 		});*/
-		add(myIssueTable);
-		add(issuePanel);
+		//add(myIssueTable);
+		//add(issuePanel);
 	}
 
 }
