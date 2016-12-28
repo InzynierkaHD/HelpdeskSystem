@@ -31,7 +31,7 @@ public class StatusHistory implements Serializable {
 	private Issue problemDataModel;
 
 	@OneToOne
-	@JoinColumn(name = "Id_pracownika", columnDefinition = "INTEGER(5) NOT NULL")
+	@JoinColumn(name = "Id_pracownika", columnDefinition = "INTEGER(5)")
 	private Employee employeeDataModel;
 
 	@OneToOne

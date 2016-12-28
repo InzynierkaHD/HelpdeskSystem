@@ -1,5 +1,7 @@
-
-
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Nowe")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizowane")
 INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`,`Telefon`) VALUES (1,0,0,"email1@gmail.com","04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb","Jan","user","Kowalski",null,0,"123456789")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (1,"Problem")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (2,"Wadliwy produkt")
@@ -56,14 +58,22 @@ INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('10', '2016-09-05 00:00:00', NULL, 'Temat9', 'To jest 9 temat', '1', '1', '3', '1', '1');
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('11', '2016-09-07 00:00:00', NULL, 'Temat10', 'To jest 10 temat', '1', '1', '3', '1', '1');
 INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `Temat`, `Tresc`, `Id_firma_produkt`, `Id_wlasciciela`, `Id_priorytetu`, `Id_typu`, `Id_user`) VALUES ('12', '2016-09-11 00:00:00', NULL, 'Temat11', 'To jest 11 temat', '1', '1', '3', '1', '1');
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,1,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,2,2)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,3,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,4,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,5,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,6,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,7,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,8,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,9,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,10,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,11,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,12,1)
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-08 00:00:00', 'komentarz pracownika', '1', '2');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-29 00:00:00', 'testowy komentarz', '2', '2');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (null, false, '2016-09-15 00:00:00', 'To jest przykladowy komentarz', '1', '1');
 INSERT INTO `komentarze` (`Id_Komentarz`, `Czy_wewnetrzny`, `Data_dodania`, `Tresc`, `Id_zgloszenia`, `Id_uzytkownika`) VALUES (NULL, false, '2016-09-06 00:00:00', 'tresc komentarza dla zgloszenia o id 3', '3', '9');
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizowane")
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (1,"Nowy klient_przedst","Dodanie nowego wspolpracownika")
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (2,"Nowy klient_admin","Dodanie nowego wspolpracownika")
 INSERT INTO `powiadomienia`(`Id_Powiadomienie`, `Nazwa`, `Tresc`) VALUES (3,"Nowy klient_klient","Dodanie nowego pracownika do firmy przez przedstawiciela klienta")

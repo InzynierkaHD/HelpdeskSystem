@@ -55,6 +55,7 @@
     <bean id="commentDao" class="pl.helpdesk.dao.CommentDao" parent="genericDao"></bean>
      <bean id="companyDao" class="pl.helpdesk.dao.CompanyDao" parent="genericDao"></bean>
 	<bean id="statusHistoryDao" class="pl.helpdesk.dao.StatusHistoryDao" parent="genericDao"></bean>
+	<bean id="statusSortingHistoryDao" class="pl.helpdesk.dao.StatusHistoryDao" parent="genericDao"></bean>
 	<bean id="statusDao" class="pl.helpdesk.dao.StatusDao" parent="genericDao"></bean>
 	<bean id="notificationDao" class="pl.helpdesk.dao.NotificationDao" parent="genericDao"></bean>
     <bean id="userNotificationsDao" class="pl.helpdesk.dao.UserNotificationsDao" parent="genericDao"></bean>

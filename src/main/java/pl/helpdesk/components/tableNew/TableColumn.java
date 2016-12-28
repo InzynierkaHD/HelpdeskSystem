@@ -29,6 +29,7 @@ public class TableColumn extends Panel{
 		this.sortingProperty = sortingProperty;
 		this.table = table;
 		this.sortingDao = sortingDao;
+		this.titleName = titleName;
 		title = new Label("title",new PropertyModel(this,"titleName"));
 		sortUp = new AjaxLink("sortUp"){
 			private static final long serialVersionUID = 1L;

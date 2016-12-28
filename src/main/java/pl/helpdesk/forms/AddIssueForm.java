@@ -3,13 +3,11 @@ package pl.helpdesk.forms;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.feedback.ExactLevelFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -18,7 +16,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -26,21 +23,23 @@ import pl.helpdesk.api.IAdminDao;
 import pl.helpdesk.api.IAgentDao;
 import pl.helpdesk.api.IClientDao;
 import pl.helpdesk.api.ICompanyProductDao;
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.api.IIssueTypeDao;
 import pl.helpdesk.api.INotificationDao;
 import pl.helpdesk.api.IPriorityDao;
 import pl.helpdesk.api.IProductDao;
+import pl.helpdesk.api.IStatusDao;
+import pl.helpdesk.api.IStatusHistoryDao;
 import pl.helpdesk.api.IUserNotificationsDao;
 import pl.helpdesk.components.SelectForm;
-import pl.helpdesk.components.table.Table;
-import pl.helpdesk.components.table.TableCol;
-import pl.helpdesk.dao.UserDao;
 import pl.helpdesk.entity.Admin;
 import pl.helpdesk.entity.Agent;
 import pl.helpdesk.entity.Client;
 import pl.helpdesk.entity.Company;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.entity.Status;
+import pl.helpdesk.entity.StatusHistory;
 import pl.helpdesk.entity.User;
 import pl.helpdesk.pages.IssueListPage;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -88,10 +87,19 @@ public class AddIssueForm extends Panel implements Serializable{
 	private IAdminDao adminDao;
 	
 	@SpringBean
+	private IStatusHistoryDao statusHistoryDao;
+	
+	@SpringBean
 	private IUserNotificationsDao userNotificationsDao;
 	
 	@SpringBean
 	private INotificationDao notificationDao;
+	
+	@SpringBean
+	private IStatusDao statusDao;
+	
+	@SpringBean
+	private IEmployeeDao employeeDao;
 	
 	public AddIssueForm(String id) {
 		super(id);
@@ -149,6 +157,13 @@ public class AddIssueForm extends Panel implements Serializable{
 					newIssue.setType(issueTypeDao.getIssueTypeByName(selectedIssueType));
 					newIssue.setCompanyProduct(companyProductDao.findCompanyProductByProductAndCompany(productDao.findProductByName(selectedProduct), userCompany));
 					issueDao.save(newIssue);
+					Status status = statusDao.getById(1);
+					StatusHistory statusHistory = new StatusHistory();
+					statusHistory.setData(new Date());
+					statusHistory.setEmployeeDataModel(employeeDao.getById(1));
+					statusHistory.setProblemDataModel(newIssue);
+					statusHistory.setStatusDataModel(status);
+					statusHistoryDao.save(statusHistory);
 					getPage().setResponsePage(IssueListPage.class);
 					log.info("------------------------------------>>>Dodanie Zgłoszenia<<<----------------------------------------");
 					List<Admin> allAdmins = adminDao.getAll();
