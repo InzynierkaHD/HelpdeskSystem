@@ -3,9 +3,9 @@ package pl.helpdesk.pages;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,6 +18,7 @@ import pl.helpdesk.components.table.Table;
 import pl.helpdesk.components.table.TableColumn;
 import pl.helpdesk.components.tableNew.TableNew;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.entity.StatusHistory;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.issue.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -30,6 +31,7 @@ public class IssueListPage extends ClientSuccessPage {
 	private AddIssueForm addIssueForm;
 	private Table<Issue> myIssueTable;
 	private IssuePanel issuePanel;
+	private RepeatingView issuePanelContainer;
 
 	@SpringBean
 	IIssueDao issueDao;
@@ -85,10 +87,20 @@ public class IssueListPage extends ClientSuccessPage {
 			}
 
 		};*/
-		TableNew table = new TableNew("tableNew");
+		TableNew table = new TableNew("tableNew"){
+			@Override
+			public void onRowClick(AjaxRequestTarget target, StatusHistory comp) {
+				super.onRowClick(target, comp);
+				issuePanel.setIssue(comp.getProblemDataModel());
+				target.add(issuePanel);
+			}
+		};
 		add(table);
-		/*issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
-		issuePanel.setOutputMarkupId(true);*/
+		//issuePanelContainer = new RepeatingView("issuePanel");
+		//add(issuePanelContainer);
+		issuePanel = new IssuePanel("issuePanel", null);
+		issuePanel.setOutputMarkupId(true);
+		add(issuePanel);
 		this.myIssueTable = myIssueTable;
 		/*issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
 	        @Override
