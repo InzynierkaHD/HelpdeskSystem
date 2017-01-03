@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edycja statusów</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Edycja statusów</div>
+		</div>
+
+		<div class="container">
+			<div class="table-responsive">
+				<table id="listaUserow" class="table table-hover" wicket:id="data">
+					<thead>
+						<tr>
+							<th>Nazwa</th>
+							<th>Usuń</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr wicket:id="lista">
+							<td span wicket:id="nazwa"></td>
+							<td><a href="#" wicket:id="usunStatus"><span
+									wicket:id="usunWyswietl"></span></a></td>
+									<td span wicket:id="czyUsuniety"></td>
+						</tr>
+							
+					</tbody>
+					<tfoot>
+						<tr>
+							<td id="stopka_tab" colspan="3" wicket:id="nav"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<form wicket:id="addStatus" role="form" class="form-horizontal"
+		id="form_dodawanieUsera">
+			<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="imie">Nowy status:</label>
+				<div class="col-sm-5">
+					<input type="text" size="40" wicket:id="nazwa" class="form-control"
+						name="imie" placeholder="Nazwa statusu">
+				</div>
+				<div class="col-sm-4">
+				</div>
+			</div>
+		</div>
+				<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-5">
+			</div>
+			<div class="col-sm-4">
+				<input type="submit" class="przycisk" id="przycisk" value="Dodaj status" />
+			</div>
+		</div>
+		</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

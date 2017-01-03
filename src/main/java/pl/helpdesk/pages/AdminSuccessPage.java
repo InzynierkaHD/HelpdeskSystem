@@ -51,11 +51,9 @@ public abstract class AdminSuccessPage extends WebPage {
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		options.clear();
-		options.put("Statystyki pracowników", "AdminEmployeeStats");
-		options.put("Statystyki firm", "AdminCompaniesStats");
-		options.put("Statystyki przedstawicieli", "AdminAgentsStats");
-		options.put("Statystyki klientów", "AdminClientsStats");
-		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> Statystyki",
+		options.put("Edycja priorytetów", "AdminEditPriority");
+		options.put("Edycja statusów", "AdminEditStatus");
+		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> System",
 				options);
 
 		Form<?> logutForm = new Form<Void>("logutForm");
@@ -98,11 +96,9 @@ public abstract class AdminSuccessPage extends WebPage {
 		INavbarComponent mojProfil = new Dropdown("<span class=\"glyphicon glyphicon-user\"></span> Mój Profil",
 				options);
 		options.clear();
-		options.put("Statystyki pracowników", "AdminEmployeeStats");
-		options.put("Statystyki firm", "AdminCompaniesStats");
-		options.put("Statystyki przedstawicieli", "AdminAgentsStats");
-		options.put("Statystyki klientów", "AdminClientsStats");
-		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> Statystyki",
+		options.put("Edycja priorytetów", "AdminEditPriority");
+		options.put("Edycja statusów", "AdminEditStatus");
+		INavbarComponent statystyki = new Dropdown("<span class=\"glyphicon glyphicon-stats\"></span> System",
 				options);
 
 		Form<?> logutForm = new Form<Void>("logutForm");
