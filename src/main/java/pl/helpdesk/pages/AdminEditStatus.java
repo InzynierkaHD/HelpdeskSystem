@@ -51,7 +51,6 @@ public class AdminEditStatus extends AdminSuccessPage {
 			add(datacontainer);
 
 			PageableListView<?> pageableListView = new PageableListView<Status>("lista", statusDao.getAll(), 5) {
-
 				/**
 				 * 
 				 */
