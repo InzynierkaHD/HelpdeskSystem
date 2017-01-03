@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edycja priorytetów</title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="container-fluid">
+			<div id="tytul_strony">Edycja priorytetów</div>
+		</div>
+
+		<div class="container">
+			<div class="table-responsive">
+				<table id="listaUserow" class="table table-hover" wicket:id="data">
+					<thead>
+						<tr>
+							<th>Nazwa</th>
+							<th>Stopień ważności</th>
+							<th>Usuń</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr wicket:id="lista">
+							<td span wicket:id="nazwa"></td>
+							<td span wicket:id="stopien"></td>
+							<td><a href="#" wicket:id="usunPriorytet"><span
+									wicket:id="usunWyswietl"></span></a></td>
+									<td span wicket:id="czyUsuniety"></td>
+						</tr>
+							
+					</tbody>
+					<tfoot>
+						<tr>
+							<td id="stopka_tab" colspan="3" wicket:id="nav"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<form wicket:id="addPriority" role="form" class="form-horizontal"
+		id="form_dodawanieUsera">
+			<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="imie">Nowy priorytet:</label>
+				<div class="col-sm-5">
+					<input type="text" size="40" wicket:id="nazwa" class="form-control"
+						name="imie" placeholder="Nazwa priorytetu">
+				</div>
+				<div class="col-sm-4">
+				</div>
+			</div>
+		</div>
+					<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="imie">Stopień ważności:</label>
+				<div class="col-sm-5">
+					<input type="text" size="40" wicket:id="stopienWaznosci" class="form-control"
+						name="stopienWaznosci" placeholder="Stopień ważności">
+				</div>
+				<div class="col-sm-4">
+				</div>
+			</div>
+		</div>
+				<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-5">
+			</div>
+			<div class="col-sm-4">
+				<input type="submit" class="przycisk" id="przycisk" value="Dodaj priorytet" />
+			</div>
+		</div>
+		</form>
+		</div>
+	</wicket:extend>
+</body>
+</html>

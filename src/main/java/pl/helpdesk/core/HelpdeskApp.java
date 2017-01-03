@@ -12,6 +12,7 @@ import pl.helpdesk.pages.AdminAddEmployee;
 import pl.helpdesk.pages.AdminAgentList;
 import pl.helpdesk.pages.AdminClientList;
 import pl.helpdesk.pages.AdminCompanyList;
+import pl.helpdesk.pages.AdminEditPriority;
 import pl.helpdesk.pages.AdminEditStatus;
 import pl.helpdesk.pages.AdminEditUser;
 import pl.helpdesk.pages.AdminEmployeeList;
@@ -33,25 +34,24 @@ import pl.helpdesk.pages.LoginPage;
 import pl.helpdesk.userSession.ApplicationSession;
 
 //Klasa startowa w niej definiujemy z jakiej klasy startujemy aplikacje
-public class HelpdeskApp extends WebApplication{
+public class HelpdeskApp extends WebApplication {
 
-	public final static String applicationName="HelpdeskSystem";
+	public final static String applicationName = "HelpdeskSystem";
+
 	@Override
 	public Class<LoginPage> getHomePage() {
 		// TODO Auto-generated method stub
 		return LoginPage.class;
 	}
-	
+
 	@Override
 	public Session newSession(Request request, Response response) {
 		// TODO Auto-generated method stub
 		return new ApplicationSession(request);
 	}
-	
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		super.init();
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		new BeanValidationConfiguration().configure(this);
@@ -70,13 +70,15 @@ public class HelpdeskApp extends WebApplication{
 		mountPage("/AgentMyProfile", AgentMyProfile.class);
 		mountPage("/EmployeeMyProfile", EmployeeMyProfile.class);
 		mountPage("/AdminAddAgent", AdminAddAgent.class);
-		mountPage("/AdminCompanyList", AdminCompanyList.class);	
-		mountPage("/AdminClientList", AdminClientList.class);	
-		mountPage("/AdminEditUser", AdminEditUser.class);	
-		mountPage("/AdminAgentList", AdminAgentList.class);	
-		mountPage("/AgentEditUser", AgentEditUser.class);	
+		mountPage("/AdminCompanyList", AdminCompanyList.class);
+		mountPage("/AdminClientList", AdminClientList.class);
+		mountPage("/AdminEditUser", AdminEditUser.class);
+		mountPage("/AdminAgentList", AdminAgentList.class);
+		mountPage("/AgentEditUser", AgentEditUser.class);
 		mountPage("/AdminShowRaport", AdminShowRaport.class);
 		mountPage("/AgentShowRaport", AgentShowRaport.class);
 		mountPage("/AdminEditStatus", AdminEditStatus.class);
+		mountPage("/AdminEditPriority", AdminEditPriority.class);
+
 	}
 }
