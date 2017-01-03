@@ -35,8 +35,7 @@ public class AdminEditStatus extends AdminSuccessPage {
 
 	@SpringBean
 	private IStatusDao statusDao;
-	
-	
+
 	@SpringBean
 	private IAdminDao adminDao;
 
@@ -61,34 +60,39 @@ public class AdminEditStatus extends AdminSuccessPage {
 					final Status status = (Status) item.getModelObject();
 
 					item.add(new Label("nazwa", status.getNazwa()));
-				
+
 					final Label usunWyswietl = new Label("usunWyswietl", "Usuń");
 					final Label usuniety = new Label("czyUsuniety", "Usunięty");
 					usuniety.setVisible(false);
 					final Link usunStatus = new Link<Object>("usunStatus") {
 
-					private static final long serialVersionUID = 1L;
+						private static final long serialVersionUID = 1L;
 
-					@Override
-					public void onClick() {
-						List<Status> allAdmins = statusDao.getAll();
-						statusDao.delete(status);
-						setResponsePage(AdminEditStatus.class);
-					}
-				};
-				item.add(usunStatus.add(usunWyswietl));
-				item.add(usuniety);
+						@Override
+						public void onClick() {
+							List<Status> allAdmins = statusDao.getAll();
+
+							try {
+								statusDao.delete(status);
+							} catch (RuntimeException ex) {
+								setResponsePage(AdminEditStatus.class);
+							}
+							setResponsePage(AdminEditStatus.class);
+						}
+					};
+					item.add(usunStatus.add(usunWyswietl));
+					item.add(usuniety);
 				}
 			};
 
 			datacontainer.add(pageableListView);
 			datacontainer.add(new AjaxPagingNavigator("nav", pageableListView));
 			datacontainer.setVersioned(false);
-			
+
 			final Form<?> addStatus;
 			final TextField newStatus;
 			Status status = new Status();
-			newStatus= new TextField("nazwa", new PropertyModel<String>(status, "nazwa"));
+			newStatus = new TextField("nazwa", new PropertyModel<String>(status, "nazwa"));
 			addStatus = new Form<Object>("addStatus") {
 				private static final long serialVersionUID = 1L;
 
@@ -99,7 +103,7 @@ public class AdminEditStatus extends AdminSuccessPage {
 					nowyStatus = newStatus.getInput();
 					Status nowy = new Status();
 					nowy.setNazwa(nowyStatus);
-					statusDao.save(nowy);	
+					statusDao.save(nowy);
 					setResponsePage(AdminEditStatus.class);
 				}
 			};

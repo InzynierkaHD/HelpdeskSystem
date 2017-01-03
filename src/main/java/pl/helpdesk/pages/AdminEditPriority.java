@@ -65,7 +65,11 @@ public class AdminEditPriority extends AdminSuccessPage {
 					@Override
 					public void onClick() {
 						List<Priority> allAdmins = priorityDao.getAll();
+						try{
 						priorityDao.delete(priority);
+						}catch(RuntimeException ex){
+						setResponsePage(AdminEditPriority.class);
+						}
 						setResponsePage(AdminEditPriority.class);
 					}
 				};
