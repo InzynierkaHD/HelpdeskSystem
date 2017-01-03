@@ -1,6 +1,31 @@
+SET NAMES 'cp1250';
+SET CHARSET 'utf8';
+SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'
+
+ALTER DATABASE `helpdesk` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE `uzytkownicy` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `typy_zgloszen` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `priorytety` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `produkty` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `firmy` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `firma_produkt` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `pracownicy` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `przedstawiciele` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `klienci` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `administratorzy` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `zgloszenia` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `komentarze` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `statusy` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `powiadomienia` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `powiadomienia_uzytkownika` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `historia_logowania` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `historia_statusow` CONVERT TO CHARACTER SET utf8;
 
 
-INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`,`Telefon`) VALUES (1,0,0,"email1@gmail.com","04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb","Jan","user","Kowalski",null,0,"123456789")
+
+
+INSERT INTO `uzytkownicy`(`Id_Uzytkownika`, `Czy_blokowany`, `Czy_usuniety`, `Email`, `Haslo`, `Imie`, `Login`, `Nazwisko`, `Ostatnie_logowanie`, `Bledne_logowania`,`Telefon`) VALUES (1,0,0,"email1@gmail.com","04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb","Jan","user","Kowąęźćalski",null,0,"123456789")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (1,"Problem")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (2,"Wadliwy produkt")
 INSERT INTO `typy_zgloszen`(`Id_Typ`, `Nazwa`) VALUES (3,"Zapytanie o produkt")
