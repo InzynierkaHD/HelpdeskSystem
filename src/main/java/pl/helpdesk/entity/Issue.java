@@ -34,7 +34,7 @@ public class Issue implements Serializable {
 	@JoinColumn(name = "Id_typu", columnDefinition = "INTEGER(2) NOT NULL")
 	private IssueType typeDataModel;
 
-	@Column(name = "Temat", columnDefinition = "VARCHAR(100) NOT NULL")
+	@Column(name = "Temat", columnDefinition = "VARCHAR(250) NOT NULL")
 	private String temat;
 
 	@Column(name = "Tresc", columnDefinition = "TEXT NOT NULL")
