@@ -1,6 +1,7 @@
 package pl.helpdesk.components.tableNew;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -20,14 +21,18 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.api.ISearchDao;
 import pl.helpdesk.api.ISortingDao;
 import pl.helpdesk.api.ITableNew;
 import pl.helpdesk.components.table.TableSearch;
+import pl.helpdesk.dao.EmployeeDao;
+import pl.helpdesk.entity.Employee;
 import pl.helpdesk.entity.Issue;
 import pl.helpdesk.entity.Status;
 import pl.helpdesk.entity.StatusHistory;
+import pl.helpdesk.userSession.ApplicationSession;
 
 public class TableNew extends Panel implements ITableNew{
 
@@ -61,6 +66,9 @@ public class TableNew extends Panel implements ITableNew{
 	@SpringBean 
 	private ISearchDao statusHistoryDao;
 	
+	@SpringBean
+	private IEmployeeDao employeeDao;
+	
 	private ListDataProvider listOfTableData;
 	
 	private WebMarkupContainer tableContain;
@@ -77,12 +85,18 @@ public class TableNew extends Panel implements ITableNew{
 		tableContain = new WebMarkupContainer("tableContain");
 		tableContain.setOutputMarkupId(true);
 		tableHead.add(new TableColumn(tableHead.newChildId(),"Id","id",thisTable,statusSortingHistoryDao));
+		tableHead.add(new TableColumn(tableHead.newChildId(),"Zgłaszający","user",thisTable,statusSortingHistoryDao));
 		tableHead.add(new TableColumn(tableHead.newChildId(),"Priorytet","prioritoryDataModel",thisTable,statusSortingHistoryDao));
 		tableHead.add(new TableColumn(tableHead.newChildId(),"Status","nazwa",thisTable,statusSortingHistoryDao));
 		tableHead.add(new TableColumn(tableHead.newChildId(),"Data dodania","dataDodania",thisTable,statusSortingHistoryDao));
 		tableHead.add(new TableColumn(tableHead.newChildId(),"Pracownik obsługujący","employeeDataModel",thisTable,statusSortingHistoryDao));
 		addOrReplace(tableHead);
-		listOfTableData = new ListDataProvider(statusSortingHistoryDao.getSortingDesc("id"));
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+			listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusSortingHistoryDao.getSortingDesc("id")));
+			}
+			else{
+				listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusSortingHistoryDao.getSortingDesc(ApplicationSession.getInstance().getUser(),"id")));
+			}
 	}
 
 	@Override
@@ -97,6 +111,8 @@ public class TableNew extends Panel implements ITableNew{
 			    rowElements = new RepeatingView("dataRow");
 			    Label label;
 			    rowElements.add(label = new Label(rowElements.newChildId(), issue.getId()));
+			    label.add(new AttributeAppender("style","background:"+getColorForStatus(status.getNazwa())));
+			    rowElements.add(label = new Label(rowElements.newChildId(), issue.getUser().getLogin()));
 			    label.add(new AttributeAppender("style","background:"+getColorForStatus(status.getNazwa())));
 			    rowElements.add(label = new Label(rowElements.newChildId(), issue.getPriority()));
 			    label.add(new AttributeAppender("style","background:"+getColorForStatus(status.getNazwa())));
@@ -128,6 +144,25 @@ public class TableNew extends Panel implements ITableNew{
 		super.onBeforeRender();
 	}
 	
+	private List<StatusHistory> castObjectToStatusHistoryList(List list){
+		List<StatusHistory> listaWynikow = new ArrayList<StatusHistory>();
+		StatusHistory biezacyStatus = new StatusHistory();
+		for(Object r : list){
+			Object[] row = (Object[])r;
+			biezacyStatus = new StatusHistory();
+				biezacyStatus.setId(Integer.parseInt(row[0].toString()));
+				biezacyStatus.setProblemDataModel((Issue)row[3]);
+				biezacyStatus.setEmployeeDataModel((Employee)row[1]);
+				biezacyStatus.setStatusDataModel((Status)row[4]);
+				biezacyStatus.setData((Date)row[2]);
+				listaWynikow.add(biezacyStatus);
+				System.out.println("row["+2+"]="+ row[2]);
+			
+		}
+		return listaWynikow;
+		
+	}
+	
 	private String getColorForStatus(String status){
 		String statusy[] = getString("Statusy").split(",");
 		String kolory[] = getString("Kolory").split(",");
@@ -139,7 +174,12 @@ public class TableNew extends Panel implements ITableNew{
 
 	@Override
 	public void sortDown(ISortingDao sortingDao,AjaxRequestTarget target,String propertyName) {
-		listOfTableData = new ListDataProvider(sortingDao.getSortingAsc(propertyName));
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+		listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(sortingDao.getSortingAsc(propertyName)));
+		}
+		else{
+			listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(sortingDao.getSortingAsc(ApplicationSession.getInstance().getUser(),propertyName)));
+		}
 		thisTable.setListOfTableData(listOfTableData);
 		target.add(tableContain);
 		target.add(thisTable);
@@ -148,7 +188,12 @@ public class TableNew extends Panel implements ITableNew{
 
 	@Override
 	public void sortUp(ISortingDao sortingDao,AjaxRequestTarget target,String propertyName) {
-		listOfTableData = new ListDataProvider(sortingDao.getSortingDesc(propertyName));
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+		listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(sortingDao.getSortingDesc(propertyName)));
+		}
+		else{
+			listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(sortingDao.getSortingDesc(ApplicationSession.getInstance().getUser(),propertyName)));
+		}
 		thisTable.setListOfTableData(listOfTableData);
 		target.add(tableContain);
 		target.add(thisTable);
@@ -175,7 +220,12 @@ public class TableNew extends Panel implements ITableNew{
 
 	@Override
 	public void search(String propertyName, String keyWord,AjaxRequestTarget target) {
-		listOfTableData = new ListDataProvider(statusHistoryDao.search(propertyName, keyWord));
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+		listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusHistoryDao.search(propertyName, keyWord)));
+		}
+		else{
+			listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusHistoryDao.search(ApplicationSession.getInstance().getUser(),propertyName, keyWord)));
+		}
 		thisTable.setListOfTableData(listOfTableData);
 		target.add(tableContain);
 		target.add(thisTable);
@@ -185,5 +235,18 @@ public class TableNew extends Panel implements ITableNew{
 	public void onRowClick(AjaxRequestTarget target,StatusHistory comp) {
 		System.out.println("kliknieto: "+comp.getProblemDataModel());
 		
+	}
+
+	@Override
+	public void searchIssueByComment(String commentContent, AjaxRequestTarget target) {
+		if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+		listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusHistoryDao.searchIssueByComment(commentContent)));
+		}
+		else{
+			listOfTableData = new ListDataProvider(castObjectToStatusHistoryList(statusHistoryDao.searchIssueByComment(ApplicationSession.getInstance().getUser(),commentContent)));
+		}
+		thisTable.setListOfTableData(listOfTableData);
+		target.add(tableContain);
+		target.add(thisTable);
 	}
 }

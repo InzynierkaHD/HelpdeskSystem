@@ -141,6 +141,7 @@ public class TableSearch extends Panel {
 					}
 				}
 				if(selectedOption.equals("komentarze")){
+					table.searchIssueByComment(keyWord, target);
 				/*	errorInfo.setDefaultModel(Model.of(""));
 					List<Issue> temp = issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser());
 					if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){

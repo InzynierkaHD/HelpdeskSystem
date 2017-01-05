@@ -32,6 +32,7 @@ public class IssueListPage extends ClientSuccessPage {
 	private Table<Issue> myIssueTable;
 	private IssuePanel issuePanel;
 	private RepeatingView issuePanelContainer;
+	private TableNew table;
 
 	@SpringBean
 	IIssueDao issueDao;
@@ -87,18 +88,29 @@ public class IssueListPage extends ClientSuccessPage {
 			}
 
 		};*/
-		TableNew table = new TableNew("tableNew"){
+		table = new TableNew("tableNew"){
 			@Override
 			public void onRowClick(AjaxRequestTarget target, StatusHistory comp) {
 				super.onRowClick(target, comp);
 				issuePanel.setIssue(comp.getProblemDataModel());
 				target.add(issuePanel);
+				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");
+				target.appendJavaScript(" $(\"#tableNew\").slideUp();");
+				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
 			}
 		};
 		add(table);
 		//issuePanelContainer = new RepeatingView("issuePanel");
 		//add(issuePanelContainer);
-		issuePanel = new IssuePanel("issuePanel", null);
+		issuePanel = new IssuePanel("issuePanel", null){
+			@Override
+			public void onClickBackButton(AjaxRequestTarget target) {
+				target.appendJavaScript(" $(\"#issuePanel\").slideUp();");
+				target.appendJavaScript(" $(\"#tableNew\").slideDown();");
+				target.appendJavaScript(" $(\"#addIssueButton\").slideDown();");
+				super.onClickBackButton(target);
+			}
+		};
 		issuePanel.setOutputMarkupId(true);
 		add(issuePanel);
 		this.myIssueTable = myIssueTable;
@@ -124,4 +136,12 @@ public class IssueListPage extends ClientSuccessPage {
 		//add(issuePanel);
 	}
 
+	public IssuePanel getIssuePanel() {
+		return issuePanel;
+	}
+
+	public void setIssuePanel(IssuePanel issuePanel) {
+		this.issuePanel = issuePanel;
+	}
+	
 }
