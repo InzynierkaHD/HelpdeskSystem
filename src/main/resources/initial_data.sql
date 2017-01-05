@@ -183,7 +183,7 @@ INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Nowe")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizow
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizowane")
 
 
 
