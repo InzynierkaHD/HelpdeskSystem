@@ -1,0 +1,19 @@
+<wicket:panel>
+		<div class="container">
+		 <div wicket:id="search"></div> 
+			<table class="table table-bordered " style="margin-top:10px">
+				<thead>
+					<tr class="naglowek" >
+						<span wicket:id="tableHead"></span>
+						<!-- <th>naglowek</th> -->
+					</tr>
+				</thead>
+				<tbody wicket:id="tableContain">
+					<tr wicket:id="rows" class="wiersz" style="cursor:pointer">
+						<td wicket:id="dataRow" class="komorkaTabeli"></td>
+					</tr>
+				</tbody>
+			</table>
+			 <ul class="pagination" wicket:id="pagingNavigator"></ul> 
+		</div>
+	</wicket:panel>

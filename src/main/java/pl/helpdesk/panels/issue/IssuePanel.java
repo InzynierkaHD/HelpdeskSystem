@@ -69,14 +69,19 @@ public class IssuePanel extends Panel {
 
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				target.appendJavaScript(" $(\"#issuePanel\").slideUp();");
-				target.appendJavaScript(" $(\"#addIssueButton\").slideDown();");
-				target.appendJavaScript(" $(\"#myIssuesTable\").slideDown();");
+				onClickBackButton(target);
+				//target.appendJavaScript(" $(\"#issuePanel\").slideUp();");
+				//target.appendJavaScript(" $(\"#addIssueButton\").slideDown();");
+				//target.appendJavaScript(" $(\"#myIssuesTable\").slideDown();");
 			}
 
 		});
 	}
 
+	public void onClickBackButton(AjaxRequestTarget target){
+		
+	}
+	
 	@Override
 	public void renderHead(IHeaderResponse response) {
 		PackageResourceReference cssFile = new PackageResourceReference(IssuePanel.class, "issuePanel.css");

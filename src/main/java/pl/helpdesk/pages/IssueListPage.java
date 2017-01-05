@@ -3,12 +3,9 @@ package pl.helpdesk.pages;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -18,9 +15,10 @@ import pl.helpdesk.api.IIssueDao;
 import pl.helpdesk.components.AlertModal;
 import pl.helpdesk.components.AlertModal.typeAlert;
 import pl.helpdesk.components.table.Table;
-import pl.helpdesk.components.table.TableCol;
 import pl.helpdesk.components.table.TableColumn;
+import pl.helpdesk.components.tableNew.TableNew;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.entity.StatusHistory;
 import pl.helpdesk.forms.AddIssueForm;
 import pl.helpdesk.panels.issue.IssuePanel;
 import pl.helpdesk.userSession.ApplicationSession;
@@ -33,6 +31,8 @@ public class IssueListPage extends ClientSuccessPage {
 	private AddIssueForm addIssueForm;
 	private Table<Issue> myIssueTable;
 	private IssuePanel issuePanel;
+	private RepeatingView issuePanelContainer;
+	private TableNew table;
 
 	@SpringBean
 	IIssueDao issueDao;
@@ -74,7 +74,7 @@ public class IssueListPage extends ClientSuccessPage {
 		listColumnName.add(new TableColumn("Typ","typeDataModel"));
 		listColumnName.add(new TableColumn("Data Dodania","dataDodania"));
 		listColumnName.add(new TableColumn("Pracownik Obsługujący","employeeDataModel"));*/
-		final Table<Issue> myIssueTable = new Table<Issue>("myIssues", listOfRows,issueDao) {
+		/*final Table<Issue> myIssueTable = new Table<Issue>("myIssues", listOfRows,issueDao) {
 			@Override
 			public void rowClickEvent(AjaxRequestTarget target, Component component) {
 				Issue clickedIssue = (Issue) component.getDefaultModel().getObject();
@@ -87,9 +87,32 @@ public class IssueListPage extends ClientSuccessPage {
 				// super.rowClickEvent();
 			}
 
+		};*/
+		table = new TableNew("tableNew"){
+			@Override
+			public void onRowClick(AjaxRequestTarget target, StatusHistory comp) {
+				super.onRowClick(target, comp);
+				issuePanel.setIssue(comp.getProblemDataModel());
+				target.add(issuePanel);
+				target.appendJavaScript(" $(\"#addIssueButton\").slideUp();");
+				target.appendJavaScript(" $(\"#tableNew\").slideUp();");
+				target.appendJavaScript(" $(\"#issuePanel\").slideDown();");
+			}
 		};
-		issuePanel = new IssuePanel("issuePanel", myIssueTable.getEntity());
+		add(table);
+		//issuePanelContainer = new RepeatingView("issuePanel");
+		//add(issuePanelContainer);
+		issuePanel = new IssuePanel("issuePanel", null){
+			@Override
+			public void onClickBackButton(AjaxRequestTarget target) {
+				target.appendJavaScript(" $(\"#issuePanel\").slideUp();");
+				target.appendJavaScript(" $(\"#tableNew\").slideDown();");
+				target.appendJavaScript(" $(\"#addIssueButton\").slideDown();");
+				super.onClickBackButton(target);
+			}
+		};
 		issuePanel.setOutputMarkupId(true);
+		add(issuePanel);
 		this.myIssueTable = myIssueTable;
 		/*issuePanel.getCommentForm().getSubmitButton().add(new AjaxEventBehavior("onclick") {
 	        @Override
@@ -109,8 +132,16 @@ public class IssueListPage extends ClientSuccessPage {
 			}
 			
 		});*/
-		add(myIssueTable);
-		add(issuePanel);
+		//add(myIssueTable);
+		//add(issuePanel);
 	}
 
+	public IssuePanel getIssuePanel() {
+		return issuePanel;
+	}
+
+	public void setIssuePanel(IssuePanel issuePanel) {
+		this.issuePanel = issuePanel;
+	}
+	
 }

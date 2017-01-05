@@ -22,8 +22,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import pl.helpdesk.api.ICommentDao;
 import pl.helpdesk.api.IEmployeeDao;
 import pl.helpdesk.api.IIssueDao;
+import pl.helpdesk.api.IStatusDao;
+import pl.helpdesk.api.ITableNew;
+import pl.helpdesk.components.SelectForm;
 import pl.helpdesk.entity.Comment;
 import pl.helpdesk.entity.Issue;
+import pl.helpdesk.entity.Status;
 import pl.helpdesk.userSession.ApplicationSession;
 
 public class TableSearch extends Panel {
@@ -39,6 +43,8 @@ public class TableSearch extends Panel {
 	private Radio radio1;
 	private Radio radio2;
 	private Label errorInfo;
+	private SelectForm statusSelect;
+	private String selectedStatus=null;
 
 	@SpringBean
 	IIssueDao issueDao;
@@ -48,11 +54,45 @@ public class TableSearch extends Panel {
 
 	@SpringBean
 	ICommentDao commentDao;
+	
+	@SpringBean
+	IStatusDao statusDao;
 
-	public TableSearch(String id,final Table table) {
+	public TableSearch(String id,final ITableNew table) {
 		super(id);
 		errorInfo = new Label("errorInfo");
 		searchForm = new Form<Void>("searchForm");
+		List<Status> choices = new ArrayList<Status>();
+		Status stat = new Status();
+		//stat.setNazwa("Grupuj po statusie");
+		//choices.add(stat);
+		choices.addAll(statusDao.getAll());
+		statusSelect = new SelectForm("status",new PropertyModel(this,"selectedStatus"),choices);
+		statusSelect.setOutputMarkupId(true);
+		statusSelect.add(new OnChangeAjaxBehavior(){
+
+	        private static final long serialVersionUID =
+	            2462233190993745889L;
+
+	        @Override
+	        protected void onUpdate(final AjaxRequestTarget target){
+
+	            // Maybe you want to update some components here?
+
+	            // Access the updated model object:
+	            final Object value = getComponent().getDefaultModelObject();
+	            // or:
+	            //final String valueAsString =
+	           //     getComponent()).getModelObject();
+	            if(value != null){
+	            	selectedStatus=null;
+	            	target.add(statusSelect);
+	            	table.search("nazwa", value.toString(),target);
+	            System.out.println("value: " + value.toString());
+	            }
+	        }
+	    });
+		add(statusSelect);
 		keyWordField = new TextField<String>("keyWordField", new PropertyModel<String>(this,"keyWord"));
 		keyWordField.add(new OnChangeAjaxBehavior() {
 			
@@ -86,21 +126,23 @@ public class TableSearch extends Panel {
 				if(selectedOption.equals("id")){
 					errorInfo.setDefaultModel(Model.of(""));
 					try{
-					List<Issue> issueList = issueDao.getIssuesForUserbyId(ApplicationSession.getInstance().getUser(), Integer.parseInt(keyWord));
-					if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
-						issueList.clear();
-						issueList.add(0, issueDao.getById(Integer.parseInt(keyWord)));
-					}
-					table.setListOfRows(issueList);
-					table.setListDataProvider(new ListDataProvider(table.getListOfRows()));
-					target.add(table);
+					//List<Issue> issueList = issueDao.getIssuesForUserbyId(ApplicationSession.getInstance().getUser(), Integer.parseInt(keyWord));
+					//if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
+					//	issueList.clear();
+					//	issueList.add(0, issueDao.getById(Integer.parseInt(keyWord)));
+					//}
+					table.search("id", keyWord,target);
+					//table.setListOfRows(issueList);
+					//table.setListDataProvider(new ListDataProvider(table.getListOfRows()));
+					//target.add(table);
 					}
 					catch(Exception e){
 						errorInfo.setDefaultModel(Model.of("Pole wyszukiwania powinno zawierać cyfrę"));
 					}
 				}
 				if(selectedOption.equals("komentarze")){
-					errorInfo.setDefaultModel(Model.of(""));
+					table.searchIssueByComment(keyWord, target);
+				/*	errorInfo.setDefaultModel(Model.of(""));
 					List<Issue> temp = issueDao.getAllIssuesForUser(ApplicationSession.getInstance().getUser());
 					if(employeeDao.isEmployee(ApplicationSession.getInstance().getUser())){
 						temp = issueDao.getAll();
@@ -123,7 +165,7 @@ public class TableSearch extends Panel {
 
 				table.setListOfRows(issueList);
 				table.setListDataProvider(new ListDataProvider(table.getListOfRows()));
-				target.add(table);
+				target.add(table);*/
 				}
 				
 				/*else{
@@ -137,6 +179,11 @@ public class TableSearch extends Panel {
 		searchForm.add(submit);
 		add(searchForm);
 		add(errorInfo);
+	}
+	@Override
+	protected void onBeforeRender() {
+		// TODO Auto-generated method stub
+		super.onBeforeRender();
 	}
 
 	public String getSelectedOption() {

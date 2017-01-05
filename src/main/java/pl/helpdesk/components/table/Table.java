@@ -114,7 +114,7 @@ public class Table<T> extends Panel {
 		tableHead = new RepeatingView("tableHead");
 		thisTable = this;
 		thisTable.setOutputMarkupId(true);
-		tableSearch = new TableSearch("search",this);
+		//tableSearch = new TableSearch("search",this);
 		add(tableSearch);
 		for (final TableColumn headerName : getListOfTableColumnName()) {
 			final Label headerLabel = new Label(tableHead.newChildId(), Model.of(headerName.getName()+" <i class=\"glyphicon glyphicon-menu-up\"></i>"));

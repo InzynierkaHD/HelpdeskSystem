@@ -13,17 +13,18 @@
 		<div class="container">
 			<span wicket:id="alert"></span>
 
-			<div id="myIssuesTable" wicket:id="myIssues"></div>
+			<!-- <div id="myIssuesTable" wicket:id="myIssues"></div> -->
+			<div id="tableNew" wicket:id="tableNew"></div>
 			<button id="addIssueButton" type="button" class="btn btn-success"
 				wicket:id="addIssue">Dodaj nowe zgłoszenie</button>
 		</div>
-		<div id="issuePanel" wicket:id="issuePanel"></div>
-		<script>
+		<div id="issuePanel" wicket:id="issuePanel"></div> 
+		 <script>
 			$(document).ready(function() {
 				$("#issuePanel").hide();
 
 			});
-		</script>
+		</script> 
 	</wicket:extend>
 </body>
 </html>

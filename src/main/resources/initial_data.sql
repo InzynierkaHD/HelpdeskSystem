@@ -180,17 +180,28 @@ INSERT INTO `zgloszenia` (`Id_Zgloszenie`, `Data_dodania`, `Data_zakonczenia`, `
 ---------STATUSY-----------
 
 
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Oczekuje")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Nowe")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Przyjete")
 INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Odrzucone")
-INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizowane")
+INSERT INTO `statusy`(`Id_Status`, `Nazwa`) VALUES (null,"Zrealizow
 
 
 
 
 ----HISTORIA STATUSOW------------
 
-
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,1,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,2,2)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,3,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,4,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,5,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,6,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,7,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,8,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,9,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,10,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,11,1)
+INSERT INTO `historia_statusow`(`Id_Hist_Statusu`, `Data`, `Id_pracownika`, `Id_zgloszenia`, `Id_statusu`) VALUES (null,'2016-12-11',1,12,1)
 
 -------POWIADOMIENIA---------
 
