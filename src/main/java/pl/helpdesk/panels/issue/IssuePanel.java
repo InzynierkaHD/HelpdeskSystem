@@ -2,6 +2,7 @@ package pl.helpdesk.panels.issue;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -92,6 +93,17 @@ public class IssuePanel extends Panel {
 
 	@Override
 	protected void onBeforeRender() {
+		if(issue != null){
+		List<String> info = new ArrayList<String>();
+		info.add("Imie: " +issue.getUser().getImie());
+		info.add("Nazwisko: " +issue.getUser().getNazwisko());
+		info.add("Numer telefonu: " +issue.getUser().getTelefon());
+		info.add("Login: " +issue.getUser().getLogin());
+		addOrReplace(new InfoSlider("clientInfo","Informacje o kliencie",info));
+		}
+		else{
+			addOrReplace(new InfoSlider("clientInfo","Informacje o kliencie",new ArrayList<String>()));
+		}
 		commentForm.setIssue(this.getIssue());
 		clientComments.removeAll();
 		/*if(issue != null)
